@@ -26,6 +26,8 @@ final class WeatherViewController: UIViewController {
         loadWeather()
     }
     
+    //MARL: Load data
+    
     private func loadWeather() {
         guard let dataManager = dataManager else { fatalError("DataManager not set") }
         
