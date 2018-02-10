@@ -8,13 +8,15 @@
 
 import UIKit
 
+private let defaultStoryboardName = "Main"
+
 final class RouterManager {
     
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
     private let coreService: CoreService
     
-    init(window: UIWindow?, storyboardName: String = "Main") {
+    init(window: UIWindow?, storyboardName: String = defaultStoryboardName) {
         self.window = window
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         coreService = CoreService()
@@ -41,7 +43,7 @@ final class RouterManager {
 
         viewController.navigator = navigator
         viewController.dataManager = dataManager
-        viewController.city = city == nil ? WeatherViewController.defaultCity : city
+        viewController.city = city
         return viewController
     }
 }

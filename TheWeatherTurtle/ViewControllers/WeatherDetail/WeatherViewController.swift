@@ -17,7 +17,7 @@ final class WeatherViewController: UIViewController {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    static let defaultCity = "London"
+    let defaultCity = "London"
     
     var navigator: WeatherDetailNavigable?
     var dataManager: WeatherDetailDataManager?
@@ -33,11 +33,11 @@ final class WeatherViewController: UIViewController {
     
     //MARK: Services
     
-    private func loadWeather() {
+    func loadWeather() {
         guard let dataManager = dataManager else { fatalError("DataManager not set") }
         
         update(with: .loading)
-        dataManager.getWeatherDetails(city: city ?? "London") { viewState in
+        dataManager.getWeatherDetails(city: city ?? defaultCity) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
