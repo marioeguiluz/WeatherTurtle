@@ -62,12 +62,21 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JOD-Sw-TY6">
+                                        <rect key="frame" x="162" y="214" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="B08-t1-BeY"/>
+                                            <constraint firstAttribute="width" constant="50" id="pxh-dK-QP3"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.23480707410000001" green="0.32567256690000002" blue="0.52553123239999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="6w4-WX-qFW" firstAttribute="leading" secondItem="fHz-F0-9CF" secondAttribute="leading" constant="16" id="1bB-yo-o8D"/>
                                     <constraint firstItem="xCk-mV-e6X" firstAttribute="leading" secondItem="fHz-F0-9CF" secondAttribute="leading" constant="16" id="9Cv-6G-iqs"/>
+                                    <constraint firstItem="JOD-Sw-TY6" firstAttribute="top" secondItem="6w4-WX-qFW" secondAttribute="bottom" constant="8" id="ATu-oE-AFA"/>
                                     <constraint firstAttribute="trailing" secondItem="xCk-mV-e6X" secondAttribute="trailing" constant="16" id="ImL-lK-MEN"/>
+                                    <constraint firstItem="JOD-Sw-TY6" firstAttribute="centerX" secondItem="xCk-mV-e6X" secondAttribute="centerX" id="MEd-cE-s33"/>
                                     <constraint firstItem="BCU-ua-vZy" firstAttribute="leading" secondItem="fHz-F0-9CF" secondAttribute="leading" constant="16" id="UFh-JT-35x"/>
                                     <constraint firstAttribute="trailing" secondItem="BCU-ua-vZy" secondAttribute="trailing" constant="16" id="V4J-sQ-3Tp"/>
                                     <constraint firstItem="6w4-WX-qFW" firstAttribute="top" secondItem="xCk-mV-e6X" secondAttribute="bottom" constant="8" id="dr1-Mv-Sfx"/>
@@ -93,6 +102,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="dIn-3x-QS6" id="tRZ-15-7g6"/>
                         <outlet property="contentView" destination="fHz-F0-9CF" id="Spk-rq-5ha"/>
+                        <outlet property="iconImage" destination="JOD-Sw-TY6" id="eAL-rH-XML"/>
                         <outlet property="labelCity" destination="BCU-ua-vZy" id="3xS-kh-aEa"/>
                         <outlet property="labelDetail" destination="6w4-WX-qFW" id="0de-zn-anP"/>
                         <outlet property="labelTemperature" destination="xCk-mV-e6X" id="w3W-bg-7sF"/>

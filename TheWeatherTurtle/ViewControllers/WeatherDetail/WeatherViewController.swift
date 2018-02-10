@@ -16,6 +16,7 @@ final class WeatherViewController: UIViewController {
     @IBOutlet weak var labelDetail: UILabel!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var iconImage: UIImageView!
     
     let defaultCity = "London"
     
@@ -73,5 +74,21 @@ final class WeatherViewController: UIViewController {
         labelCity.text = viewModel.city
         labelTemperature.text = viewModel.temperature
         labelDetail.text = viewModel.detail
+        displayIcon(with: viewModel)
+    }
+    
+    private func displayIcon(with viewModel: WeatherViewModel) {
+        guard let icon = viewModel.icon else {
+            iconImage.image = nil
+            return
+        }
+        
+        DispatchQueue.global().async {
+            self.dataManager?.getWeatherIcon(code: icon, completion: { (image) in
+                DispatchQueue.main.async {
+                    self.iconImage.image =  image
+                }
+            })
+        }
     }
 }

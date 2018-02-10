@@ -143,8 +143,8 @@
 		3006DB23202E2B2E00B77AA3 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				302583F7202F147F005354ED /* Navigable.swift */,
 				3006DB24202E2B3E00B77AA3 /* RouterManager.swift */,
+				302583F7202F147F005354ED /* Navigable.swift */,
 				302583F5202F1419005354ED /* WeatherDetailNavigator.swift */,
 			);
 			path = Navigation;

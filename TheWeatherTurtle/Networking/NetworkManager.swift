@@ -25,6 +25,8 @@ extension Resource {
             let decoder = JSONDecoder()
             if let model = try? decoder.decode(A.self, from: data) {
                 return model
+            } else if let data = data as? A {
+                return data
             } else {
                 return nil
             }

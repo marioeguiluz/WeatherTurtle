@@ -6,6 +6,9 @@
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
+import Foundation
+import UIKit
+
 final class WeatherDetailDataManager {
     private let weatherService: WeatherService
     
@@ -22,6 +25,24 @@ final class WeatherDetailDataManager {
             case .success(let data):
                 let viewModel = WeatherViewModel(with: data) ?? WeatherViewModel.empty()
                 completion(.data(viewModel: viewModel))
+            }
+        }
+    }
+    
+    func getWeatherIcon(code: String, completion: @escaping (UIImage?) -> ()) {
+        weatherService.getWeatherIcon(code: code) { (response) in
+            switch response {
+            case .error(_):
+                completion(nil)
+            
+            case .success(let data):
+                guard let data = data else {
+                    completion(nil)
+                    return
+                }
+                
+                let image = UIImage(data: data)
+                completion(image)
             }
         }
     }

@@ -43,6 +43,7 @@ struct WeatherViewModel {
     let city: String
     let temperature: String
     let detail: String
+    let icon: String?
 }
 
 extension WeatherViewModel {
@@ -51,15 +52,17 @@ extension WeatherViewModel {
         guard
             let cityName = data?.name,
             let temp = data?.main?.temp,
-            let details = data?.weather?.first?.description else {
+            let details = data?.weather?.first?.description,
+            let iconName = data?.weather?.first?.icon else {
                 return nil
         }
         city = cityName
         temperature = "\(temp)"
         detail = details
+        icon = iconName
     }
     
     static func empty() -> WeatherViewModel {
-        return WeatherViewModel(city: "No city", temperature: "No data", detail: "No details")
+        return WeatherViewModel(city: "No city", temperature: "No data", detail: "No details", icon: nil)
     }
 }
