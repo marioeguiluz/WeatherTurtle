@@ -8,20 +8,17 @@
 
 import Foundation
 
-typealias JSONDictionary = [String: AnyObject]
+enum Response<A: Decodable> {
+    case error(info: Error)
+    case success(data: A?)
+}
 
 struct Resource<A: Decodable> {
     let url: URL
     let parse: (Data) -> A?
 }
 
-enum Response<A: Decodable> {
-    case error(info: Error)
-    case success(data: A?)
-}
-
 extension Resource {
-    
     init(url: URL) {
         self.url = url
         self.parse = { data in

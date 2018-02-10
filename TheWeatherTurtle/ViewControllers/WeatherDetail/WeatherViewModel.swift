@@ -41,10 +41,25 @@ enum WeatherViewState {
 
 struct WeatherViewModel {
     let city: String
-    let temperature: Double
+    let temperature: String
     let detail: String
+}
+
+extension WeatherViewModel {
+    
+    init?(with data: WeatherDetails?) {
+        guard
+            let cityName = data?.name,
+            let temp = data?.main?.temp,
+            let details = data?.weather?.first?.description else {
+                return nil
+        }
+        city = cityName
+        temperature = "\(temp)"
+        detail = details
+    }
     
     static func empty() -> WeatherViewModel {
-        return WeatherViewModel(city: "No city", temperature: 0, detail: "No details")
+        return WeatherViewModel(city: "No city", temperature: "No data", detail: "No details")
     }
 }

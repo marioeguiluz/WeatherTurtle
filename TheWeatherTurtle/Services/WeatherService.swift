@@ -17,10 +17,18 @@ final class WeatherService {
     }
     
     func getWeatherDetails(city: String, completion: @escaping (Response<WeatherDetails>) -> ()) {
-        let cityWeatherDetailsUrl = URL(string: "http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22")!
-        let cityWeatherDetails = Resource<WeatherDetails>(url: cityWeatherDetailsUrl)
+        let cityWeatherDetails = Resource<WeatherDetails>(url: weatherURL(for: city))
         networkManager.load(resource: cityWeatherDetails) { response in
             completion(response)
         }
+    }
+}
+
+extension WeatherService {
+    private func weatherURL(for city: String) -> URL {
+        guard let url = URL(string: "http://samples.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(networkManager.openWeatherMapKey)") else {
+            fatalError("\(#file): \(#function)")
+        }
+        return url
     }
 }

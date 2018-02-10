@@ -7,7 +7,7 @@
 //
 
 final class WeatherDetailDataManager {
-    let weatherService: WeatherService
+    private let weatherService: WeatherService
     
     init(weatherService: WeatherService) {
         self.weatherService = weatherService
@@ -18,16 +18,11 @@ final class WeatherDetailDataManager {
             switch response {
             case .error(_):
                 completion(.error)
+                
             case .success(let data):
-                let viewModel = self.dataViewModel(with: data)
+                let viewModel = WeatherViewModel(with: data) ?? WeatherViewModel.empty()
                 completion(.data(viewModel: viewModel))
             }
         }
-        completion(.loading)
-    }
-    
-    private func dataViewModel(with data: WeatherDetails?) -> WeatherViewModel {
-        guard let data = data else { return WeatherViewModel.empty() }
-        return WeatherViewModel(city: data.name ?? "Noname", temperature: data.main?.temp ?? 0, detail: data.weather?.first?.description ?? "")
     }
 }
