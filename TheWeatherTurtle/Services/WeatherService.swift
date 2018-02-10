@@ -10,7 +10,7 @@ import Foundation
 
 final class WeatherService {
     
-    let networkManager: NetworkManager
+    private let networkManager: NetworkManager
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager

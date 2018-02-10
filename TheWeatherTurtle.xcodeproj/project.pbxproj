@@ -26,6 +26,7 @@
 		3006DB25202E2B3E00B77AA3 /* RouterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3006DB24202E2B3E00B77AA3 /* RouterManager.swift */; };
 		302583F6202F1419005354ED /* WeatherDetailNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302583F5202F1419005354ED /* WeatherDetailNavigator.swift */; };
 		302583F8202F147F005354ED /* Navigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302583F7202F147F005354ED /* Navigable.swift */; };
+		302583FC202F1BD9005354ED /* CoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302583FB202F1BD9005354ED /* CoreService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		3006DB24202E2B3E00B77AA3 /* RouterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterManager.swift; sourceTree = "<group>"; };
 		302583F5202F1419005354ED /* WeatherDetailNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailNavigator.swift; sourceTree = "<group>"; };
 		302583F7202F147F005354ED /* Navigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigable.swift; sourceTree = "<group>"; };
+		302583FB202F1BD9005354ED /* CoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,12 +84,12 @@
 		3006DAF4202B7C2000B77AA3 /* TheWeatherTurtle */ = {
 			isa = PBXGroup;
 			children = (
-				3006DB11202E17E600B77AA3 /* Models */,
-				302583F9202F1642005354ED /* Services */,
-				3006DB23202E2B2E00B77AA3 /* Navigation */,
-				3006DB22202E2B1900B77AA3 /* Networking */,
-				3006DB21202E2B0C00B77AA3 /* ViewControllers */,
 				3006DAF5202B7C2000B77AA3 /* AppDelegate.swift */,
+				3006DB23202E2B2E00B77AA3 /* Navigation */,
+				302583F9202F1642005354ED /* Services */,
+				3006DB22202E2B1900B77AA3 /* Networking */,
+				3006DB11202E17E600B77AA3 /* Models */,
+				3006DB21202E2B0C00B77AA3 /* ViewControllers */,
 				3006DAF9202B7C2000B77AA3 /* Main.storyboard */,
 				3006DAFE202B7C2000B77AA3 /* LaunchScreen.storyboard */,
 				3006DB01202B7C2000B77AA3 /* Info.plist */,
@@ -151,6 +153,7 @@
 		302583F9202F1642005354ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				302583FB202F1BD9005354ED /* CoreService.swift */,
 				3006DB0D202B919200B77AA3 /* WeatherService.swift */,
 			);
 			path = Services;
@@ -242,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				302583FC202F1BD9005354ED /* CoreService.swift in Sources */,
 				3006DB10202B947E00B77AA3 /* NetworkManager.swift in Sources */,
 				3006DB1A202E184700B77AA3 /* Sys.swift in Sources */,
 				3006DB25202E2B3E00B77AA3 /* RouterManager.swift in Sources */,

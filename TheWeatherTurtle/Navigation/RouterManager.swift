@@ -12,15 +12,12 @@ final class RouterManager {
     
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
-    
-    private let networkManager: NetworkManager
-    private let weatherService: WeatherService
+    private let coreService: CoreService
     
     init(window: UIWindow?, storyboardName: String = "Main") {
         self.window = window
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        networkManager = NetworkManager()
-        weatherService = WeatherService(networkManager: networkManager)
+        coreService = CoreService()
     }
     
     private func loadViewController<A: UIViewController>(type: A.Type) -> A {
@@ -36,9 +33,9 @@ final class RouterManager {
     func startWithWeatherDetail(city: String? = nil) {
         setRootViewController(instantiateWeatherDetailController(city: city))
     }
-    
+
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
-        let dataManager = WeatherDetailDataManager(weatherService: weatherService)
+        let dataManager = WeatherDetailDataManager(weatherService: coreService.weatherService)
         let viewController = loadViewController(type: WeatherViewController.self)
         let navigator = WeatherDetailNavigator(routerManager: self, weatherViewController: viewController)
 
