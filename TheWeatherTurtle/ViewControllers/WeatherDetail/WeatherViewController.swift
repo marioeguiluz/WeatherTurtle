@@ -83,12 +83,10 @@ final class WeatherViewController: UIViewController {
             return
         }
         
-        DispatchQueue.global().async {
-            self.dataManager?.getWeatherIcon(code: icon, completion: { (image) in
-                DispatchQueue.main.async {
-                    self.iconImage.image =  image
-                }
-            })
-        }
+        self.dataManager?.getWeatherIcon(code: icon, completion: { (image) in
+            DispatchQueue.main.async {
+                self.iconImage.image =  image
+            }
+        })
     }
 }
