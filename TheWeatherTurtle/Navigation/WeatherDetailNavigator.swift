@@ -10,10 +10,18 @@ protocol WeatherDetailNavigable: Navigable { }
 
 final class WeatherDetailNavigator: WeatherDetailNavigable {
     private let routerManager: RouterManager
-    private let weatherViewController: WeatherViewController
     
-    init(routerManager: RouterManager, weatherViewController: WeatherViewController) {
+    init(routerManager: RouterManager ) {
         self.routerManager = routerManager
-        self.weatherViewController = weatherViewController
+    }
+}
+
+protocol WeatherListNavigable: Navigable { }
+
+final class WeatherListNavigator: WeatherListNavigable {
+    private let routerManager: RouterManager
+    
+    init(routerManager: RouterManager) {
+        self.routerManager = routerManager
     }
 }

@@ -21,7 +21,7 @@ final class WeatherViewController: UIViewController {
     let defaultCity = "London"
     
     var navigator: WeatherDetailNavigable?
-    var dataManager: WeatherDetailDataManager?
+    var dataManager: WeatherDataManager?
     var city: String?
         
     //MARK: View Cycle
@@ -34,7 +34,7 @@ final class WeatherViewController: UIViewController {
     
     //MARK: Services
     
-    func loadWeather() {
+    private func loadWeather() {
         guard let dataManager = dataManager else { fatalError("DataManager not set") }
         
         update(with: .loading)
@@ -47,7 +47,7 @@ final class WeatherViewController: UIViewController {
     
     //MARK: Update
     
-    private func update(with viewState: WeatherViewState) {
+    private func update(with viewState: ViewState<WeatherViewModel>) {
         
         prepare(for: viewState)
         
@@ -64,7 +64,7 @@ final class WeatherViewController: UIViewController {
         }
     }
     
-    private func prepare(for viewState: WeatherViewState) {
+    private func prepare(for viewState: ViewState<WeatherViewModel>) {
         activityIndicator.stopAnimating()
         contentView.isHidden = viewState.isLoading()
         loadingView.isHidden = !viewState.isLoading()
