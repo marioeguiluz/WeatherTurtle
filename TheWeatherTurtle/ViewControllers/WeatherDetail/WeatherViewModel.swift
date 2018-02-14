@@ -24,7 +24,7 @@ extension WeatherViewModel {
                 return nil
         }
         city = cityName
-        temperature = "\(temp)"
+        temperature = "\(temp) °C"
         detail = details
         icon = iconName
     }

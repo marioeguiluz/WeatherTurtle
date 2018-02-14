@@ -11,6 +11,7 @@ import UIKit
 final class WeatherListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    private let refreshControl = UIRefreshControl()
     
     private static let defaultCitiesIDs = ["524901", "703448", "2643743"]
     
@@ -32,6 +33,11 @@ final class WeatherListViewController: UIViewController {
         
         tableManager = WeatherListTableManager(tableView: tableView, weatherManager: dataManager)
         tableManager.prepareTableView()
+        
+        refreshControl.tintColor = .white
+        refreshControl.attributedTitle = NSAttributedString(string: "Loading", attributes: [.foregroundColor :  UIColor.white])
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +57,10 @@ final class WeatherListViewController: UIViewController {
         }
     }
     
+    @objc private func refresh() {
+        loadWeather()
+    }
+    
     //MARK: Update
     
     private func update(with viewState: ViewState<WeatherListViewModel>) {
@@ -59,8 +69,7 @@ final class WeatherListViewController: UIViewController {
         
         switch viewState {
         case .loading:
-            print()
-            //activityIndicator.startAnimating()
+            refreshControl.beginRefreshing()
             
         case .error:
             present(navigator.alertGeneralError(), animated: true, completion: nil)
@@ -71,9 +80,7 @@ final class WeatherListViewController: UIViewController {
     }
     
     private func prepare(for viewState: ViewState<WeatherListViewModel>) {
-//        activityIndicator.stopAnimating()
-//        contentView.isHidden = viewState.isLoading()
-//        loadingView.isHidden = !viewState.isLoading()
+        refreshControl.endRefreshing()
     }
     
     private func update(with viewModel: WeatherListViewModel) {
