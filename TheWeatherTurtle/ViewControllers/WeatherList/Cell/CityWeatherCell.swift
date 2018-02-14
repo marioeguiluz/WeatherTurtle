@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CityWeatherCell: UITableViewCell {
+final class CityWeatherCell: UITableViewCell {
 
     @IBOutlet weak var imageViewWeather: UIImageView!
     @IBOutlet weak var labelCity: UILabel!

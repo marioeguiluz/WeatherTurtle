@@ -21,12 +21,7 @@ final class RouterManager {
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         coreService = CoreService()
     }
-    
-    private func loadViewController<A: UIViewController>(type: A.Type) -> A {
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "\(type)") as? A else { fatalError("ViewController indentifier incorrect") }
-        return viewController
-    }
-    
+
     private func setRootViewController(_ viewController: UIViewController) {
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
@@ -40,25 +35,17 @@ final class RouterManager {
         setRootViewController(instantiateWeatherListController(cities: nil))
     }
 
-    func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
+    private func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService)
-        let viewController = loadViewController(type: WeatherViewController.self)
         let navigator = WeatherDetailNavigator(routerManager: self)
-
-        viewController.navigator = navigator
-        viewController.dataManager = dataManager
-        viewController.city = city
+        let viewController = WeatherViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, city: city)
         return viewController
     }
     
-    func instantiateWeatherListController(cities: [String]? = []) -> WeatherListViewController {
+    private func instantiateWeatherListController(cities: [String]? = []) -> WeatherListViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService)
-        let viewController = loadViewController(type: WeatherListViewController.self)
         let navigator = WeatherListNavigator(routerManager: self)
-        
-        viewController.navigator = navigator
-        viewController.dataManager = dataManager
-        viewController.cities = cities
+        let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cities: cities)
         return viewController
     }
 }

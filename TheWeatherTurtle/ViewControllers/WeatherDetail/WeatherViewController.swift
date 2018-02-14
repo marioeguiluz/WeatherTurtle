@@ -18,11 +18,19 @@ final class WeatherViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var iconImage: UIImageView!
     
-    let defaultCity = "London"
+    private static let defaultCity = "London"
     
-    var navigator: WeatherDetailNavigable?
-    var dataManager: WeatherDataManager?
-    var city: String?
+    private var navigator: WeatherDetailNavigable!
+    private var dataManager: WeatherDataManager!
+    private var city: String!
+
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherDetailNavigable, dataManager: WeatherDataManager, city: String?) -> WeatherViewController {
+        let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherViewController
+        viewController.navigator = navigator
+        viewController.dataManager = dataManager
+        viewController.city = city ?? WeatherViewController.defaultCity
+        return viewController
+    }
         
     //MARK: View Cycle
 
@@ -35,10 +43,8 @@ final class WeatherViewController: UIViewController {
     //MARK: Services
     
     private func loadWeather() {
-        guard let dataManager = dataManager else { fatalError("DataManager not set") }
-        
         update(with: .loading)
-        dataManager.getWeatherDetails(city: city ?? defaultCity) { viewState in
+        dataManager.getWeatherDetails(city: city) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -83,7 +89,7 @@ final class WeatherViewController: UIViewController {
             return
         }
         
-        self.dataManager?.getWeatherIcon(code: icon, completion: { (image) in
+        dataManager.getWeatherIcon(code: icon, completion: { (image) in
             DispatchQueue.main.async {
                 self.iconImage.image =  image
             }

@@ -7,7 +7,6 @@
 //
 
 struct WeatherDetailsList : Codable {
-    
     let cnt : Int?
     let list : [WeatherDetails]?
 }

@@ -13,7 +13,7 @@ final class WeatherListTableManager: NSObject {
     private let identifier = "CityWeatherCell"
     
     private let tableView: UITableView
-    private var weatherManager: WeatherDataManager?
+    private weak var weatherManager: WeatherDataManager?
     private var items: [WeatherViewModel] = []
     private var imageCache: [String: UIImage] = [:]
     

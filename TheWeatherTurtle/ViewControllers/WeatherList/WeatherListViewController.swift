@@ -12,18 +12,26 @@ final class WeatherListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private let defaultCitiesIDs = ["524901", "703448", "2643743"]
+    private static let defaultCitiesIDs = ["524901", "703448", "2643743"]
     
-    var navigator: WeatherListNavigable?
-    var dataManager: WeatherDataManager?
-    var tableManager: WeatherListTableManager?
-    var cities: [String]?
+    private var navigator: WeatherListNavigable!
+    private var dataManager: WeatherDataManager!
+    private var tableManager: WeatherListTableManager!
+    private var cities: [String]!
+
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherListNavigable, dataManager: WeatherDataManager, cities: [String]?) -> WeatherListViewController {
+        let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherListViewController
+        viewController.navigator = navigator
+        viewController.dataManager = dataManager
+        viewController.cities = cities ?? WeatherListViewController.defaultCitiesIDs
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableManager = WeatherListTableManager(tableView: tableView, weatherManager: dataManager)
-        tableManager?.prepareTableView()
+        tableManager.prepareTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,10 +43,8 @@ final class WeatherListViewController: UIViewController {
     //MARK: Services
     
     private func loadWeather() {
-        guard let dataManager = dataManager else { fatalError("DataManager not set") }
-        
         update(with: .loading)
-        dataManager.getWeatherDetails(cities: cities ?? defaultCitiesIDs) { viewState in
+        dataManager.getWeatherDetails(cities: cities) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -57,7 +63,6 @@ final class WeatherListViewController: UIViewController {
             //activityIndicator.startAnimating()
             
         case .error:
-            guard let navigator = navigator else { fatalError("Navigator not set") }
             present(navigator.alertGeneralError(), animated: true, completion: nil)
             
         case .data(let viewModel):
@@ -72,6 +77,6 @@ final class WeatherListViewController: UIViewController {
     }
     
     private func update(with viewModel: WeatherListViewModel) {
-        tableManager?.reload(with: viewModel.cities)
+        tableManager.reload(with: viewModel.cities)
     }
 }
