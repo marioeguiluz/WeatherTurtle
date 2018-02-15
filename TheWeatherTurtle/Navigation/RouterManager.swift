@@ -15,6 +15,7 @@ final class RouterManager {
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
     private let coreService: CoreService
+    var mainNavigationController: UINavigationController?
     
     init(window: UIWindow?, storyboardName: String = defaultStoryboardName) {
         self.window = window
@@ -28,21 +29,25 @@ final class RouterManager {
     }
     
     func startWithWeatherDetail(city: String? = nil) {
-        setRootViewController(instantiateWeatherDetailController(city: city))
+        mainNavigationController = UINavigationController(rootViewController: instantiateWeatherDetailController(city: city))
+        guard let mainNC = mainNavigationController else { fatalError() }
+        setRootViewController(mainNC)
     }
     
     func startWithWeatherList(city: String? = nil) {
-        setRootViewController(instantiateWeatherListController(cities: nil))
+        mainNavigationController = UINavigationController(rootViewController: instantiateWeatherListController(cities: nil))
+        guard let mainNC = mainNavigationController else { fatalError() }
+        setRootViewController(mainNC)
     }
 
-    private func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
+    func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService)
         let navigator = WeatherDetailNavigator(routerManager: self)
         let viewController = WeatherViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, city: city)
         return viewController
     }
     
-    private func instantiateWeatherListController(cities: [String]? = []) -> WeatherListViewController {
+    func instantiateWeatherListController(cities: [String]? = []) -> WeatherListViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService)
         let navigator = WeatherListNavigator(routerManager: self)
         let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cities: cities)

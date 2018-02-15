@@ -8,15 +8,21 @@
 
 import UIKit
 
+protocol WeatherListTableManagerDelegate: class {
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel)
+}
+
 final class WeatherListTableManager: NSObject {
     
     private let identifier = "CityWeatherCell"
     
+    private weak var delegate: WeatherListTableManagerDelegate?
     private let tableView: UITableView
     private var items: [WeatherViewModel] = []
     
-    init(tableView: UITableView) {
+    init(tableView: UITableView, delegate: WeatherListTableManagerDelegate) {
         self.tableView = tableView
+        self.delegate = delegate
     }
     
     func prepareTableView() {
@@ -46,5 +52,12 @@ extension WeatherListTableManager: UITableViewDataSource, UITableViewDelegate {
         let viewModel = items[indexPath.row]
         cell.update(viewModel)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let delegate = delegate else {
+            fatalError("Delegate not set in \(#file) : \(#function)")
+        }
+        delegate.weatherListTableManager(self, didSelectWeatherItem: items[indexPath.row])
     }
 }

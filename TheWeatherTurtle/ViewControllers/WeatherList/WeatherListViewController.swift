@@ -31,7 +31,7 @@ final class WeatherListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableManager = WeatherListTableManager(tableView: tableView)
+        tableManager = WeatherListTableManager(tableView: tableView, delegate: self)
         tableManager.prepareTableView()
         
         refreshControl.tintColor = .white
@@ -85,5 +85,11 @@ final class WeatherListViewController: UIViewController {
     
     private func update(with viewModel: WeatherListViewModel) {
         tableManager.reload(with: viewModel.cities)
+    }
+}
+
+extension WeatherListViewController: WeatherListTableManagerDelegate {
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel) {
+        navigator.pushWeatherDetail(city: viewModel.city)
     }
 }
