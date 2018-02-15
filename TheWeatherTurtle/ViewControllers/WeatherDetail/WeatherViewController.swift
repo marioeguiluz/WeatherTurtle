@@ -80,19 +80,8 @@ final class WeatherViewController: UIViewController {
         labelCity.text = viewModel.city
         labelTemperature.text = viewModel.temperature
         labelDetail.text = viewModel.detail
-        displayIcon(with: viewModel)
-    }
-    
-    private func displayIcon(with viewModel: WeatherViewModel) {
-        guard let icon = viewModel.icon else {
-            iconImage.image = nil
-            return
-        }
-        
-        dataManager.getWeatherIcon(code: icon, completion: { (image) in
-            DispatchQueue.main.async {
-                self.iconImage.image =  image
-            }
+        ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
+            self?.iconImage.image = image
         })
     }
 }

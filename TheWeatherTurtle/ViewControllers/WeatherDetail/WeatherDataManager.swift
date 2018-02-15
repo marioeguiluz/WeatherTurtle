@@ -41,22 +41,4 @@ final class WeatherDataManager {
             }
         }
     }
-    
-    func getWeatherIcon(code: String, completion: @escaping (UIImage?) -> ()) {
-        weatherService.getWeatherIcon(code: code) { (response) in
-            switch response {
-            case .error(_):
-                completion(nil)
-            
-            case .success(let data):
-                guard let data = data else {
-                    completion(nil)
-                    return
-                }
-                
-                let image = UIImage(data: data)
-                completion(image)
-            }
-        }
-    }
 }

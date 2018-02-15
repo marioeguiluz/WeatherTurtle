@@ -52,6 +52,6 @@ final class NetworkManager {
             
             completion(.success(data: resource.parse(data)))
             
-            }.resume()
+        }.resume()
     }
 }

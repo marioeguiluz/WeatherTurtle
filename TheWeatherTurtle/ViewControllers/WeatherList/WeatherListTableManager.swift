@@ -13,13 +13,10 @@ final class WeatherListTableManager: NSObject {
     private let identifier = "CityWeatherCell"
     
     private let tableView: UITableView
-    private weak var weatherManager: WeatherDataManager?
     private var items: [WeatherViewModel] = []
-    private var imageCache: [String: UIImage] = [:]
     
-    init(tableView: UITableView, weatherManager: WeatherDataManager?) {
+    init(tableView: UITableView) {
         self.tableView = tableView
-        self.weatherManager = weatherManager
     }
     
     func prepareTableView() {
@@ -32,19 +29,6 @@ final class WeatherListTableManager: NSObject {
     func reload(with items: [WeatherViewModel]) {
         self.items = items
         tableView.reloadData()
-    }
-    
-    private func setImage(with url: String, on cell: CityWeatherCell) {
-        if let cachedImage =  imageCache[url] {
-            cell.imageViewWeather?.image = cachedImage
-        } else {
-            self.weatherManager?.getWeatherIcon(code: url, completion: { (image) in
-                DispatchQueue.main.async {
-                    self.imageCache[url] = image
-                    cell.imageViewWeather?.image = image
-                }
-            })
-        }
     }
 }
 
@@ -61,10 +45,6 @@ extension WeatherListTableManager: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! CityWeatherCell
         let viewModel = items[indexPath.row]
         cell.update(viewModel)
-        if let imageUrl = viewModel.icon {
-            setImage(with: imageUrl, on: cell)
-        }
-        
         return cell
     }
 }

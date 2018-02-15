@@ -34,6 +34,7 @@
 		302584082032196D005354ED /* WeatherListTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302584072032196D005354ED /* WeatherListTableManager.swift */; };
 		3025840B20321C46005354ED /* CityWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3025840920321C46005354ED /* CityWeatherCell.swift */; };
 		3025840C20321C46005354ED /* CityWeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3025840A20321C46005354ED /* CityWeatherCell.xib */; };
+		3025840F20360081005354ED /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3025840E20360081005354ED /* ImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		302584072032196D005354ED /* WeatherListTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListTableManager.swift; sourceTree = "<group>"; };
 		3025840920321C46005354ED /* CityWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherCell.swift; sourceTree = "<group>"; };
 		3025840A20321C46005354ED /* CityWeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityWeatherCell.xib; sourceTree = "<group>"; };
+		3025840E20360081005354ED /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 			children = (
 				302583FB202F1BD9005354ED /* CoreService.swift */,
 				3006DB0D202B919200B77AA3 /* WeatherService.swift */,
+				3025840E20360081005354ED /* ImageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				302584082032196D005354ED /* WeatherListTableManager.swift in Sources */,
 				3006DB0C202B914800B77AA3 /* WeatherDataManager.swift in Sources */,
 				3006DAF8202B7C2000B77AA3 /* WeatherViewController.swift in Sources */,
+				3025840F20360081005354ED /* ImageService.swift in Sources */,
 				302583F6202F1419005354ED /* WeatherDetailNavigator.swift in Sources */,
 				3006DB20202E184700B77AA3 /* Weather.swift in Sources */,
 				3006DB08202B85D400B77AA3 /* WeatherViewModel.swift in Sources */,

@@ -24,13 +24,6 @@ final class WeatherService {
         }
     }
     
-    func getWeatherIcon(code: String, completion: @escaping (Response<Data>) -> ()) {
-        let imageData = Resource<Data>(url: weatherIconURL(for: code))
-        networkManager.load(resource: imageData) { response in
-            completion(response)
-        }
-    }
-    
     func getWeatherDetails(cities: [String], completion: @escaping (Response<WeatherDetailsList>) -> ()) {
         let cityWeatherDetails = Resource<WeatherDetailsList>(url: weatherURL(for: cities))
         networkManager.load(resource: cityWeatherDetails) { response in
@@ -42,13 +35,6 @@ final class WeatherService {
 extension WeatherService {
     private func weatherURL(for city: String) -> URL {
         guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(networkManager.openWeatherMapKey)") else {
-            fatalError("\(#file): \(#function)")
-        }
-        return url
-    }
-    
-    private func weatherIconURL(for code: String) -> URL {
-        guard let url = URL(string: "http://openweathermap.org/img/w/\(code).png") else {
             fatalError("\(#file): \(#function)")
         }
         return url

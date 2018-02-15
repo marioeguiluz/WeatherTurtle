@@ -31,7 +31,7 @@ final class WeatherListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableManager = WeatherListTableManager(tableView: tableView, weatherManager: dataManager)
+        tableManager = WeatherListTableManager(tableView: tableView)
         tableManager.prepareTableView()
         
         refreshControl.tintColor = .white

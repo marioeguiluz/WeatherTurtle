@@ -6,11 +6,13 @@
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
+import Foundation
+
 struct WeatherViewModel {
     let city: String
     let temperature: String
     let detail: String
-    let icon: String?
+    let icon: URL?
 }
 
 extension WeatherViewModel {
@@ -26,10 +28,17 @@ extension WeatherViewModel {
         city = cityName
         temperature = "\(temp) °C"
         detail = details
-        icon = iconName
+        icon = WeatherViewModel.weatherIconURL(for: iconName)
     }
     
     static func empty() -> WeatherViewModel {
         return WeatherViewModel(city: "No city", temperature: "No data", detail: "No details", icon: nil)
+    }
+    
+    private static func weatherIconURL(for code: String) -> URL? {
+        guard let url = URL(string: "http://openweathermap.org/img/w/\(code).png") else {
+            return nil
+        }
+        return url
     }
 }
