@@ -34,7 +34,7 @@ final class WeatherService {
 
 extension WeatherService {
     private func weatherURL(for city: String) -> URL {
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(CoreService.openWeatherMapKey)") else {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&units=metric&appid=\(CoreService.openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url
