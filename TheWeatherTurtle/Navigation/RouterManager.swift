@@ -44,4 +44,11 @@ final class RouterManager {
         let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cities: cities)
         return viewController
     }
+    
+    func instantiateAddCityController() -> AddCityViewController {
+        let dataManager = WeatherDataManager(weatherService: coreService.weatherService)
+        let navigator = AddCityNavigator(routerManager: self)
+        let viewController = AddCityViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager)
+        return viewController
+    }
 }

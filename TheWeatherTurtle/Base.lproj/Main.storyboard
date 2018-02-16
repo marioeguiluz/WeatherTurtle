@@ -112,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-846" y="-240"/>
+            <point key="canvasLocation" x="-226" y="253"/>
         </scene>
         <!--Weather List View Controller-->
         <scene sceneID="qoK-yJ-heH">
@@ -144,7 +144,57 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jkn-27-Pvg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-157.59999999999999" y="-240.62968515742131"/>
+            <point key="canvasLocation" x="-860" y="-399"/>
+        </scene>
+        <!--Add City View Controller-->
+        <scene sceneID="5cf-gF-mBS">
+            <objects>
+                <viewController storyboardIdentifier="AddCityViewController" id="W0q-1V-DqP" customClass="AddCityViewController" customModule="TheWeatherTurtle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QjL-pB-F96">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dYp-IW-MD5">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <searchBar key="tableFooterView" contentMode="redraw" id="3BH-iL-3c6">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="W0q-1V-DqP" id="QXZ-xl-DHe"/>
+                                    </connections>
+                                </searchBar>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dYp-IW-MD5" firstAttribute="top" secondItem="QjL-pB-F96" secondAttribute="top" id="1p4-Ez-ZXw"/>
+                            <constraint firstItem="dYp-IW-MD5" firstAttribute="trailing" secondItem="U6y-FK-dir" secondAttribute="trailing" id="GY4-mD-gbF"/>
+                            <constraint firstItem="dYp-IW-MD5" firstAttribute="bottom" secondItem="U6y-FK-dir" secondAttribute="bottom" id="lMa-Oi-nzc"/>
+                            <constraint firstItem="dYp-IW-MD5" firstAttribute="leading" secondItem="U6y-FK-dir" secondAttribute="leading" id="v8M-58-zat"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="U6y-FK-dir"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <connections>
+                        <outlet property="searchBar" destination="3BH-iL-3c6" id="RZi-Xe-ogG"/>
+                        <outlet property="searchDisplayController" destination="aP5-dO-iKq" id="CeU-vw-sg0"/>
+                        <outlet property="tableView" destination="dYp-IW-MD5" id="rpk-Ig-Qaz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uG9-bG-og9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="aP5-dO-iKq">
+                    <connections>
+                        <outlet property="delegate" destination="W0q-1V-DqP" id="O1L-W1-NVJ"/>
+                        <outlet property="searchBar" destination="3BH-iL-3c6" id="ZRl-j1-foF"/>
+                        <outlet property="searchContentsController" destination="W0q-1V-DqP" id="CcZ-gO-glM"/>
+                        <outlet property="searchResultsDataSource" destination="W0q-1V-DqP" id="HlZ-u9-07J"/>
+                        <outlet property="searchResultsDelegate" destination="W0q-1V-DqP" id="OQn-SA-mdM"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="-226.40000000000001" y="-400.74962518740631"/>
         </scene>
     </scenes>
 </document>

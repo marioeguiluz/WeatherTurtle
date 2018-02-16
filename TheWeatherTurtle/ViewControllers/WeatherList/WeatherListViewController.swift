@@ -31,6 +31,8 @@ final class WeatherListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Weather"
+
         tableManager = WeatherListTableManager(tableView: tableView, delegate: self)
         tableManager.prepareTableView()
         
@@ -38,12 +40,19 @@ final class WeatherListViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Loading", attributes: [.foregroundColor :  UIColor.white])
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        
+        createAddButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         loadWeather()
+    }
+    
+    private func createAddButton() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToAddCity))
+        navigationItem.rightBarButtonItem = addButton
     }
     
     //MARK: Services
@@ -86,10 +95,20 @@ final class WeatherListViewController: UIViewController {
     private func update(with viewModel: WeatherListViewModel) {
         tableManager.reload(with: viewModel.cities)
     }
+    
+    //MARK: Navigation
+    
+    private func goToWeatherDetail(city: String) {
+        navigator.pushWeatherDetail(city: city, on: navigationController)
+    }
+    
+    @objc private func goToAddCity() {
+        navigator.pushAddCityWeather(on: navigationController)
+    }
 }
 
 extension WeatherListViewController: WeatherListTableManagerDelegate {
     func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel) {
-        navigator.pushWeatherDetail(city: viewModel.city, on: navigationController)
+        goToWeatherDetail(city: viewModel.city)
     }
 }

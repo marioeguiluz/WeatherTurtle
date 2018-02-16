@@ -1,5 +1,5 @@
 //
-//  WeatherDetailNavigator.swift
+//  WeatherListNavigator.swift
 //  TheWeatherTurtle
 //
 //  Created by Mario Eguiluz on 10/02/2018.
@@ -10,6 +10,7 @@ import UIKit
 
 protocol WeatherListNavigable: Navigable {
     func pushWeatherDetail(city: String, on rootController: UINavigationController?)
+    func pushAddCityWeather(on rootController: UINavigationController?)
 }
 
 final class WeatherListNavigator: WeatherListNavigable {
@@ -22,5 +23,10 @@ final class WeatherListNavigator: WeatherListNavigable {
     func pushWeatherDetail(city: String, on rootController: UINavigationController?) {
         let detailVC = routerManager.instantiateWeatherDetailController(city: city)
         rootController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func pushAddCityWeather(on rootController: UINavigationController?) {
+        let addVC = routerManager.instantiateAddCityController()
+        rootController?.pushViewController(addVC, animated: true)
     }
 }

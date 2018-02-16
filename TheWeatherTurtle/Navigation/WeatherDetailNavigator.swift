@@ -6,8 +6,6 @@
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
-import UIKit
-
 protocol WeatherDetailNavigable: Navigable { }
 
 final class WeatherDetailNavigator: WeatherDetailNavigable {
