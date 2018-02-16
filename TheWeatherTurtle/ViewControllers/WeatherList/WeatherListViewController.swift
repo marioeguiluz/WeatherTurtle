@@ -10,10 +10,10 @@ import UIKit
 
 final class WeatherListViewController: UIViewController {
     
+    private static let defaultCitiesIDs = ["524901", "703448", "2643743"]
+
     @IBOutlet weak var tableView: UITableView!
     private let refreshControl = UIRefreshControl()
-    
-    private static let defaultCitiesIDs = ["524901", "703448", "2643743"]
     
     private var navigator: WeatherListNavigable!
     private var dataManager: WeatherDataManager!
@@ -90,6 +90,6 @@ final class WeatherListViewController: UIViewController {
 
 extension WeatherListViewController: WeatherListTableManagerDelegate {
     func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel) {
-        navigator.pushWeatherDetail(city: viewModel.city)
+        navigator.pushWeatherDetail(city: viewModel.city, on: navigationController)
     }
 }

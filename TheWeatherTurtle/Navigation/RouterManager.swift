@@ -15,7 +15,6 @@ final class RouterManager {
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
     private let coreService: CoreService
-    var mainNavigationController: UINavigationController?
     
     init(window: UIWindow?, storyboardName: String = defaultStoryboardName) {
         self.window = window
@@ -28,16 +27,8 @@ final class RouterManager {
         window?.makeKeyAndVisible()
     }
     
-    func startWithWeatherDetail(city: String? = nil) {
-        mainNavigationController = UINavigationController(rootViewController: instantiateWeatherDetailController(city: city))
-        guard let mainNC = mainNavigationController else { fatalError() }
-        setRootViewController(mainNC)
-    }
-    
     func startWithWeatherList(city: String? = nil) {
-        mainNavigationController = UINavigationController(rootViewController: instantiateWeatherListController(cities: nil))
-        guard let mainNC = mainNavigationController else { fatalError() }
-        setRootViewController(mainNC)
+        setRootViewController(UINavigationController(rootViewController: instantiateWeatherListController(cities: nil)))
     }
 
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {

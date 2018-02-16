@@ -34,18 +34,18 @@ final class WeatherService {
 
 extension WeatherService {
     private func weatherURL(for city: String) -> URL {
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(networkManager.openWeatherMapKey)") else {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(CoreService.openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url
     }
-    
+
     private func weatherURL(for cities: [String]) -> URL {
         var cityIDs = cities.first ?? ""
         for cityID in cities.dropFirst() {
             cityIDs = "\(cityIDs),\(cityID)"
         }
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/group?id=\(cityIDs)&units=metric&appid=\(networkManager.openWeatherMapKey)") else {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/group?id=\(cityIDs)&units=metric&appid=\(CoreService.openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url

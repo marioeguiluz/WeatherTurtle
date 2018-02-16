@@ -35,6 +35,7 @@
 		3025840B20321C46005354ED /* CityWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3025840920321C46005354ED /* CityWeatherCell.swift */; };
 		3025840C20321C46005354ED /* CityWeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3025840A20321C46005354ED /* CityWeatherCell.xib */; };
 		3025840F20360081005354ED /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3025840E20360081005354ED /* ImageService.swift */; };
+		30258411203750E4005354ED /* WeatherListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30258410203750E4005354ED /* WeatherListNavigator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		3025840920321C46005354ED /* CityWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherCell.swift; sourceTree = "<group>"; };
 		3025840A20321C46005354ED /* CityWeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityWeatherCell.xib; sourceTree = "<group>"; };
 		3025840E20360081005354ED /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		30258410203750E4005354ED /* WeatherListNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherListNavigator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			children = (
 				3006DB24202E2B3E00B77AA3 /* RouterManager.swift */,
 				302583F7202F147F005354ED /* Navigable.swift */,
+				30258410203750E4005354ED /* WeatherListNavigator.swift */,
 				302583F5202F1419005354ED /* WeatherDetailNavigator.swift */,
 			);
 			path = Navigation;
@@ -314,6 +317,7 @@
 				3025840F20360081005354ED /* ImageService.swift in Sources */,
 				302583F6202F1419005354ED /* WeatherDetailNavigator.swift in Sources */,
 				3006DB20202E184700B77AA3 /* Weather.swift in Sources */,
+				30258411203750E4005354ED /* WeatherListNavigator.swift in Sources */,
 				3006DB08202B85D400B77AA3 /* WeatherViewModel.swift in Sources */,
 				3006DB1F202E184700B77AA3 /* Coord.swift in Sources */,
 				3006DAF6202B7C2000B77AA3 /* AppDelegate.swift in Sources */,

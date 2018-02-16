@@ -35,9 +35,7 @@ extension Resource {
 }
 
 final class NetworkManager {
-    
-    let openWeatherMapKey = "d62caae37d4c67c3c6d9871a3f00482f"
-    
+        
     func load<A>(resource: Resource<A>, completion: @escaping (Response<A>) -> ()) {
         URLSession.shared.dataTask(with: resource.url) { (data, response, error) in
             if let error = error {
