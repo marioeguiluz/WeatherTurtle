@@ -12,15 +12,27 @@ final class AddCityViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+
+    private let searchController = UISearchController(searchResultsController: nil)
     private var navigator: AddCityNavigable!
     private var dataManager: WeatherDataManager!
+    private var tableManager: AddCityTableManager!
     
     static func instantiate(storyboard: UIStoryboard, navigator: AddCityNavigable, dataManager: WeatherDataManager) -> AddCityViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! AddCityViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager
         return viewController
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableManager = AddCityTableManager(tableView: tableView, delegate: self)
+        tableManager.prepareTableView(with: searchController)
+
+        definesPresentationContext = true
+        navigationItem.searchController = searchController
     }
 
     //MARK: View Cycle
@@ -55,6 +67,7 @@ final class AddCityViewController: UIViewController {
 
         case .data(let viewModel):
             update(with: viewModel)
+            searchController.isActive = true
         }
     }
     
@@ -63,7 +76,12 @@ final class AddCityViewController: UIViewController {
     }
     
     private func update(with viewModel: AddCityViewModel) {
-        print("Data")
+        tableManager.update(with: viewModel.allCities)
     }
 }
 
+extension AddCityViewController: AddCityTableManagerDelegate {
+    func addCityTableManager(_ tableManager: AddCityTableManager, didSelectCity viewModel: City) {
+
+    }
+}

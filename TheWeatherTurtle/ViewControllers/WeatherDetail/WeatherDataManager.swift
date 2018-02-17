@@ -46,7 +46,7 @@ final class WeatherDataManager {
 
     func getAllCities(completion: @escaping (ViewState<AddCityViewModel>) -> Void) {
         dataStoreService.getAllCities { cities in
-            let viewModel = cities.isEmpty ? AddCityViewModel.empty() : AddCityViewModel(cityResults: cities)
+            let viewModel = cities.isEmpty ? AddCityViewModel.empty() : AddCityViewModel(cityResults: [], allCities: cities)
             completion(.data(viewModel: viewModel))
         }
     }
