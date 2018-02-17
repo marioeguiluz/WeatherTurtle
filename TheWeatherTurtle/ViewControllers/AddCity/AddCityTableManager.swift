@@ -75,14 +75,18 @@ extension AddCityTableManager: UITableViewDataSource, UITableViewDelegate {
 extension AddCityTableManager {
 
     private func search(text: String) {
-        results = items
-            .filter { city in
-                guard let cityName = city.name else {
-                    return false
-                }
-                return cityName.lowercased().contains(text.lowercased())
+        DispatchQueue.global().async {
+            self.results = self.items
+                .filter { city in
+                    guard let cityName = city.name else {
+                        return false
+                    }
+                    return cityName.lowercased().contains(text.lowercased())
             }
-        tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 
     private func searchBarEmpty() -> Bool {
