@@ -7,13 +7,12 @@
 //
 
 struct AddCityViewModel {
-    let cityResults: [City]
     let allCities: [City]
 }
 
 extension AddCityViewModel {
 
     static func empty() -> AddCityViewModel {
-        return AddCityViewModel(cityResults: [], allCities: [])
+        return AddCityViewModel(allCities: [])
     }
 }

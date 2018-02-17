@@ -252,8 +252,8 @@
 			children = (
 				ACE76C6620387E7900FF720E /* Cell */,
 				30258413203758F1005354ED /* AddCityViewController.swift */,
-				ACE76C622038684800FF720E /* AddCityViewModel.swift */,
 				ACE76C6420387DF700FF720E /* AddCityTableManager.swift */,
+				ACE76C622038684800FF720E /* AddCityViewModel.swift */,
 			);
 			path = AddCity;
 			sourceTree = "<group>";
