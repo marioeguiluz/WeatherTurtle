@@ -9,8 +9,6 @@
 import UIKit
 
 final class WeatherListViewController: UIViewController {
-    
-    private static let defaultCitiesIDs = ["524901", "703448", "2643743"]
 
     @IBOutlet weak var tableView: UITableView!
     private let refreshControl = UIRefreshControl()
@@ -18,13 +16,13 @@ final class WeatherListViewController: UIViewController {
     private var navigator: WeatherListNavigable!
     private var dataManager: WeatherDataManager!
     private var tableManager: WeatherListTableManager!
-    private var cities: [String]!
+    private var cityIDs: [String]?
 
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherListNavigable, dataManager: WeatherDataManager, cities: [String]?) -> WeatherListViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherListNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherListViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherListViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager
-        viewController.cities = cities ?? WeatherListViewController.defaultCitiesIDs
+        viewController.cityIDs = cityIDs
         return viewController
     }
     
@@ -59,7 +57,8 @@ final class WeatherListViewController: UIViewController {
     
     private func loadWeather() {
         update(with: .loading)
-        dataManager.getWeatherDetails(cities: cities) { viewState in
+        cityIDs = dataManager.getUserCities()
+        dataManager.getWeatherDetails(cities: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }

@@ -50,4 +50,12 @@ final class WeatherDataManager {
             completion(.data(viewModel: viewModel))
         }
     }
+
+    func getUserCities() -> [String] {
+        return dataStoreService.getUserCities()
+    }
+
+    func storeCity(_ cityID: String) -> Bool {
+        return dataStoreService.storeCity(cityID)
+    }
 }

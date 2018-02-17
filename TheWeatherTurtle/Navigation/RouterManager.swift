@@ -28,7 +28,7 @@ final class RouterManager {
     }
     
     func startWithWeatherList(city: String? = nil) {
-        setRootViewController(UINavigationController(rootViewController: instantiateWeatherListController(cities: nil)))
+        setRootViewController(UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: nil)))
     }
 
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
@@ -38,10 +38,10 @@ final class RouterManager {
         return viewController
     }
     
-    func instantiateWeatherListController(cities: [String]? = []) -> WeatherListViewController {
+    func instantiateWeatherListController(cityIDs: [String]? = []) -> WeatherListViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
         let navigator = WeatherListNavigator(routerManager: self)
-        let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cities: cities)
+        let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
         return viewController
     }
     

@@ -82,6 +82,10 @@ final class AddCityViewController: UIViewController {
 
 extension AddCityViewController: AddCityTableManagerDelegate {
     func addCityTableManager(_ tableManager: AddCityTableManager, didSelectCity viewModel: City) {
-
+        if let cityID = viewModel.id, dataManager.storeCity("\(cityID)") {
+            navigationController?.popViewController(animated: true)
+        } else {
+            update(with: .error)
+        }
     }
 }

@@ -12,7 +12,7 @@ final class DataStoreService {
 
     private var allCities: [City]?
 
-    private let defaultCities = ["London", "Moscow", "Paris"]
+    private let defaultCityIDs = ["524901", "703448", "2643743"]
     private let keyCities = "cities"
     private let filename = "dictionary.dat"
     private var path: String {
@@ -28,7 +28,7 @@ final class DataStoreService {
     }
 
     private func createInitialCities() {
-        let cities = [keyCities: defaultCities]
+        let cities = [keyCities: defaultCityIDs]
         NSKeyedArchiver.archiveRootObject(cities, toFile: path)
     }
 
@@ -63,16 +63,16 @@ final class DataStoreService {
     }
 
     @discardableResult
-    func storeCity(_ city: String) -> Bool {
+    func storeCity(_ cityID: String) -> Bool {
         let path = self.path
         guard FileManager.default.fileExists(atPath: path),
             var dictionary = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String : [String]],
             var cities = dictionary[keyCities],
-            !cities.contains(city) else {
+            !cities.contains(cityID) else {
             return false
         }
 
-        cities.append(city)
+        cities.append(cityID)
         dictionary[keyCities] = cities
         return NSKeyedArchiver.archiveRootObject(dictionary, toFile: path)
     }
