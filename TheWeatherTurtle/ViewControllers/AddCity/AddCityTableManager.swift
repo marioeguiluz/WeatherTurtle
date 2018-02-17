@@ -39,7 +39,7 @@ final class AddCityTableManager: NSObject {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Cities"
+        searchController.searchBar.placeholder = "Search City"
         searchController.searchBar.delegate = self
     }
 

@@ -18,8 +18,8 @@ final class WeatherDataManager {
         self.dataStoreService = dataStoreService
     }
     
-    func getWeatherDetails(city: String, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
-        weatherService.getWeatherDetails(city: city) { (response) in
+    func getWeatherDetails(cityID: String, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
+        weatherService.getWeatherDetails(cityID: cityID) { (response) in
             switch response {
             case .error(_):
                 completion(.error)
@@ -31,8 +31,8 @@ final class WeatherDataManager {
         }
     }
     
-    func getWeatherDetails(cities: [String], completion: @escaping (ViewState<WeatherListViewModel>) -> ()) {
-        weatherService.getWeatherDetails(cities: cities) { (response) in
+    func getWeatherDetails(cityIDs: [String], completion: @escaping (ViewState<WeatherListViewModel>) -> ()) {
+        weatherService.getWeatherDetails(cityIDs: cityIDs) { (response) in
             switch response {
             case .error(_):
                 completion(.error)

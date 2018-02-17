@@ -17,15 +17,15 @@ final class WeatherService {
         self.networkManager = networkManager
     }
     
-    func getWeatherDetails(city: String, completion: @escaping (Response<WeatherDetails>) -> ()) {
-        let cityWeatherDetails = Resource<WeatherDetails>(url: weatherURL(for: city))
+    func getWeatherDetails(cityID: String, completion: @escaping (Response<WeatherDetails>) -> ()) {
+        let cityWeatherDetails = Resource<WeatherDetails>(url: weatherURL(for: cityID))
         networkManager.load(resource: cityWeatherDetails) { response in
             completion(response)
         }
     }
     
-    func getWeatherDetails(cities: [String], completion: @escaping (Response<WeatherDetailsList>) -> ()) {
-        let cityWeatherDetails = Resource<WeatherDetailsList>(url: weatherURL(for: cities))
+    func getWeatherDetails(cityIDs: [String], completion: @escaping (Response<WeatherDetailsList>) -> ()) {
+        let cityWeatherDetails = Resource<WeatherDetailsList>(url: weatherURL(for: cityIDs))
         networkManager.load(resource: cityWeatherDetails) { response in
             completion(response)
         }
@@ -33,8 +33,8 @@ final class WeatherService {
 }
 
 extension WeatherService {
-    private func weatherURL(for city: String) -> URL {
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?q=\(city)&units=metric&appid=\(CoreService.openWeatherMapKey)") else {
+    private func weatherURL(for cityID: String) -> URL {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?id=\(cityID)&units=metric&appid=\(CoreService.openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url

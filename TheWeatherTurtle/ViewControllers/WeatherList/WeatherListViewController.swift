@@ -58,7 +58,7 @@ final class WeatherListViewController: UIViewController {
     private func loadWeather() {
         update(with: .loading)
         cityIDs = dataManager.getUserCities()
-        dataManager.getWeatherDetails(cities: cityIDs ?? []) { viewState in
+        dataManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -108,6 +108,6 @@ final class WeatherListViewController: UIViewController {
 
 extension WeatherListViewController: WeatherListTableManagerDelegate {
     func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel) {
-        goToWeatherDetail(city: viewModel.city)
+        goToWeatherDetail(city: viewModel.id)
     }
 }

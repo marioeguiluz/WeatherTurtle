@@ -34,7 +34,9 @@ final class DataStoreService {
 
     func getAllCities(completion: @escaping ([City]) -> Void) {
         if let cities = allCities {
-            completion(cities)
+            DispatchQueue.main.async {
+                completion(cities)
+            }
         }
 
         DispatchQueue.global().async { [weak self] in

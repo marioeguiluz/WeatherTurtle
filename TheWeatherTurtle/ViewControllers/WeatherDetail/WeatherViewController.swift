@@ -13,7 +13,6 @@ final class WeatherViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var labelCity: UILabel!
     @IBOutlet weak var labelTemperature: UILabel!
-    @IBOutlet weak var labelDetail: UILabel!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var iconImage: UIImageView!
@@ -22,13 +21,13 @@ final class WeatherViewController: UIViewController {
     
     private var navigator: WeatherDetailNavigable!
     private var dataManager: WeatherDataManager!
-    private var city: String!
+    private var cityID: String!
 
     static func instantiate(storyboard: UIStoryboard, navigator: WeatherDetailNavigable, dataManager: WeatherDataManager, city: String?) -> WeatherViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager
-        viewController.city = city ?? WeatherViewController.defaultCity
+        viewController.cityID = city ?? WeatherViewController.defaultCity
         return viewController
     }
         
@@ -36,7 +35,8 @@ final class WeatherViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
+        title = "Forecast Today"
         loadWeather()
     }
     
@@ -44,7 +44,7 @@ final class WeatherViewController: UIViewController {
     
     private func loadWeather() {
         update(with: .loading)
-        dataManager.getWeatherDetails(city: city) { viewState in
+        dataManager.getWeatherDetails(cityID: cityID) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -77,9 +77,8 @@ final class WeatherViewController: UIViewController {
     }
     
     private func update(with viewModel: WeatherViewModel) {
-        labelCity.text = viewModel.city
+        labelCity.text = viewModel.city + ", " + viewModel.detail
         labelTemperature.text = viewModel.temperature
-        labelDetail.text = viewModel.detail
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.iconImage.image = image
         })

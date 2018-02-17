@@ -12,7 +12,8 @@ final class AddCityViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     private let searchController = UISearchController(searchResultsController: nil)
     private var navigator: AddCityNavigable!
     private var dataManager: WeatherDataManager!
@@ -33,6 +34,8 @@ final class AddCityViewController: UIViewController {
 
         definesPresentationContext = true
         navigationItem.searchController = searchController
+
+        title = "Add City"
     }
 
     //MARK: View Cycle
@@ -59,7 +62,7 @@ final class AddCityViewController: UIViewController {
 
         switch viewState {
         case .loading:
-            print("Loading")
+            activityIndicator.startAnimating()
 
         case .error:
             guard let navigator = navigator else { fatalError("Navigator not set") }
@@ -72,7 +75,7 @@ final class AddCityViewController: UIViewController {
     }
     
     private func prepare(for viewState: ViewState<AddCityViewModel>) {
-        print("PrepareUI")
+        activityIndicator.stopAnimating()
     }
     
     private func update(with viewModel: AddCityViewModel) {

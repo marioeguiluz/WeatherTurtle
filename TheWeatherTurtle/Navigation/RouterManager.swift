@@ -20,6 +20,15 @@ final class RouterManager {
         self.window = window
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         coreService = CoreService()
+
+        setupAppearnce()
+    }
+
+    private func setupAppearnce() {
+        UINavigationBar.appearance().backgroundColor = .white
+        UINavigationBar.appearance().tintColor = .darkGray
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.darkGray]
+        UISearchBar.appearance().tintColor = .darkGray
     }
 
     private func setRootViewController(_ viewController: UIViewController) {
