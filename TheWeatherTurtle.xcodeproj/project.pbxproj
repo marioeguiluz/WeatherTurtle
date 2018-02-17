@@ -39,6 +39,9 @@
 		30258414203758F1005354ED /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30258413203758F1005354ED /* AddCityViewController.swift */; };
 		3025841620375AF3005354ED /* AddCityNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3025841520375AF3005354ED /* AddCityNavigator.swift */; };
 		AC5EC5F8203848F800B9D43B /* DataStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5EC5F7203848F800B9D43B /* DataStoreService.swift */; };
+		ACE76C5F20385F6100FF720E /* citylist.json in Resources */ = {isa = PBXBuildFile; fileRef = ACE76C5E20385F6100FF720E /* citylist.json */; };
+		ACE76C61203861BA00FF720E /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE76C60203861BA00FF720E /* City.swift */; };
+		ACE76C632038684800FF720E /* AddCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE76C622038684800FF720E /* AddCityViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +79,9 @@
 		30258413203758F1005354ED /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		3025841520375AF3005354ED /* AddCityNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityNavigator.swift; sourceTree = "<group>"; };
 		AC5EC5F7203848F800B9D43B /* DataStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreService.swift; sourceTree = "<group>"; };
+		ACE76C5E20385F6100FF720E /* citylist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citylist.json; sourceTree = "<group>"; };
+		ACE76C60203861BA00FF720E /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		ACE76C622038684800FF720E /* AddCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,7 @@
 				3006DAF9202B7C2000B77AA3 /* Main.storyboard */,
 				3006DAFE202B7C2000B77AA3 /* LaunchScreen.storyboard */,
 				3006DB01202B7C2000B77AA3 /* Info.plist */,
+				ACE76C5E20385F6100FF720E /* citylist.json */,
 				3006DAFC202B7C2000B77AA3 /* Assets.xcassets */,
 			);
 			path = TheWeatherTurtle;
@@ -201,6 +208,7 @@
 				3006DB13202E184600B77AA3 /* Sys.swift */,
 				3006DB19202E184700B77AA3 /* Weather.swift */,
 				3006DB17202E184700B77AA3 /* Wind.swift */,
+				ACE76C60203861BA00FF720E /* City.swift */,
 			);
 			path = WeatherDetails;
 			sourceTree = "<group>";
@@ -237,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				30258413203758F1005354ED /* AddCityViewController.swift */,
+				ACE76C622038684800FF720E /* AddCityViewModel.swift */,
 			);
 			path = AddCity;
 			sourceTree = "<group>";
@@ -301,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3006DB00202B7C2000B77AA3 /* LaunchScreen.storyboard in Resources */,
+				ACE76C5F20385F6100FF720E /* citylist.json in Resources */,
 				3025840C20321C46005354ED /* CityWeatherCell.xib in Resources */,
 				3006DAFD202B7C2000B77AA3 /* Assets.xcassets in Resources */,
 				3006DAFB202B7C2000B77AA3 /* Main.storyboard in Resources */,
@@ -319,6 +329,7 @@
 				3025840420321510005354ED /* ViewState.swift in Sources */,
 				3006DB10202B947E00B77AA3 /* NetworkManager.swift in Sources */,
 				3006DB1A202E184700B77AA3 /* Sys.swift in Sources */,
+				ACE76C632038684800FF720E /* AddCityViewModel.swift in Sources */,
 				3006DB25202E2B3E00B77AA3 /* RouterManager.swift in Sources */,
 				30258406203216B7005354ED /* WeatherListViewController.swift in Sources */,
 				302583F8202F147F005354ED /* Navigable.swift in Sources */,
@@ -338,6 +349,7 @@
 				302583F6202F1419005354ED /* WeatherDetailNavigator.swift in Sources */,
 				3006DB20202E184700B77AA3 /* Weather.swift in Sources */,
 				30258411203750E4005354ED /* WeatherListNavigator.swift in Sources */,
+				ACE76C61203861BA00FF720E /* City.swift in Sources */,
 				3006DB08202B85D400B77AA3 /* WeatherViewModel.swift in Sources */,
 				3006DB1F202E184700B77AA3 /* Coord.swift in Sources */,
 				3006DAF6202B7C2000B77AA3 /* AppDelegate.swift in Sources */,

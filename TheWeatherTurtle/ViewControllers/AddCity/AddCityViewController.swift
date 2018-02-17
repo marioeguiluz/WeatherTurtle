@@ -22,51 +22,48 @@ final class AddCityViewController: UIViewController {
         viewController.dataManager = dataManager
         return viewController
     }
-    
+
     //MARK: View Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //loadWeather()
+        loadCities()
     }
     
     //MARK: Services
     
-//    private func loadWeather() {
-//        update(with: .loading)
-//        dataManager.getWeatherDetails(city: city) { viewState in
-//            DispatchQueue.main.async {
-//                self.update(with: viewState)
-//            }
-//        }
-//    }
-    
+    private func loadCities() {
+        update(with: .loading)
+        dataManager.getAllCities { viewState in
+            self.update(with: viewState)
+        }
+    }
+
     //MARK: Update
     
-    private func update(with viewState: ViewState<WeatherViewModel>) {
+    private func update(with viewState: ViewState<AddCityViewModel>) {
         
-//        prepare(for: viewState)
-//
-//        switch viewState {
-//        case .loading:
-//            //activityIndicator.startAnimating()
-//
-//        case .error:
-//            guard let navigator = navigator else { fatalError("Navigator not set") }
-//            present(navigator.alertGeneralError(), animated: true, completion: nil)
-//
-//        case .data(let viewModel):
-//            //update(with: viewModel)
-//        }
-    }
-    
-    private func prepare(for viewState: ViewState<WeatherViewModel>) {
+        prepare(for: viewState)
 
+        switch viewState {
+        case .loading:
+            print("Loading")
+
+        case .error:
+            guard let navigator = navigator else { fatalError("Navigator not set") }
+            present(navigator.alertGeneralError(), animated: true, completion: nil)
+
+        case .data(let viewModel):
+            update(with: viewModel)
+        }
     }
     
-    private func update(with viewModel: WeatherViewModel) {
-        
+    private func prepare(for viewState: ViewState<AddCityViewModel>) {
+        print("PrepareUI")
+    }
+    
+    private func update(with viewModel: AddCityViewModel) {
+        print("Data")
     }
 }
 

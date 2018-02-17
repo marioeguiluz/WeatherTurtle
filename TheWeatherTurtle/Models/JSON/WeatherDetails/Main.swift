@@ -6,10 +6,10 @@
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
-struct Main : Codable {
-	let temp : Double?
-	let pressure : Int?
-	let humidity : Int?
-	let temp_min : Double?
-	let temp_max : Double?
+struct Main: Codable {
+	let temp: Double?
+	let pressure: Int?
+	let humidity: Int?
+	let temp_min: Double?
+	let temp_max: Double?
 }

@@ -11,9 +11,11 @@ import UIKit
 
 final class WeatherDataManager {
     private let weatherService: WeatherService
+    private let dataStoreService: DataStoreService
     
-    init(weatherService: WeatherService) {
+    init(weatherService: WeatherService, dataStoreService: DataStoreService) {
         self.weatherService = weatherService
+        self.dataStoreService = dataStoreService
     }
     
     func getWeatherDetails(city: String, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
@@ -39,6 +41,13 @@ final class WeatherDataManager {
                 let viewModel = WeatherListViewModel(with: data) ?? WeatherListViewModel.empty()
                 completion(.data(viewModel: viewModel))
             }
+        }
+    }
+
+    func getAllCities(completion: @escaping (ViewState<AddCityViewModel>) -> Void) {
+        dataStoreService.getAllCities { cities in
+            let viewModel = cities.isEmpty ? AddCityViewModel.empty() : AddCityViewModel(cityResults: cities)
+            completion(.data(viewModel: viewModel))
         }
     }
 }

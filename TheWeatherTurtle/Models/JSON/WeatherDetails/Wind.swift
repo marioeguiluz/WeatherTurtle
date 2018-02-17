@@ -6,7 +6,7 @@
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
-struct Wind : Codable {
-	let speed : Double?
-	let deg : Int?
+struct Wind: Codable {
+	let speed: Double?
+    let deg: Int?
 }

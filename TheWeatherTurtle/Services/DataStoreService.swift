@@ -10,9 +10,10 @@ import Foundation
 
 final class DataStoreService {
 
+    private var allCities: [City]?
+
     private let defaultCities = ["London", "Moscow", "Paris"]
     private let keyCities = "cities"
-
     private let filename = "dictionary.dat"
     private var path: String {
         let dirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -31,7 +32,28 @@ final class DataStoreService {
         NSKeyedArchiver.archiveRootObject(cities, toFile: path)
     }
 
-    func getCities() -> [String] {
+    func getAllCities(completion: @escaping ([City]) -> Void) {
+        if let cities = allCities {
+            completion(cities)
+        }
+
+        DispatchQueue.global().async { [weak self] in
+            guard let path = Bundle.main.path(forResource: "citylist", ofType: "json"),
+                let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped),
+                let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                let array = json as? [Dictionary<String,Any>] else {
+                    completion([])
+                    return
+            }
+            let cities = array.map { City.init(with: $0) }
+            self?.allCities = cities
+            DispatchQueue.main.async {
+                completion(cities)
+            }
+        }
+    }
+
+    func getUserCities() -> [String] {
         guard FileManager.default.fileExists(atPath: path),
             let dictionary = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String : [String]],
             let cities = dictionary[keyCities] else {
