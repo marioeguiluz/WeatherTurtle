@@ -88,6 +88,11 @@ extension AddCityTableManager {
             }
         }
     }
+    
+    private func clearResults() {
+        results.removeAll()
+        tableView.reloadData()
+    }
 
     private func searchBarEmpty() -> Bool {
         guard let searchController = searchController else { return true }
@@ -102,17 +107,15 @@ extension AddCityTableManager {
 }
 
 extension AddCityTableManager: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        guard let query = searchBar.text, query.count > 2 else {
-            return
-        }
-        search(text: query)
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        clearResults()
     }
 }
 
 extension AddCityTableManager: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text, query.count > 2 else {
+            clearResults()
             return
         }
         search(text: query)
