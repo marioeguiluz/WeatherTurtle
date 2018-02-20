@@ -12,6 +12,7 @@ final class WeatherListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     private let refreshControl = UIRefreshControl()
+    private var editButton: UIBarButtonItem?
     
     private var navigator: WeatherListNavigable!
     private var dataManager: WeatherDataManager!
@@ -39,7 +40,7 @@ final class WeatherListViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
-        createAddButton()
+        createEditAddButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,9 +49,12 @@ final class WeatherListViewController: UIViewController {
         loadWeather()
     }
     
-    private func createAddButton() {
+    private func createEditAddButtons() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToAddCity))
-        navigationItem.rightBarButtonItem = addButton
+        navigationItem.leftBarButtonItem = addButton
+        
+        editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditMode))
+        navigationItem.rightBarButtonItem = editButton
     }
     
     //MARK: Services
@@ -95,6 +99,10 @@ final class WeatherListViewController: UIViewController {
         tableManager.reload(with: viewModel.cities)
     }
     
+    @objc private func toggleEditMode() {
+        tableManager.toggleEditMode()
+    }
+    
     //MARK: Navigation
     
     private func goToWeatherDetail(city: String) {
@@ -109,5 +117,17 @@ final class WeatherListViewController: UIViewController {
 extension WeatherListViewController: WeatherListTableManagerDelegate {
     func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel) {
         goToWeatherDetail(city: viewModel.id)
+    }
+    
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, willRemoveWeatherItem viewModel: WeatherViewModel, at indexPath: IndexPath) {
+        guard dataManager.removeCity(viewModel.id) else {
+            update(with: .error)
+            return
+        }
+        tableManager.remove(indexPath: indexPath)
+    }
+    
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, isEditing: Bool) {
+        editButton?.title = isEditing ? "Done" : "Edit"
     }
 }

@@ -10,6 +10,8 @@ import UIKit
 
 protocol WeatherListTableManagerDelegate: class {
     func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel)
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, willRemoveWeatherItem viewModel: WeatherViewModel, at indexPath: IndexPath)
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, isEditing: Bool)
 }
 
 final class WeatherListTableManager: NSObject {
@@ -36,6 +38,27 @@ final class WeatherListTableManager: NSObject {
         self.items = items
         tableView.reloadData()
     }
+    
+    func toggleEditMode() {
+        let isEditing = !tableView.isEditing
+        tableView.isEditing = isEditing
+        guard let delegate = delegate else {
+            fatalError("Delegate not set in \(#file) : \(#function)")
+        }
+        delegate.weatherListTableManager(self, isEditing: isEditing)
+    }
+    
+    func remove(indexPath: IndexPath) {
+        items.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .right)
+    }
+    
+    private func willRemoveRow(at indexPath: IndexPath){
+        guard let delegate = delegate else {
+            fatalError("Delegate not set in \(#file) : \(#function)")
+        }
+        delegate.weatherListTableManager(self, willRemoveWeatherItem: items[indexPath.row], at: indexPath)
+    }
 }
 
 extension WeatherListTableManager: UITableViewDataSource, UITableViewDelegate {
@@ -59,5 +82,14 @@ extension WeatherListTableManager: UITableViewDataSource, UITableViewDelegate {
             fatalError("Delegate not set in \(#file) : \(#function)")
         }
         delegate.weatherListTableManager(self, didSelectWeatherItem: items[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            willRemoveRow(at: indexPath)
+        default:
+            return
+        }
     }
 }

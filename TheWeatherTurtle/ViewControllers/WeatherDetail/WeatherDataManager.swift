@@ -58,4 +58,8 @@ final class WeatherDataManager {
     func storeCity(_ cityID: String) -> Bool {
         return dataStoreService.storeCity(cityID)
     }
+    
+    func removeCity(_ cityID: String) -> Bool {
+        return dataStoreService.removeCity(cityID)
+    }
 }

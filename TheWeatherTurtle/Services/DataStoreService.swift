@@ -78,4 +78,19 @@ final class DataStoreService {
         dictionary[keyCities] = cities
         return NSKeyedArchiver.archiveRootObject(dictionary, toFile: path)
     }
+    
+    @discardableResult
+    func removeCity(_ cityID: String) -> Bool {
+        let path = self.path
+        guard FileManager.default.fileExists(atPath: path),
+            var dictionary = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String : [String]],
+            var cities = dictionary[keyCities],
+            let indexToRemove = cities.index(where: { $0 == cityID }) else {
+                return false
+        }
+        
+        cities.remove(at: indexToRemove)
+        dictionary[keyCities] = cities
+        return NSKeyedArchiver.archiveRootObject(dictionary, toFile: path)
+    }
 }
