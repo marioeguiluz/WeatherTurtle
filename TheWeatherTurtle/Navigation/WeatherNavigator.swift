@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol WeatherListNavigable: Navigable {
+protocol WeatherNavigable: Navigable {
     func pushWeatherDetail(city: String, on rootController: UINavigationController?)
     func pushAddCityWeather(on rootController: UINavigationController?)
 }
 
-final class WeatherListNavigator: WeatherListNavigable {
+final class WeatherNavigator: WeatherNavigable {
     private let routerManager: RouterManager
     
     init(routerManager: RouterManager) {

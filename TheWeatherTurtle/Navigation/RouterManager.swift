@@ -29,6 +29,8 @@ final class RouterManager {
         UINavigationBar.appearance().tintColor = .darkGray
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.darkGray]
         UISearchBar.appearance().tintColor = .darkGray
+        UITabBar.appearance().tintColor = .darkGray
+        UITabBar.appearance().backgroundColor = .white
     }
 
     private func setRootViewController(_ viewController: UIViewController) {
@@ -36,8 +38,16 @@ final class RouterManager {
         window?.makeKeyAndVisible()
     }
     
-    func startWithWeatherList(city: String? = nil) {
-        setRootViewController(UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: nil)))
+    func startWithWeatherList(cityIDs: [String]? = []) {
+        setRootViewController(UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: cityIDs)))
+    }
+    
+    func startWithTabBar(cityIDs: [String]? = []) {
+        let tabController = UITabBarController()
+        let tabTable = UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: cityIDs))
+        let tabCollection = UINavigationController(rootViewController: instantiateWeatherCollectionController(cityIDs: cityIDs))
+        tabController.viewControllers = [tabTable, tabCollection]
+        setRootViewController(tabController)
     }
 
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
@@ -49,7 +59,7 @@ final class RouterManager {
     
     func instantiateWeatherListController(cityIDs: [String]? = []) -> WeatherListViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
-        let navigator = WeatherListNavigator(routerManager: self)
+        let navigator = WeatherNavigator(routerManager: self)
         let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
         return viewController
     }
@@ -58,6 +68,13 @@ final class RouterManager {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
         let navigator = AddCityNavigator(routerManager: self)
         let viewController = AddCityViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager)
+        return viewController
+    }
+    
+    func instantiateWeatherCollectionController(cityIDs: [String]? = []) -> WeatherCollectionViewController {
+        let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
+        let navigator = WeatherNavigator(routerManager: self)
+        let viewController = WeatherCollectionViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
         return viewController
     }
 }

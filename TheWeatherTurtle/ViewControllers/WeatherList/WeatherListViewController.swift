@@ -14,24 +14,23 @@ final class WeatherListViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
     private var editButton: UIBarButtonItem?
     
-    private var navigator: WeatherListNavigable!
+    private var navigator: WeatherNavigable!
     private var dataManager: WeatherDataManager!
     private var tableManager: WeatherListTableManager!
     private var cityIDs: [String]?
 
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherListNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherListViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherListViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherListViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager
         viewController.cityIDs = cityIDs
+        viewController.title = "Weather List"
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Weather"
-
         tableManager = WeatherListTableManager(tableView: tableView, delegate: self)
         tableManager.prepareTableView()
         

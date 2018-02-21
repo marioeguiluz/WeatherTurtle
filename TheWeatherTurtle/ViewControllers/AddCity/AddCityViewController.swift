@@ -23,6 +23,7 @@ final class AddCityViewController: UIViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! AddCityViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager
+        viewController.title = "Add City"
         return viewController
     }
 
@@ -34,8 +35,6 @@ final class AddCityViewController: UIViewController {
 
         definesPresentationContext = true
         navigationItem.searchController = searchController
-
-        title = "Add City"
     }
 
     //MARK: View Cycle
