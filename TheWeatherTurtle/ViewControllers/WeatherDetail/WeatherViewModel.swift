@@ -13,6 +13,8 @@ struct WeatherViewModel {
     let city: String
     let temperature: String
     let detail: String
+    let longitude: Double
+    let latitude: Double
     let icon: URL?
 }
 
@@ -24,7 +26,9 @@ extension WeatherViewModel {
             let cityName = data?.name,
             let temp = data?.main?.temp,
             let details = data?.weather?.first?.description,
-            let iconName = data?.weather?.first?.icon else {
+            let iconName = data?.weather?.first?.icon,
+            let lat = data?.coord?.lat,
+            let long = data?.coord?.lon else {
                 return nil
         }
         
@@ -32,11 +36,13 @@ extension WeatherViewModel {
         city = cityName
         temperature = String(format: "%.0f", temp.rounded(.toNearestOrEven)) + "°"
         detail = details
+        latitude = lat
+        longitude = long
         icon = WeatherViewModel.weatherIconURL(for: iconName)
     }
     
     static func empty() -> WeatherViewModel {
-        return WeatherViewModel(id: "0", city: "No city", temperature: "No data", detail: "No details", icon: nil)
+        return WeatherViewModel(id: "0", city: "No city", temperature: "No data", detail: "No details", longitude: 0, latitude: 0, icon: nil)
     }
 
     private static func weatherIconURL(for code: String) -> URL? {

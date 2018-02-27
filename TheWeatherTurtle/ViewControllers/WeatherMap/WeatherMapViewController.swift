@@ -1,40 +1,38 @@
 //
-//  WeatherCollectionViewController.swift
+//  WeatherMapViewController.swift
 //  TheWeatherTurtle
 //
-//  Created by Mario Eguiluz on 21/02/2018.
+//  Created by Mario Eguiluz on 24/02/2018.
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
 import UIKit
+import MapKit
 
-final class WeatherCollectionViewController: UIViewController {
-    
-    @IBOutlet weak var collectionView: UICollectionView!
+final class WeatherMapViewController: UIViewController {
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
+    
     private var navigator: WeatherNavigable!
     private var dataManager: WeatherDataManager!
-    private var collectionManager: WeatherCollectionManager!
+    private var mapManager: WeatherMapManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherCollectionViewController {
-        let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherCollectionViewController
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherMapViewController {
+        let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherMapViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager
         viewController.cityIDs = cityIDs
-        viewController.title = "Weather Collection"
+        viewController.title = "Weather Map"
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionManager = WeatherCollectionManager(collectionView: collectionView, delegate: self)
-        collectionManager.prepareCollectionView()
-
+        mapManager = WeatherMapManager(mapView: mapView, delegate: self)
+        mapView.delegate = mapManager
         createAddButton()
-        createModeTestButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,11 +46,6 @@ final class WeatherCollectionViewController: UIViewController {
         navigationItem.leftBarButtonItem = addButton
     }
     
-    private func createModeTestButton() {
-        let modeButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(toggleMode))
-        navigationItem.rightBarButtonItem = modeButton
-    }
-    
     //MARK: Services
     
     private func loadWeather() {
@@ -63,10 +56,6 @@ final class WeatherCollectionViewController: UIViewController {
                 self.update(with: viewState)
             }
         }
-    }
-    
-    @objc private func toggleMode() {
-        collectionManager.toggleMode()
     }
     
     @objc private func refresh() {
@@ -96,7 +85,7 @@ final class WeatherCollectionViewController: UIViewController {
     }
     
     private func update(with viewModel: WeatherListViewModel) {
-        collectionManager.reload(with: viewModel.cities)
+        mapManager.reload(with: viewModel.cities)
     }
     
     //MARK: Navigation
@@ -110,8 +99,6 @@ final class WeatherCollectionViewController: UIViewController {
     }
 }
 
-extension WeatherCollectionViewController: WeatherCollectionManagerDelegate {
-    func weatherCollectionManager(_ collectionManager: WeatherCollectionManager, didSelectWeatherItem viewModel: WeatherViewModel) {
-        goToWeatherDetail(city: viewModel.id)
-    }
+extension WeatherMapViewController: WeatherMapManagerDelegate {
+
 }

@@ -13,6 +13,11 @@ class AddCityCell: UITableViewCell {
     @IBOutlet weak var labelCity: UILabel!
 
     func update(_ viewModel: City) {
-        labelCity.text = viewModel.name
+        guard let name = viewModel.name else { return }
+        if let country = viewModel.country {
+            labelCity.text = name + ", " + country
+        } else {
+            labelCity.text = name
+        }
     }
 }

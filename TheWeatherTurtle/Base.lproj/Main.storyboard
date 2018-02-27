@@ -93,6 +93,41 @@
             </objects>
             <point key="canvasLocation" x="-226.40000000000001" y="252.32383808095955"/>
         </scene>
+        <!--Weather Map View Controller-->
+        <scene sceneID="Oko-9z-J8I">
+            <objects>
+                <viewController storyboardIdentifier="WeatherMapViewController" id="hm9-12-IX7" customClass="WeatherMapViewController" customModule="TheWeatherTurtle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="raU-dc-L1s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MWx-vQ-wu0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </mapView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0j5-ye-36y">
+                                <rect key="frame" x="169" y="325" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MWx-vQ-wu0" firstAttribute="bottom" secondItem="KXO-3z-AEM" secondAttribute="bottom" id="JDY-TB-lDv"/>
+                            <constraint firstItem="0j5-ye-36y" firstAttribute="centerY" secondItem="KXO-3z-AEM" secondAttribute="centerY" id="QSE-r3-Np6"/>
+                            <constraint firstItem="MWx-vQ-wu0" firstAttribute="leading" secondItem="KXO-3z-AEM" secondAttribute="leading" id="Qqr-X3-bVR"/>
+                            <constraint firstItem="MWx-vQ-wu0" firstAttribute="top" secondItem="raU-dc-L1s" secondAttribute="top" id="gM9-02-jHe"/>
+                            <constraint firstItem="0j5-ye-36y" firstAttribute="centerX" secondItem="KXO-3z-AEM" secondAttribute="centerX" id="pKg-Fc-MgW"/>
+                            <constraint firstItem="MWx-vQ-wu0" firstAttribute="trailing" secondItem="KXO-3z-AEM" secondAttribute="trailing" id="uTL-yI-qpY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="KXO-3z-AEM"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="0j5-ye-36y" id="vxY-Dm-kDU"/>
+                        <outlet property="mapView" destination="MWx-vQ-wu0" id="Lcw-G1-4Xc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g7l-k7-sdZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="412" y="252.32383808095955"/>
+        </scene>
         <!--Weather List View Controller-->
         <scene sceneID="qoK-yJ-heH">
             <objects>
