@@ -13,10 +13,12 @@ final class CoreService {
     
     let weatherService: WeatherService
     let dataStoreService: DataStoreService
+    let locationService: LocationService
     
     init() {
         networkManager = NetworkManager()
         weatherService = WeatherService(networkManager: networkManager)
         dataStoreService = DataStoreService()
+        locationService = LocationService()
     }
 }

@@ -14,14 +14,16 @@ final class WeatherMapViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var navigator: WeatherNavigable!
-    private var dataManager: WeatherDataManager!
+    private var weatherManager: WeatherDataManager!
+    private var mapDataManager: WeatherMapDataManager!
     private var mapManager: WeatherMapManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherMapViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherDataManager, mapDataManager: WeatherMapDataManager, cityIDs: [String]?) -> WeatherMapViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherMapViewController
         viewController.navigator = navigator
-        viewController.dataManager = dataManager
+        viewController.weatherManager = weatherManager
+        viewController.mapDataManager = mapDataManager
         viewController.cityIDs = cityIDs
         viewController.title = "Weather Map"
         return viewController
@@ -32,7 +34,9 @@ final class WeatherMapViewController: UIViewController {
         
         mapManager = WeatherMapManager(mapView: mapView, delegate: self)
         mapView.delegate = mapManager
+
         createAddButton()
+        createLongPressAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,13 +49,19 @@ final class WeatherMapViewController: UIViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToAddCity))
         navigationItem.leftBarButtonItem = addButton
     }
+
+    private func createLongPressAction() {
+        let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressRecogniser.minimumPressDuration = 1
+        mapView.addGestureRecognizer(longPressRecogniser)
+    }
     
     //MARK: Services
     
     private func loadWeather() {
         update(with: .loading)
-        cityIDs = dataManager.getUserCities()
-        dataManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
+        cityIDs = weatherManager.getUserCities()
+        weatherManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -96,6 +106,28 @@ final class WeatherMapViewController: UIViewController {
     
     @objc private func goToAddCity() {
         navigator.pushAddCityWeather(on: navigationController)
+    }
+
+    //MARK: Actions
+
+    @objc private func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
+        if gestureRecognizer.state != .began { return }
+        let touchPoint = gestureRecognizer.location(in: mapView)
+        let mapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+
+        weatherManager.getWeatherDetails(latitude: mapCoordinate.latitude, longitude: mapCoordinate.longitude) { [weak self] viewState in
+            DispatchQueue.main.async {
+                switch viewState {
+                case .error:
+                    guard let alert = self?.navigator.alertGeneralError() else { return }
+                    self?.present(alert, animated: true, completion: nil)
+                case .data(let viewModel):
+                    self?.mapManager.addAnnotation(viewModel)
+                default:
+                    return
+                }
+            }
+        }
     }
 }
 

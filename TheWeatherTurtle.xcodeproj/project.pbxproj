@@ -46,6 +46,8 @@
 		30258420203DEF50005354ED /* CollectionWeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3025841E203DEF50005354ED /* CollectionWeatherCell.xib */; };
 		302584232041D556005354ED /* WeatherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302584222041D556005354ED /* WeatherMapViewController.swift */; };
 		AC5EC5F8203848F800B9D43B /* DataStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5EC5F7203848F800B9D43B /* DataStoreService.swift */; };
+		AC9D973720488F910095AA9F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9D973620488F910095AA9F /* LocationService.swift */; };
+		AC9D97392048B6CC0095AA9F /* WeatherMapDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9D97382048B6CC0095AA9F /* WeatherMapDataManager.swift */; };
 		ACE76C5F20385F6100FF720E /* citylist.json in Resources */ = {isa = PBXBuildFile; fileRef = ACE76C5E20385F6100FF720E /* citylist.json */; };
 		ACE76C61203861BA00FF720E /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE76C60203861BA00FF720E /* City.swift */; };
 		ACE76C632038684800FF720E /* AddCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE76C622038684800FF720E /* AddCityViewModel.swift */; };
@@ -96,6 +98,8 @@
 		3025841E203DEF50005354ED /* CollectionWeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionWeatherCell.xib; sourceTree = "<group>"; };
 		302584222041D556005354ED /* WeatherMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapViewController.swift; sourceTree = "<group>"; };
 		AC5EC5F7203848F800B9D43B /* DataStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreService.swift; sourceTree = "<group>"; };
+		AC9D973620488F910095AA9F /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		AC9D97382048B6CC0095AA9F /* WeatherMapDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapDataManager.swift; sourceTree = "<group>"; };
 		ACE76C5E20385F6100FF720E /* citylist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citylist.json; sourceTree = "<group>"; };
 		ACE76C60203861BA00FF720E /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		ACE76C622038684800FF720E /* AddCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewModel.swift; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 				3006DB0D202B919200B77AA3 /* WeatherService.swift */,
 				3025840E20360081005354ED /* ImageService.swift */,
 				AC5EC5F7203848F800B9D43B /* DataStoreService.swift */,
+				AC9D973620488F910095AA9F /* LocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 				302584222041D556005354ED /* WeatherMapViewController.swift */,
 				301D33EB2045D59800062656 /* WeatherMapManager.swift */,
 				301D33ED2045D7FC00062656 /* WeatherPointAnnotation.swift */,
+				AC9D97382048B6CC0095AA9F /* WeatherMapDataManager.swift */,
 			);
 			path = WeatherMap;
 			sourceTree = "<group>";
@@ -405,11 +411,13 @@
 				3006DB1B202E184700B77AA3 /* Main.swift in Sources */,
 				302584232041D556005354ED /* WeatherMapViewController.swift in Sources */,
 				3006DB1E202E184700B77AA3 /* Wind.swift in Sources */,
+				AC9D97392048B6CC0095AA9F /* WeatherMapDataManager.swift in Sources */,
 				ACE76C6920387EFC00FF720E /* AddCityCell.swift in Sources */,
 				3025841F203DEF50005354ED /* CollectionWeatherCell.swift in Sources */,
 				301D33EE2045D7FC00062656 /* WeatherPointAnnotation.swift in Sources */,
 				302583FF203210AA005354ED /* WeatherDetailsList.swift in Sources */,
 				3006DB0E202B919200B77AA3 /* WeatherService.swift in Sources */,
+				AC9D973720488F910095AA9F /* LocationService.swift in Sources */,
 				3025840B20321C46005354ED /* CityWeatherCell.swift in Sources */,
 				3025841620375AF3005354ED /* AddCityNavigator.swift in Sources */,
 				3025841B203DEE0F005354ED /* WeatherCollectionManager.swift in Sources */,

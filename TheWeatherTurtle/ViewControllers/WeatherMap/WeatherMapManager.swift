@@ -34,6 +34,11 @@ final class WeatherMapManager: NSObject {
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(items.map(WeatherPointAnnotation.init))
     }
+
+    func addAnnotation(_ weatherViewModel: WeatherViewModel) {
+        items.append(weatherViewModel)
+        mapView.addAnnotation(WeatherPointAnnotation(weatherModel: weatherViewModel))
+    }
 }
 
 extension WeatherMapManager: MKMapViewDelegate {

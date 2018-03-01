@@ -44,6 +44,19 @@ final class WeatherDataManager {
         }
     }
 
+    func getWeatherDetails(latitude: Double, longitude: Double, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
+        weatherService.getWeatherDetails(latitude: latitude, longitude: longitude) { (response) in
+            switch response {
+            case .error(_):
+                completion(.error)
+
+            case .success(let data):
+                let viewModel = WeatherViewModel(with: data) ?? WeatherViewModel.empty()
+                completion(.data(viewModel: viewModel))
+            }
+        }
+    }
+
     func getAllCities(completion: @escaping (ViewState<AddCityViewModel>) -> Void) {
         dataStoreService.getAllCities { cities in
             let viewModel = cities.isEmpty ? AddCityViewModel.empty() : AddCityViewModel(allCities: cities)

@@ -30,6 +30,13 @@ final class WeatherService {
             completion(response)
         }
     }
+
+    func getWeatherDetails(latitude: Double, longitude: Double, completion: @escaping (Response<WeatherDetails>) -> ()) {
+        let cityWeatherDetails = Resource<WeatherDetails>(url: weatherURL(latitude: latitude, longitude: longitude))
+        networkManager.load(resource: cityWeatherDetails) { response in
+            completion(response)
+        }
+    }
 }
 
 extension WeatherService {
@@ -46,6 +53,13 @@ extension WeatherService {
             cityIDs = "\(cityIDs),\(cityID)"
         }
         guard let url = URL(string: "http://api.openweathermap.org/data/2.5/group?id=\(cityIDs)&units=metric&appid=\(CoreService.openWeatherMapKey)") else {
+            fatalError("\(#file): \(#function)")
+        }
+        return url
+    }
+
+    private func weatherURL(latitude: Double, longitude: Double) -> URL {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=\(CoreService.openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url

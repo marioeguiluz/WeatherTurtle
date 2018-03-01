@@ -81,8 +81,9 @@ final class RouterManager {
     
     func instantiateWeatherMapController(cityIDs: [String]? = []) -> WeatherMapViewController {
         let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
+        let weatherMapDataManager = WeatherMapDataManager(locationService: coreService.locationService)
         let navigator = WeatherNavigator(routerManager: self)
-        let viewController = WeatherMapViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
+        let viewController = WeatherMapViewController.instantiate(storyboard: storyboard, navigator: navigator, weatherManager: dataManager, mapDataManager: weatherMapDataManager, cityIDs: cityIDs)
         return viewController
     }
 }
