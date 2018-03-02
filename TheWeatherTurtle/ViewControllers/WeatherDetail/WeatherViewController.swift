@@ -28,6 +28,8 @@ final class WeatherViewController: UIViewController {
         viewController.navigator = navigator
         viewController.dataManager = dataManager
         viewController.cityID = city ?? WeatherViewController.defaultCity
+        viewController.title = "Forecast Today"
+
         return viewController
     }
         
@@ -36,7 +38,6 @@ final class WeatherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        title = "Forecast Today"
         loadWeather()
     }
     

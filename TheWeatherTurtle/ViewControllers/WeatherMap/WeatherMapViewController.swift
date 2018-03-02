@@ -68,6 +68,15 @@ final class WeatherMapViewController: UIViewController {
         }
     }
     
+    private func loadWeather(with coordinate: CLLocationCoordinate2D) {
+        update(with: .loading)
+        weatherManager.getWeatherDetails(latitude: coordinate.latitude, longitude: coordinate.longitude) { viewState in
+            DispatchQueue.main.async {
+                self.addAnnotation(with: viewState)
+            }
+        }
+    }
+    
     @objc private func refresh() {
         loadWeather()
     }
@@ -76,7 +85,7 @@ final class WeatherMapViewController: UIViewController {
     
     private func update(with viewState: ViewState<WeatherListViewModel>) {
         
-        prepare(for: viewState)
+        prepare()
         
         switch viewState {
         case .loading:
@@ -90,12 +99,30 @@ final class WeatherMapViewController: UIViewController {
         }
     }
     
-    private func prepare(for viewState: ViewState<WeatherListViewModel>) {
+    private func addAnnotation(with viewState: ViewState<WeatherViewModel>) {
+        
+        prepare()
+
+        switch viewState {
+        case .error:
+            present(navigator.alertGeneralError(), animated: true, completion: nil)
+        case .data(let viewModel):
+            addAnnotation(with: viewModel)
+        default:
+            return
+        }
+    }
+    
+    private func prepare() {
         activityIndicator.stopAnimating()
     }
     
     private func update(with viewModel: WeatherListViewModel) {
         mapManager.reload(with: viewModel.cities)
+    }
+    
+    private func addAnnotation(with viewModel: WeatherViewModel) {
+        mapManager.addAnnotation(viewModel)
     }
     
     //MARK: Navigation
@@ -113,21 +140,8 @@ final class WeatherMapViewController: UIViewController {
     @objc private func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.state != .began { return }
         let touchPoint = gestureRecognizer.location(in: mapView)
-        let mapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-
-        weatherManager.getWeatherDetails(latitude: mapCoordinate.latitude, longitude: mapCoordinate.longitude) { [weak self] viewState in
-            DispatchQueue.main.async {
-                switch viewState {
-                case .error:
-                    guard let alert = self?.navigator.alertGeneralError() else { return }
-                    self?.present(alert, animated: true, completion: nil)
-                case .data(let viewModel):
-                    self?.mapManager.addAnnotation(viewModel)
-                default:
-                    return
-                }
-            }
-        }
+        let coordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+        loadWeather(with: coordinate)
     }
 }
 
