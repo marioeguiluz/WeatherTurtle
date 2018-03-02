@@ -9,7 +9,6 @@
 final class CoreService {
     
     private let networkManager: NetworkManager
-    static let openWeatherMapKey = "d62caae37d4c67c3c6d9871a3f00482f"
     
     let weatherService: WeatherService
     let dataStoreService: DataStoreService
