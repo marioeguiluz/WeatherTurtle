@@ -44,7 +44,7 @@ final class WeatherDataManager {
         }
     }
 
-    func getWeatherDetails(latitude: Double, longitude: Double, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
+    func getWeatherDetails(latitude: Double, longitude: Double, storeCity: Bool, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
         weatherService.getWeatherDetails(latitude: latitude, longitude: longitude) { (response) in
             switch response {
             case .error(_):
@@ -52,6 +52,9 @@ final class WeatherDataManager {
 
             case .success(let data):
                 let viewModel = WeatherViewModel(with: data) ?? WeatherViewModel.empty()
+                if storeCity {
+                    _ = self.storeCity(viewModel.id)
+                }
                 completion(.data(viewModel: viewModel))
             }
         }

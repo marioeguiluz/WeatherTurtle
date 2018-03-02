@@ -9,22 +9,29 @@
 import UIKit
 import MapKit
 
+protocol WeatherMapViewControllerDelegate: class {
+    func weatherMapViewController(_ weatherMapViewController: WeatherMapViewController, didAddCity: WeatherViewModel)
+}
+
 final class WeatherMapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    private weak var delegate: WeatherMapViewControllerDelegate?
+
     private var navigator: WeatherNavigable!
     private var weatherManager: WeatherDataManager!
     private var mapDataManager: WeatherMapDataManager!
     private var mapManager: WeatherMapManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherDataManager, mapDataManager: WeatherMapDataManager, cityIDs: [String]?) -> WeatherMapViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherDataManager, mapDataManager: WeatherMapDataManager, cityIDs: [String]? = nil, delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherMapViewController
         viewController.navigator = navigator
         viewController.weatherManager = weatherManager
         viewController.mapDataManager = mapDataManager
         viewController.cityIDs = cityIDs
+        viewController.delegate = delegate
         viewController.title = "Weather Map"
         return viewController
     }
@@ -70,7 +77,7 @@ final class WeatherMapViewController: UIViewController {
     
     private func loadWeather(with coordinate: CLLocationCoordinate2D) {
         update(with: .loading)
-        weatherManager.getWeatherDetails(latitude: coordinate.latitude, longitude: coordinate.longitude) { viewState in
+        weatherManager.getWeatherDetails(latitude: coordinate.latitude, longitude: coordinate.longitude, storeCity: true) { viewState in
             DispatchQueue.main.async {
                 self.addAnnotation(with: viewState)
             }
@@ -104,12 +111,15 @@ final class WeatherMapViewController: UIViewController {
         prepare()
 
         switch viewState {
+        case .loading:
+                fallthrough
+            
         case .error:
             present(navigator.alertGeneralError(), animated: true, completion: nil)
+        
         case .data(let viewModel):
             addAnnotation(with: viewModel)
-        default:
-            return
+            delegate?.weatherMapViewController(self, didAddCity: viewModel)
         }
     }
     

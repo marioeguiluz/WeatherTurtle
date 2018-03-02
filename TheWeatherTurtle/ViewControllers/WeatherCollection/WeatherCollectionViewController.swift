@@ -35,6 +35,7 @@ final class WeatherCollectionViewController: UIViewController {
 
         createAddButton()
         createModeTestButton()
+        addPinchGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +52,11 @@ final class WeatherCollectionViewController: UIViewController {
     private func createModeTestButton() {
         let modeButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(toggleMode))
         navigationItem.rightBarButtonItem = modeButton
+    }
+    
+    private func addPinchGesture() {
+        let gesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        view.addGestureRecognizer(gesture)
     }
     
     //MARK: Services
@@ -108,10 +114,23 @@ final class WeatherCollectionViewController: UIViewController {
     @objc private func goToAddCity() {
         navigator.pushAddCityWeather(on: navigationController)
     }
+    
+    @objc private func handlePinch(_ pinchGestureRecognizer: UIPinchGestureRecognizer) {
+        guard pinchGestureRecognizer.state != .began else { return }
+        if pinchGestureRecognizer.state == .ended {
+            toggleMode()
+        }
+    }
 }
 
 extension WeatherCollectionViewController: WeatherCollectionManagerDelegate {
     func weatherCollectionManager(_ collectionManager: WeatherCollectionManager, didSelectWeatherItem viewModel: WeatherViewModel) {
         goToWeatherDetail(city: viewModel.id)
+    }
+}
+
+extension WeatherCollectionViewController: WeatherMapViewControllerDelegate {
+    func weatherMapViewController(_ weatherMapViewController: WeatherMapViewController, didAddCity: WeatherViewModel) {
+        refresh()
     }
 }
