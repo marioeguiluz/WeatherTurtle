@@ -15,11 +15,11 @@ final class AddCityViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let searchController = UISearchController(searchResultsController: nil)
-    private var navigator: AddCityNavigable!
+    private var navigator: Navigable!
     private var dataManager: WeatherDataManager!
     private var tableManager: AddCityTableManager!
     
-    static func instantiate(storyboard: UIStoryboard, navigator: AddCityNavigable, dataManager: WeatherDataManager) -> AddCityViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: Navigable, dataManager: WeatherDataManager) -> AddCityViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! AddCityViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager

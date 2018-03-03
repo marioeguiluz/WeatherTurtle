@@ -9,12 +9,17 @@
 import Foundation
 import UIKit
 
-final class WeatherService {
-    static let openWeatherMapKey = "d62caae37d4c67c3c6d9871a3f00482f"
+protocol WeatherService {
+    func getWeatherDetails(cityID: String, completion: @escaping (Response<WeatherDetails>) -> ())
+    func getWeatherDetails(cityIDs: [String], completion: @escaping (Response<WeatherDetailsList>) -> ())
+    func getWeatherDetails(latitude: Double, longitude: Double, completion: @escaping (Response<WeatherDetails>) -> ())
+}
 
-    private let networkManager: NetworkManager
+final class OpenWeatherService: WeatherService {
+
+    private let networkManager: NetworkLayer
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkLayer) {
         self.networkManager = networkManager
     }
     
@@ -40,9 +45,13 @@ final class WeatherService {
     }
 }
 
-extension WeatherService {
+extension OpenWeatherService {
+    private var openWeatherMapKey: String {
+        return "d62caae37d4c67c3c6d9871a3f00482f"
+    }
+
     private func weatherURL(for cityID: String) -> URL {
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?id=\(cityID)&units=metric&appid=\(WeatherService.openWeatherMapKey)") else {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?id=\(cityID)&units=metric&appid=\(openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url
@@ -53,14 +62,14 @@ extension WeatherService {
         for cityID in cities.dropFirst() {
             cityIDs = "\(cityIDs),\(cityID)"
         }
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/group?id=\(cityIDs)&units=metric&appid=\(WeatherService.openWeatherMapKey)") else {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/group?id=\(cityIDs)&units=metric&appid=\(openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url
     }
 
     private func weatherURL(latitude: Double, longitude: Double) -> URL {
-        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=\(WeatherService.openWeatherMapKey)") else {
+        guard let url = URL(string: "http://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=metric&appid=\(openWeatherMapKey)") else {
             fatalError("\(#file): \(#function)")
         }
         return url

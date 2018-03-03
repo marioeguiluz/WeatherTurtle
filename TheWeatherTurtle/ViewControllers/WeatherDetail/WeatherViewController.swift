@@ -19,11 +19,11 @@ final class WeatherViewController: UIViewController {
     
     private static let defaultCity = "London"
     
-    private var navigator: WeatherDetailNavigable!
+    private var navigator: Navigable!
     private var dataManager: WeatherDataManager!
     private var cityID: String!
 
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherDetailNavigable, dataManager: WeatherDataManager, city: String?) -> WeatherViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: Navigable, dataManager: WeatherDataManager, city: String?) -> WeatherViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherViewController
         viewController.navigator = navigator
         viewController.dataManager = dataManager

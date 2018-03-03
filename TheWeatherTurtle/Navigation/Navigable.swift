@@ -8,15 +8,14 @@
 
 import UIKit
 
-protocol Navigable {
-    func alertGeneralError() -> UIAlertController
+protocol Navigable: ErrorPresenter {
+    var routerManager: RouterManager { get }
 }
 
-extension Navigable {
-    func alertGeneralError() -> UIAlertController {
-        let alert = UIAlertController(title: "Error", message: "General issue", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        alert.addAction(action)
-        return alert
+final class Navigator: Navigable  {
+    let routerManager: RouterManager
+    
+    init(routerManager: RouterManager) {
+        self.routerManager = routerManager
     }
 }

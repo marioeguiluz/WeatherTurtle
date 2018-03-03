@@ -21,15 +21,13 @@ final class WeatherMapViewController: UIViewController {
 
     private var navigator: WeatherNavigable!
     private var weatherManager: WeatherDataManager!
-    private var mapDataManager: WeatherMapDataManager!
     private var mapManager: WeatherMapManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherDataManager, mapDataManager: WeatherMapDataManager, cityIDs: [String]? = nil, delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherDataManager, cityIDs: [String]? = nil, delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherMapViewController
         viewController.navigator = navigator
         viewController.weatherManager = weatherManager
-        viewController.mapDataManager = mapDataManager
         viewController.cityIDs = cityIDs
         viewController.delegate = delegate
         viewController.title = "Weather Map"

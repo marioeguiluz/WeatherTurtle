@@ -9,11 +9,12 @@
 import Foundation
 import UIKit
 
-protocol ImageDownloadble {
+protocol ImageService {
     func setImage(from url: URL?, completion: @escaping (UIImage?) -> Void)
+    func clearCache()
 }
 
-final class ImageDownloader: ImageDownloadble {
+final class ImageDownloader: ImageService {
     
     static let shared = ImageDownloader()
     private let cache = NSCache<NSString, UIImage>()
@@ -46,5 +47,9 @@ final class ImageDownloader: ImageDownloadble {
                 
             }.resume()
         }
+    }
+    
+    func clearCache() {
+        cache.removeAllObjects()
     }
 }
