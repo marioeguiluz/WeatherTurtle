@@ -22,7 +22,6 @@ final class CityWeatherCell: UITableViewCell {
     func update(_ viewModel: WeatherViewModel) {
         labelCity.text = viewModel.city
         labelTemperature.text = viewModel.temperature
-        contentView.backgroundColor = viewModel.temperatureCategory.backgroundColor()
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.imageViewWeather.image = image
         })

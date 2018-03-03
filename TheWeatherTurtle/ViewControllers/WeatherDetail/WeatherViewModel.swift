@@ -93,21 +93,6 @@ enum TemperatureCategory {
         }
     }
     
-    func backgroundColor() -> UIColor {
-        switch self {
-        case .veryLow:
-            return UIColor(red: 86/255, green: 189/255, blue: 224/255, alpha: 1.0)
-        case .low:
-            return UIColor(red: 113/255, green: 87/255, blue: 245/255, alpha: 1.0)
-        case .mid:
-            return UIColor(red: 126/255, green: 215/255, blue: 157/255, alpha: 1.0)
-        case .high:
-            return UIColor(red: 213/255, green: 96/255, blue: 123/255, alpha: 1.0)
-        default:
-            return .groupTableViewBackground
-        }
-    }
-    
     func textColor() -> UIColor {
         return self == .veryLow ? .darkGray : .white
     }
