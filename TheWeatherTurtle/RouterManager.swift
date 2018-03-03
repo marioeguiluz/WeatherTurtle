@@ -45,10 +45,8 @@ final class RouterManager {
     func startWithTabBar(cityIDs: [String]? = []) {
         let tabController = UITabBarController()
         let tabTable = UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: cityIDs))
-        let tabCollection = UINavigationController(rootViewController: instantiateWeatherCollectionController(cityIDs: cityIDs))
-        let mapController = UINavigationController(rootViewController: instantiateWeatherMapController(cityIDs: cityIDs))
         let mapAndDetailController = UINavigationController(rootViewController: instantiateMapAndDetailController(cityIDs: cityIDs))
-        tabController.viewControllers = [tabTable, tabCollection, mapController, mapAndDetailController]
+        tabController.viewControllers = [tabTable, mapAndDetailController]
         setRootViewController(tabController)
     }
 

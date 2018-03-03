@@ -32,6 +32,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHz-F0-9CF" userLabel="ContentView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xrh-6h-HJl">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BCU-ua-vZy">
                                         <rect key="frame" x="28" y="124" width="319" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -60,8 +63,12 @@
                                     <constraint firstItem="BCU-ua-vZy" firstAttribute="leading" secondItem="fHz-F0-9CF" secondAttribute="leading" constant="28" id="Dod-Qc-DE6"/>
                                     <constraint firstItem="JOD-Sw-TY6" firstAttribute="leading" secondItem="xCk-mV-e6X" secondAttribute="trailing" id="FGJ-oy-d4R"/>
                                     <constraint firstItem="JOD-Sw-TY6" firstAttribute="top" secondItem="fHz-F0-9CF" secondAttribute="top" constant="30" id="Gi2-vn-bkK"/>
+                                    <constraint firstAttribute="trailing" secondItem="xrh-6h-HJl" secondAttribute="trailing" id="NSP-jL-3P7"/>
+                                    <constraint firstItem="xrh-6h-HJl" firstAttribute="leading" secondItem="fHz-F0-9CF" secondAttribute="leading" id="Vn6-SP-K9q"/>
                                     <constraint firstItem="BCU-ua-vZy" firstAttribute="top" secondItem="xCk-mV-e6X" secondAttribute="bottom" constant="0.5" id="WNk-5v-sMd"/>
+                                    <constraint firstItem="xrh-6h-HJl" firstAttribute="top" secondItem="fHz-F0-9CF" secondAttribute="top" id="ZWB-jc-duY"/>
                                     <constraint firstItem="xCk-mV-e6X" firstAttribute="leading" secondItem="fHz-F0-9CF" secondAttribute="leading" constant="28" id="eNQ-uX-uI5"/>
+                                    <constraint firstAttribute="bottom" secondItem="xrh-6h-HJl" secondAttribute="bottom" id="pdA-DY-tut"/>
                                     <constraint firstAttribute="trailing" secondItem="BCU-ua-vZy" secondAttribute="trailing" constant="28" id="u0n-Pg-Fv4"/>
                                 </constraints>
                             </view>
@@ -82,6 +89,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="activityIndicator" destination="dIn-3x-QS6" id="tRZ-15-7g6"/>
+                        <outlet property="backgroundImageView" destination="xrh-6h-HJl" id="1jI-sK-go9"/>
                         <outlet property="contentView" destination="fHz-F0-9CF" id="Spk-rq-5ha"/>
                         <outlet property="iconImage" destination="JOD-Sw-TY6" id="eAL-rH-XML"/>
                         <outlet property="labelCity" destination="BCU-ua-vZy" id="3xS-kh-aEa"/>
@@ -138,8 +146,8 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" estimatedRowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tfv-CS-ho3">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="separatorColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
                         </subviews>
@@ -219,7 +227,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hTQ-uH-9uK">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iKN-Cu-Lia">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>

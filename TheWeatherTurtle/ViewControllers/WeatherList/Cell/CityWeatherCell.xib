@@ -15,19 +15,19 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="CityWeatherCell" id="KGk-i7-Jjw" customClass="CityWeatherCell" customModule="TheWeatherTurtle" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckg-Hz-fkb">
-                        <rect key="frame" x="64" y="0.0" width="206.5" height="44"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <rect key="frame" x="64" y="0.0" width="207.5" height="44"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9p-dN-Do2">
-                        <rect key="frame" x="270.5" y="0.0" width="33.5" height="44"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                        <rect key="frame" x="271.5" y="0.0" width="32.5" height="44"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="31"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -39,6 +39,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="ckg-Hz-fkb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5xV-4n-z24"/>
                     <constraint firstItem="i9p-dN-Do2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7qp-Fd-htd"/>

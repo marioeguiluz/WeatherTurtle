@@ -24,7 +24,7 @@ final class WeatherCollectionManager: NSObject {
     private weak var delegate: WeatherCollectionManagerDelegate?
     private let collectionView: UICollectionView
     private var items: [WeatherViewModel] = []
-    private var mode: CollectionWeatherMode = .expanded
+    private var mode: CollectionWeatherMode = .collapsed
     
     init(collectionView: UICollectionView, delegate: WeatherCollectionManagerDelegate) {
         self.collectionView = collectionView

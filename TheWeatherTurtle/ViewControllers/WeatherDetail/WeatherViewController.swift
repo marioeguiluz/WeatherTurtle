@@ -11,6 +11,7 @@ import UIKit
 final class WeatherViewController: UIViewController {
 
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var labelCity: UILabel!
     @IBOutlet weak var labelTemperature: UILabel!
     @IBOutlet weak var loadingView: UIView!
@@ -80,6 +81,9 @@ final class WeatherViewController: UIViewController {
     private func update(with viewModel: WeatherViewModel) {
         labelCity.text = viewModel.city + ", " + viewModel.detail
         labelTemperature.text = viewModel.temperature
+        backgroundImageView.image = viewModel.temperatureCategory.backgroundImage()
+        labelCity.textColor = viewModel.temperatureCategory.textColor()
+        labelTemperature.textColor = viewModel.temperatureCategory.textColor()
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.iconImage.image = image
         })
