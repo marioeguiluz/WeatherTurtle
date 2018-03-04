@@ -26,7 +26,8 @@ final class WeatherMapManager: NSObject {
     func prepareMapView() {
         mapView.mapType = .mutedStandard
         mapView.delegate = self
-        mapView.register(WeatherAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(WeatherAnnotationView.self, forAnnotationViewWithReuseIdentifier: WeatherAnnotationView.identifier)
+        mapView.register(WeatherClusterView.self, forAnnotationViewWithReuseIdentifier: WeatherClusterView.identifier)
     }
     
     func reload(with items: [WeatherViewModel]) {
@@ -43,6 +44,28 @@ final class WeatherMapManager: NSObject {
 
 extension WeatherMapManager: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        return nil
+
+        if annotation is WeatherPointAnnotation {
+            let annotationView: WeatherAnnotationView
+            if let reusableAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: WeatherAnnotationView.identifier) as? WeatherAnnotationView {
+                annotationView = reusableAnnotation
+                annotationView.annotation = annotation
+            } else {
+                annotationView = WeatherAnnotationView(annotation: annotation, reuseIdentifier: WeatherAnnotationView.identifier)
+            }
+            return annotationView
+
+        } else if annotation is MKClusterAnnotation {
+            let annotationView: WeatherClusterView
+            if let reusableAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: WeatherClusterView.identifier) as? WeatherClusterView {
+                annotationView = reusableAnnotation
+                annotationView.annotation = annotation
+            } else {
+                annotationView = WeatherClusterView(annotation: annotation, reuseIdentifier: WeatherClusterView.identifier)
+            }
+            return annotationView
+        } else {
+            return nil
+        }
     }
 }

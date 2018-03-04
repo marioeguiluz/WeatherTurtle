@@ -96,4 +96,19 @@ enum TemperatureCategory {
     func textColor() -> UIColor {
         return self == .veryLow ? .darkGray : .white
     }
+
+    func pinColor() -> UIColor {
+        switch self {
+        case .veryLow:
+            return .lightGray
+        case .low:
+            return .blue
+        case .mid:
+            return .orange
+        case .high:
+            return .red
+        default:
+            return .lightGray
+        }
+    }
 }

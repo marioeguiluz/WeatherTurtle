@@ -11,6 +11,12 @@ import MapKit
 final class WeatherPointAnnotation: MKPointAnnotation {
     
     private var weatherModel: WeatherViewModel!
+    var pinColor: UIColor {
+        return weatherModel.temperatureCategory.pinColor()
+    }
+    var category: TemperatureCategory {
+        return weatherModel.temperatureCategory
+    }
     
     init(weatherModel: WeatherViewModel) {
         super.init()
@@ -23,12 +29,12 @@ final class WeatherPointAnnotation: MKPointAnnotation {
 
 
 final class WeatherAnnotationView: MKMarkerAnnotationView {
-    
+    static let identifier = "WeatherAnnotationView"
     override var annotation: MKAnnotation? {
         willSet {
-            if let _ = newValue as? WeatherPointAnnotation {
-                clusteringIdentifier = "weather"
-                markerTintColor = .red
+            if let viewModel = newValue as? WeatherPointAnnotation {
+                clusteringIdentifier = WeatherClusterView.identifier
+                markerTintColor = viewModel.pinColor
                 displayPriority = .defaultLow
             }
         }
