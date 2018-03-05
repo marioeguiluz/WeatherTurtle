@@ -26,17 +26,3 @@ final class WeatherPointAnnotation: MKPointAnnotation {
         subtitle = weatherModel.detail
     }
 }
-
-
-final class WeatherAnnotationView: MKMarkerAnnotationView {
-    static let identifier = "WeatherAnnotationView"
-    override var annotation: MKAnnotation? {
-        willSet {
-            if let viewModel = newValue as? WeatherPointAnnotation {
-                clusteringIdentifier = WeatherClusterView.identifier
-                markerTintColor = viewModel.pinColor
-                displayPriority = .defaultLow
-            }
-        }
-    }
-}
