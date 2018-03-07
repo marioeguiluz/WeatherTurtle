@@ -11,6 +11,7 @@ import MapKit
 
 protocol WeatherMapViewControllerDelegate: class {
     func weatherMapViewController(_ weatherMapViewController: WeatherMapViewController, didAddCity: WeatherViewModel)
+    func weatherMapViewController(_ weatherMapViewController: WeatherMapViewController, didSelectCity viewModel: WeatherViewModel)
 }
 
 final class WeatherMapViewController: UIViewController {
@@ -154,5 +155,7 @@ final class WeatherMapViewController: UIViewController {
 }
 
 extension WeatherMapViewController: WeatherMapManagerDelegate {
-
+    func weatherMapManager(_ weatherMapManager: WeatherMapManager, didSelect weatherViewModel: WeatherViewModel) {
+        delegate?.weatherMapViewController(self, didSelectCity: weatherViewModel)
+    }
 }

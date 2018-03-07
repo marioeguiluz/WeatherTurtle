@@ -9,7 +9,7 @@
 import MapKit
 
 protocol WeatherMapManagerDelegate: class {
-    
+    func weatherMapManager(_ weatherMapManager: WeatherMapManager, didSelect weatherViewModel: WeatherViewModel)
 }
 
 final class WeatherMapManager: NSObject {
@@ -66,6 +66,12 @@ extension WeatherMapManager: MKMapViewDelegate {
             return annotationView
         } else {
             return nil
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? WeatherPointAnnotation, let delegate = delegate {
+            delegate.weatherMapManager(self, didSelect: annotation.weatherModel)
         }
     }
 }

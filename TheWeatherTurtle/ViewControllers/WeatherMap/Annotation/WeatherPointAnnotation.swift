@@ -10,7 +10,7 @@ import MapKit
 
 final class WeatherPointAnnotation: MKPointAnnotation {
     
-    private var weatherModel: WeatherViewModel!
+    let weatherModel: WeatherViewModel
     var pinColor: UIColor {
         return weatherModel.temperatureCategory.pinColor()
     }
@@ -19,8 +19,8 @@ final class WeatherPointAnnotation: MKPointAnnotation {
     }
     
     init(weatherModel: WeatherViewModel) {
-        super.init()
         self.weatherModel = weatherModel
+        super.init()
         coordinate = CLLocationCoordinate2D(latitude: weatherModel.latitude, longitude: weatherModel.longitude)
         title = weatherModel.city + " " + weatherModel.temperature
         subtitle = weatherModel.detail

@@ -21,16 +21,21 @@ final class CollectionWeatherCell: UICollectionViewCell {
         imageViewWeather.image = nil
     }
     
-    func update(_ viewModel: WeatherViewModel, mode: CollectionWeatherMode) {
-        labelDetails.isHidden = mode == .collapsed
-        labelExtraInfo.isHidden = mode == .collapsed
-        
-        labelCity.text = viewModel.city
+    func update(_ viewModel: WeatherViewModel) {
+        labelCity.attributedText = underlinedText(viewModel.city, color: viewModel.temperatureCategory.pinColor())
         labelTemperature.text = viewModel.temperature
-        labelDetails.text = viewModel.detail
-        labelExtraInfo.text = "50% humidity"
+        labelDetails.text = ""
+        labelExtraInfo.text = ""
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.imageViewWeather.image = image
         })
+    }
+    
+    private func underlinedText(_ text: String, color: UIColor) -> NSAttributedString {
+        let labelAtributes:[NSAttributedStringKey : Any]  = [
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+            NSAttributedStringKey.underlineColor: color]
+        let underlineAttributedString = NSAttributedString(string: text, attributes: labelAtributes)
+        return underlineAttributedString
     }
 }

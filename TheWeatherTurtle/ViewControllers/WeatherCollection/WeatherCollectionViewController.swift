@@ -34,8 +34,6 @@ final class WeatherCollectionViewController: UIViewController {
         collectionManager.prepareCollectionView()
 
         createAddButton()
-        createModeTestButton()
-        addPinchGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,16 +47,6 @@ final class WeatherCollectionViewController: UIViewController {
         navigationItem.leftBarButtonItem = addButton
     }
     
-    private func createModeTestButton() {
-        let modeButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(toggleMode))
-        navigationItem.rightBarButtonItem = modeButton
-    }
-    
-    private func addPinchGesture() {
-        let gesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
-        view.addGestureRecognizer(gesture)
-    }
-    
     //MARK: Services
     
     private func loadWeather() {
@@ -69,10 +57,6 @@ final class WeatherCollectionViewController: UIViewController {
                 self.update(with: viewState)
             }
         }
-    }
-    
-    @objc private func toggleMode() {
-        collectionManager.toggleMode()
     }
     
     @objc private func refresh() {
@@ -114,13 +98,6 @@ final class WeatherCollectionViewController: UIViewController {
     @objc private func goToAddCity() {
         navigator.pushAddCityWeather(on: navigationController)
     }
-    
-    @objc private func handlePinch(_ pinchGestureRecognizer: UIPinchGestureRecognizer) {
-        guard pinchGestureRecognizer.state != .began else { return }
-        if pinchGestureRecognizer.state == .ended {
-            toggleMode()
-        }
-    }
 }
 
 extension WeatherCollectionViewController: WeatherCollectionManagerDelegate {
@@ -132,5 +109,9 @@ extension WeatherCollectionViewController: WeatherCollectionManagerDelegate {
 extension WeatherCollectionViewController: WeatherMapViewControllerDelegate {
     func weatherMapViewController(_ weatherMapViewController: WeatherMapViewController, didAddCity: WeatherViewModel) {
         refresh()
+    }
+    
+    func weatherMapViewController(_ weatherMapViewController: WeatherMapViewController, didSelectCity viewModel: WeatherViewModel) {
+        collectionManager.scrollToCity(with: viewModel.id)
     }
 }

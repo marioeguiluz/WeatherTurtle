@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum CollectionWeatherMode {
-    case expanded
-    case collapsed
-}
-
 protocol WeatherCollectionManagerDelegate: class {
     func weatherCollectionManager(_ collectionManager: WeatherCollectionManager, didSelectWeatherItem viewModel: WeatherViewModel)
 }
@@ -24,7 +19,6 @@ final class WeatherCollectionManager: NSObject {
     private weak var delegate: WeatherCollectionManagerDelegate?
     private let collectionView: UICollectionView
     private var items: [WeatherViewModel] = []
-    private var mode: CollectionWeatherMode = .collapsed
     
     init(collectionView: UICollectionView, delegate: WeatherCollectionManagerDelegate) {
         self.collectionView = collectionView
@@ -37,14 +31,16 @@ final class WeatherCollectionManager: NSObject {
         collectionView.register(UINib(nibName: identifier, bundle: nil), forCellWithReuseIdentifier: identifier)
     }
     
-    func toggleMode() {
-        mode = mode == .expanded ? .collapsed : .expanded
-        collectionView.reloadData()
-    }
-    
     func reload(with items: [WeatherViewModel]) {
         self.items = items
         collectionView.reloadData()
+    }
+    
+    func scrollToCity(with cityId: String) {
+        if let index = items.index(where: { $0.id == cityId }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        }
     }
 }
 
@@ -59,18 +55,13 @@ extension WeatherCollectionManager: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch mode {
-        case .collapsed:
-            return CGSize(width: collectionView.frame.width/3, height: collectionView.frame.height)
-        case .expanded:
-            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-        }
+        return CGSize(width: collectionView.frame.width/3, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! CollectionWeatherCell
         let viewModel = items[indexPath.row]
-        cell.update(viewModel, mode: mode)
+        cell.update(viewModel)
         return cell
     }
     

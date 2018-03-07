@@ -88,9 +88,10 @@ final class RouterManager {
     }
     
     func instantiateMapAndDetailController(cityIDs: [String]? = []) -> WeatherContainerViewController {
+        let navigator = WeatherNavigator(routerManager: self)
         let detailController = instantiateWeatherCollectionController(cityIDs: cityIDs)
         let mapController = instantiateWeatherMapController(cityIDs: cityIDs, delegate: detailController)
-        let viewController = WeatherContainerViewController.instantiate(storyboard: storyboard, mapController: mapController, detailController: detailController)
+        let viewController = WeatherContainerViewController.instantiate(storyboard: storyboard, navigator: navigator, mapController: mapController, detailController: detailController)
         return viewController
     }
 }
