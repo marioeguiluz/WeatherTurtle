@@ -23,7 +23,7 @@ final class WeatherClusterView: MKAnnotationView {
                
                 let renderer = UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40))
                 image = renderer.image { _ in
-                    drawSections(sections, totalCount: totalCount)
+                    drawCircleBorderSections(sections, totalCount: totalCount)
                     drawCenter()
                     drawTotalAnnotationsText(totalCount)
                 }
@@ -59,7 +59,7 @@ final class WeatherClusterView: MKAnnotationView {
         return sections
     }
     
-    private func drawSections(_ sections: [(category: TemperatureCategory, sectionCount: Int)], totalCount: Int) {
+    private func drawCircleBorderSections(_ sections: [(category: TemperatureCategory, sectionCount: Int)], totalCount: Int) {
         var startingAngle:CGFloat = 0
         for (sectionCategory, sectionCount) in sections {
             sectionCategory.pinColor().setFill()
