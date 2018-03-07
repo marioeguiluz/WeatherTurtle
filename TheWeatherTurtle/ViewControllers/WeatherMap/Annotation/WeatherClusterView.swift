@@ -18,80 +18,66 @@ final class WeatherClusterView: MKAnnotationView {
         willSet {
             if let cluster = newValue as? MKClusterAnnotation {
 
+                let totalCount = cluster.memberAnnotations.count
+                let sections = countCategories(memberAnnotations: cluster.memberAnnotations)
+               
                 let renderer = UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40))
-                let count = cluster.memberAnnotations.count
-                
-                var veryLowCount = 0
-                var lowCount = 0
-                var midCount = 0
-                var highCount = 0
-                cluster.memberAnnotations.forEach { member in
-                    guard let weatherAnnotation = member as? WeatherPointAnnotation else {
-                        return
-                    }
-                    switch weatherAnnotation.category {
-                    case .veryLow: veryLowCount += 1
-                    case .low: lowCount += 1
-                    case .mid: midCount += 1
-                    case .high: highCount += 1
-                    case .unknown: break
-                    }
-                }
-                
                 image = renderer.image { _ in
-                    
-                    TemperatureCategory.veryLow.pinColor().setFill()
-                    let piePathVeryLow = UIBezierPath()
-                    let veryLowAngle = (CGFloat.pi * 2.0 * CGFloat(veryLowCount)) / CGFloat(count)
-                    piePathVeryLow.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
-                                   startAngle: 0, endAngle: veryLowAngle,
-                                   clockwise: true)
-                    piePathVeryLow.addLine(to: CGPoint(x: 20, y: 20))
-                    piePathVeryLow.close()
-                    piePathVeryLow.fill()
-
-                    TemperatureCategory.low.pinColor().setFill()
-                    let piePath = UIBezierPath()
-                    let lowAngle = veryLowAngle + (CGFloat.pi * 2.0 * CGFloat(lowCount)) / CGFloat(count)
-                    piePath.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
-                                   startAngle: veryLowAngle, endAngle: lowAngle,
-                                   clockwise: true)
-                    piePath.addLine(to: CGPoint(x: 20, y: 20))
-                    piePath.close()
-                    piePath.fill()
-
-                    TemperatureCategory.mid.pinColor().setFill()
-                    let piePathMid = UIBezierPath()
-                    let midAngle = lowAngle + (CGFloat.pi * 2.0 * CGFloat(midCount)) / CGFloat(count)
-                    piePathMid.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
-                                   startAngle: lowAngle, endAngle: midAngle,
-                                   clockwise: true)
-                    piePathMid.addLine(to: CGPoint(x: 20, y: 20))
-                    piePathMid.close()
-                    piePathMid.fill()
-
-                    TemperatureCategory.high.pinColor().setFill()
-                    let piePathHigh = UIBezierPath()
-                    let highAngle = midAngle + (CGFloat.pi * 2.0 * CGFloat(highCount)) / CGFloat(count)
-                    piePathHigh.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
-                                   startAngle: midAngle, endAngle: highAngle,
-                                   clockwise: true)
-                    piePathHigh.addLine(to: CGPoint(x: 20, y: 20))
-                    piePathHigh.close()
-                    piePathHigh.fill()
-
-                    // Fill inner circle with white color
-                    UIColor.white.setFill()
-                    UIBezierPath(ovalIn: CGRect(x: 8, y: 8, width: 24, height: 24)).fill()
-
-                    drawTotalAnnotationsText(count)
+                    drawSections(sections, totalCount: totalCount)
+                    drawCenter()
+                    drawTotalAnnotationsText(totalCount)
                 }
             }
         }
     }
     
-    private func drawColorSections() {
+    private func countCategories(memberAnnotations: [MKAnnotation]) -> [(category: TemperatureCategory, sectionCount: Int)] {
+        var veryLowCount = 0
+        var lowCount = 0
+        var midCount = 0
+        var highCount = 0
         
+        memberAnnotations.forEach { member in
+            guard let weatherAnnotation = member as? WeatherPointAnnotation else {
+                return
+            }
+            switch weatherAnnotation.category {
+            case .veryLow: veryLowCount += 1
+            case .low: lowCount += 1
+            case .mid: midCount += 1
+            case .high: highCount += 1
+            case .unknown: break
+            }
+        }
+        
+        let sections: [(category: TemperatureCategory, sectionCount: Int)] = [
+            (.veryLow, sectionCount: veryLowCount),
+            (.low, sectionCount: lowCount),
+            (.mid, sectionCount: midCount),
+            (.high, sectionCount: highCount)]
+        
+        return sections
+    }
+    
+    private func drawSections(_ sections: [(category: TemperatureCategory, sectionCount: Int)], totalCount: Int) {
+        var startingAngle:CGFloat = 0
+        for (sectionCategory, sectionCount) in sections {
+            sectionCategory.pinColor().setFill()
+            let piePath = UIBezierPath()
+            let endAngle = startingAngle + (CGFloat.pi * 2.0 * CGFloat(sectionCount)) / CGFloat(totalCount)
+            piePath.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,
+                           startAngle: startingAngle, endAngle: endAngle,
+                           clockwise: true)
+            piePath.addLine(to: CGPoint(x: 20, y: 20))
+            piePath.close()
+            piePath.fill()
+            startingAngle = endAngle
+        }
+    }
+    
+    private func drawCenter() {
+        UIColor.white.setFill()
+        UIBezierPath(ovalIn: CGRect(x: 8, y: 8, width: 24, height: 24)).fill()
     }
     
     private func drawTotalAnnotationsText(_ count: Int) {
