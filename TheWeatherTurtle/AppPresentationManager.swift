@@ -1,5 +1,5 @@
 //
-//  RouterManager.swift
+//  AppPresentationManager.swift
 //  TheWeatherTurtle
 //
 //  Created by Mario Eguiluz on 09/02/2018.
@@ -10,7 +10,7 @@ import UIKit
 
 private let defaultStoryboardName = "Main"
 
-final class RouterManager {
+final class AppPresentationManager {
     
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
@@ -20,7 +20,7 @@ final class RouterManager {
         self.window = window
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         coreService = CoreService()
-
+        
         setupAppearnce()
     }
 
@@ -51,47 +51,48 @@ final class RouterManager {
         tabController.viewControllers = [tabTable, mapAndDetailController]
         setRootViewController(tabController)
     }
-
+    
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
-        let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
-        let navigator = Navigator(routerManager: self)
+        let dataManager = coreService.weatherDataManager()
+        let navigator = Navigator(appPresentationManager: self)
         let viewController = WeatherViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, city: city)
         return viewController
     }
     
     func instantiateWeatherListController(cityIDs: [String]? = []) -> WeatherListViewController {
-        let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
-        let navigator = WeatherNavigator(routerManager: self)
+        let dataManager = coreService.weatherDataManager()
+        let navigator = WeatherNavigator(appPresentationManager: self)
         let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
         return viewController
     }
     
     func instantiateAddCityController() -> AddCityViewController {
-        let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
-        let navigator = Navigator(routerManager: self)
+        let dataManager = coreService.weatherDataManager()
+        let navigator = Navigator(appPresentationManager: self)
         let viewController = AddCityViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager)
         return viewController
     }
     
     func instantiateWeatherCollectionController(cityIDs: [String]? = []) -> WeatherCollectionViewController {
-        let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
-        let navigator = WeatherNavigator(routerManager: self)
+        let dataManager = coreService.weatherDataManager()
+        let navigator = WeatherNavigator(appPresentationManager: self)
         let viewController = WeatherCollectionViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
         return viewController
     }
     
     func instantiateWeatherMapController(cityIDs: [String]? = [], delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
-        let dataManager = WeatherDataManager(weatherService: coreService.weatherService, dataStoreService: coreService.dataStoreService)
-        let navigator = WeatherNavigator(routerManager: self)
+        let dataManager = coreService.weatherDataManager()
+        let navigator = WeatherNavigator(appPresentationManager: self)
         let viewController = WeatherMapViewController.instantiate(storyboard: storyboard, navigator: navigator, weatherManager: dataManager, cityIDs: cityIDs, delegate: delegate)
         return viewController
     }
     
     func instantiateMapAndDetailController(cityIDs: [String]? = []) -> WeatherContainerViewController {
-        let navigator = WeatherNavigator(routerManager: self)
+        let navigator = WeatherNavigator(appPresentationManager: self)
         let detailController = instantiateWeatherCollectionController(cityIDs: cityIDs)
         let mapController = instantiateWeatherMapController(cityIDs: cityIDs, delegate: detailController)
         let viewController = WeatherContainerViewController.instantiate(storyboard: storyboard, navigator: navigator, mapController: mapController, detailController: detailController)
         return viewController
     }
+
 }

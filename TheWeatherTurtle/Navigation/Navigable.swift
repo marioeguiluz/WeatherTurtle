@@ -9,13 +9,13 @@
 import UIKit
 
 protocol Navigable: ErrorPresenter {
-    var routerManager: RouterManager { get }
+    var appPresentationManager: AppPresentationManager { get }
 }
 
 final class Navigator: Navigable  {
-    let routerManager: RouterManager
+    let appPresentationManager: AppPresentationManager
     
-    init(routerManager: RouterManager) {
-        self.routerManager = routerManager
+    init(appPresentationManager: AppPresentationManager) {
+        self.appPresentationManager = appPresentationManager
     }
 }

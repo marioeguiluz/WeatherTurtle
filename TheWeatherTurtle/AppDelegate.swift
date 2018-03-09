@@ -12,11 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var routerMananger: RouterManager?
+    var routerMananger: AppPresentationManager?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        routerMananger = RouterManager(window: window)
+        routerMananger = AppPresentationManager(window: window)
         routerMananger?.startWithTabBar()
         return true
     }

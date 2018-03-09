@@ -15,20 +15,20 @@ protocol WeatherNavigable: Navigable {
 
 extension WeatherNavigable {
     func pushWeatherDetail(city: String, on rootController: UINavigationController?) {
-        let detailVC = routerManager.instantiateWeatherDetailController(city: city)
+        let detailVC = appPresentationManager.instantiateWeatherDetailController(city: city)
         rootController?.pushViewController(detailVC, animated: true)
     }
     
     func pushAddCityWeather(on rootController: UINavigationController?) {
-        let addVC = routerManager.instantiateAddCityController()
+        let addVC = appPresentationManager.instantiateAddCityController()
         rootController?.pushViewController(addVC, animated: true)
     }
 }
 
 final class WeatherNavigator: WeatherNavigable {
-    let routerManager: RouterManager
+    let appPresentationManager: AppPresentationManager
     
-    init(routerManager: RouterManager) {
-        self.routerManager = routerManager
+    init(appPresentationManager: AppPresentationManager) {
+        self.appPresentationManager = appPresentationManager
     }
 }

@@ -18,4 +18,8 @@ final class CoreService {
         weatherService = OpenWeatherService(networkManager: networkManager)
         dataStoreService = FileStoreage()
     }
+    
+    func weatherDataManager() -> WeatherDataManager {
+        return WeatherDataManager(weatherService: weatherService, dataStoreService: dataStoreService)
+    }
 }
