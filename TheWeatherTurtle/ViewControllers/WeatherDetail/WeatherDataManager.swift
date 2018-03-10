@@ -60,15 +60,15 @@ final class WeatherDataManager {
         }
     }
 
-    func getAllCities(completion: @escaping (ViewState<AddCityViewModel>) -> Void) {
-        dataStoreService.getAllCities { cities in
+    func searchableCities(completion: @escaping (ViewState<AddCityViewModel>) -> Void) {
+        dataStoreService.searchableCities { cities in
             let viewModel = cities.isEmpty ? AddCityViewModel.empty() : AddCityViewModel(allCities: cities)
             completion(.data(viewModel: viewModel))
         }
     }
 
-    func getUserCities() -> [String] {
-        return dataStoreService.getUserCities()
+    func userSelectedCities() -> [String] {
+        return dataStoreService.userSelectedCities()
     }
 
     func storeCity(_ cityID: String) -> Bool {

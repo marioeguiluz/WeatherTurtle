@@ -20,23 +20,10 @@ enum Response<A: Decodable> {
 
 extension Resource {
     init(url: URL) {
-        
         self.url = url
-        
         self.parse = { data in
-        
             let decoder = JSONDecoder()
-            
-            if let model = try? decoder.decode(A.self, from: data) {
-                return model
-                
-            } else if let data = data as? A {
-                return data
-                
-            } else {
-                return nil
-            }
-            
+            return try? decoder.decode(A.self, from: data)
         }
     }
 }

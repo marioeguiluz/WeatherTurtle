@@ -48,7 +48,7 @@ final class AddCityViewController: UIViewController {
     
     private func loadCities() {
         update(with: .loading)
-        dataManager.getAllCities { viewState in
+        dataManager.searchableCities { viewState in
             self.update(with: viewState)
         }
     }

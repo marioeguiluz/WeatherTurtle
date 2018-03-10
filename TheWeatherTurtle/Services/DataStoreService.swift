@@ -9,8 +9,8 @@
 import Foundation
 
 protocol DataStoreService {
-    func getAllCities(completion: @escaping ([City]) -> Void)
-    func getUserCities() -> [String]
+    func searchableCities(completion: @escaping ([City]) -> Void)
+    func userSelectedCities() -> [String]
     func storeCity(_ cityID: String) -> Bool
     func removeCity(_ cityID: String) -> Bool
 }
@@ -39,7 +39,7 @@ final class FileStoreage: DataStoreService {
         NSKeyedArchiver.archiveRootObject(cities, toFile: path)
     }
 
-    func getAllCities(completion: @escaping ([City]) -> Void) {
+    func searchableCities(completion: @escaping ([City]) -> Void) {
         if let cities = allCities {
             DispatchQueue.main.async {
                 completion(cities)
@@ -62,7 +62,7 @@ final class FileStoreage: DataStoreService {
         }
     }
 
-    func getUserCities() -> [String] {
+    func userSelectedCities() -> [String] {
         guard FileManager.default.fileExists(atPath: path),
             let dictionary = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String : [String]],
             let cities = dictionary[keyCities] else {

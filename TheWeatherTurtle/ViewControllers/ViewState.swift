@@ -19,22 +19,4 @@ enum ViewState<A> {
             return false
         }
     }
-    
-    func isError() -> Bool {
-        switch self {
-        case .error:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    func isData() -> Bool {
-        switch self {
-        case .data(_):
-            return true
-        default:
-            return false
-        }
-    }
 }

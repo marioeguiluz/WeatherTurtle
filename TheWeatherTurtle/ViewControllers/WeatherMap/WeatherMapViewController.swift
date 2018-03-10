@@ -66,7 +66,7 @@ final class WeatherMapViewController: UIViewController {
     
     private func loadWeather() {
         update(with: .loading)
-        cityIDs = weatherManager.getUserCities()
+        cityIDs = weatherManager.userSelectedCities()
         weatherManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)

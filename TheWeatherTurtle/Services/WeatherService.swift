@@ -58,6 +58,10 @@ extension OpenWeatherService {
     }
 
     private func weatherURL(for cities: [String]) -> URL {
+        guard cities.count < 20 else {
+            print("Open Weather Map only supports this call with less than 20 cities at a time")
+            fatalError("\(#file): \(#function)")
+        }
         var cityIDs = cities.first ?? ""
         for cityID in cities.dropFirst() {
             cityIDs = "\(cityIDs),\(cityID)"
