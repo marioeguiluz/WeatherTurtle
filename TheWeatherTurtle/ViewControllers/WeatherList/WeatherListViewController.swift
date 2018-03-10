@@ -48,6 +48,15 @@ final class WeatherListViewController: UIViewController {
         loadWeather()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { context in
+//            self.bgImage.alpha = (size.width>size.height) ? 0.25 : 0.55
+//            self.tableManager.reload(with: <#T##[WeatherViewModel]#>)
+        }, completion: nil)
+    }
+    
     private func createEditAddButtons() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToAddCity))
         navigationItem.leftBarButtonItem = addButton
@@ -104,9 +113,10 @@ final class WeatherListViewController: UIViewController {
     
     //MARK: Navigation
     
-    private func goToWeatherDetail(city: String) {
-        //navigator.pushWeatherDetail(city: city, on: navigationController)
-        navigator.presentWeatherDetail(city: city, on: self, originFrame: CGRect(x: 100, y: 100, width: 100, height: 100))
+    private func goToWeatherDetail(city: String, frame: CGRect) {
+        DispatchQueue.main.async {
+            self.navigator.presentWeatherDetail(city: city, on: self, originFrame: frame)
+        }
     }
     
     @objc private func goToAddCity() {
@@ -115,8 +125,8 @@ final class WeatherListViewController: UIViewController {
 }
 
 extension WeatherListViewController: WeatherListTableManagerDelegate {
-    func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel) {
-        goToWeatherDetail(city: viewModel.id)
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel, frame: CGRect) {
+        goToWeatherDetail(city: viewModel.id, frame: frame)
     }
     
     func weatherListTableManager(_ tableManager: WeatherListTableManager, willRemoveWeatherItem viewModel: WeatherViewModel, at indexPath: IndexPath) {

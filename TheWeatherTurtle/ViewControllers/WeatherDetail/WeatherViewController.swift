@@ -90,6 +90,11 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     }
     
     @IBAction func dismiss(_ sender: Any) {
+        UIView.animate(withDuration: 0.25) {
+            self.labelCity.alpha = 0
+            self.labelTemperature.alpha = 0
+            self.iconImage.alpha = 0
+        }
         dismiss(animated: true, completion: nil)
     }
 }

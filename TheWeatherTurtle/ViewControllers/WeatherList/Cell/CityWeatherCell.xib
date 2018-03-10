@@ -50,7 +50,6 @@
                     <constraint firstItem="RwC-aU-ocf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IBh-Nz-rpx"/>
                     <constraint firstItem="i9p-dN-Do2" firstAttribute="leading" secondItem="ckg-Hz-fkb" secondAttribute="trailing" id="MFP-by-1f6"/>
                     <constraint firstItem="ckg-Hz-fkb" firstAttribute="leading" secondItem="RwC-aU-ocf" secondAttribute="trailing" constant="8" id="Nvw-Xa-eV1"/>
-                    <constraint firstItem="23a-xH-XjG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMQ-N1-ad9"/>
                     <constraint firstAttribute="bottom" secondItem="ckg-Hz-fkb" secondAttribute="bottom" constant="-0.5" id="Tiq-yM-Mhi"/>
                     <constraint firstItem="RwC-aU-ocf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ZoU-LI-68V"/>
                     <constraint firstAttribute="bottom" secondItem="i9p-dN-Do2" secondAttribute="bottom" constant="-0.5" id="fMn-RU-5cs"/>
@@ -60,6 +59,9 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="23a-xH-XjG" firstAttribute="leading" secondItem="njF-e1-oar" secondAttribute="leading" id="Gak-RL-Cha"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="imageViewBackground" destination="23a-xH-XjG" id="G5z-mv-zC4"/>

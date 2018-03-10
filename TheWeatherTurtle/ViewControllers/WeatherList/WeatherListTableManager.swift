@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WeatherListTableManagerDelegate: class {
-    func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel)
+    func weatherListTableManager(_ tableManager: WeatherListTableManager, didSelectWeatherItem viewModel: WeatherViewModel, frame: CGRect)
     func weatherListTableManager(_ tableManager: WeatherListTableManager, willRemoveWeatherItem viewModel: WeatherViewModel, at indexPath: IndexPath)
     func weatherListTableManager(_ tableManager: WeatherListTableManager, isEditing: Bool)
 }
@@ -81,7 +81,12 @@ extension WeatherListTableManager: UITableViewDataSource, UITableViewDelegate {
         guard let delegate = delegate else {
             fatalError("Delegate not set in \(#file) : \(#function)")
         }
-        delegate.weatherListTableManager(self, didSelectWeatherItem: items[indexPath.row])
+        
+        let cell = tableView.cellForRow(at: indexPath) as? CityWeatherCell
+        guard let thumbnail = cell?.imageViewBackground, let thumbnailSuperview = thumbnail.superview else { return }
+        let originRect = thumbnailSuperview.convert(thumbnail.frame, to: nil)
+        
+        delegate.weatherListTableManager(self, didSelectWeatherItem: items[indexPath.row], frame: originRect)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
