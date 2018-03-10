@@ -1,22 +1,24 @@
 import UIKit
 
-final class Animator: NSObject, UIViewControllerAnimatedTransitioning {
-    
-    var duration: TimeInterval {
-        return presenting ? 0.25 : 0.2
-    }
+final class Animator: NSObject {
+    let duration: TimeInterval = 0.25
     var presenting = true
     var originFrame = CGRect.zero
+}
+
+extension Animator: UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView
-        let toView = transitionContext.view(forKey: .to)!
-        let detailView = presenting ? toView : transitionContext.view(forKey: .from)!
+        guard
+            let toView = transitionContext.view(forKey: .to),
+            let detailView = presenting ? toView : transitionContext.view(forKey: .from) else { return }
         
+        let containerView = transitionContext.containerView
+
         let initialFrame = presenting ? originFrame : detailView.frame
         let finalFrame = presenting ? detailView.frame : originFrame
         
