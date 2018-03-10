@@ -94,6 +94,7 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
             self.labelCity.alpha = 0
             self.labelTemperature.alpha = 0
             self.iconImage.alpha = 0
+            self.dismissButton.alpha = 0
         }
         dismiss(animated: true, completion: nil)
     }

@@ -23,14 +23,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckg-Hz-fkb">
-                        <rect key="frame" x="64" y="0.0" width="207.5" height="44"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                        <rect key="frame" x="64" y="0.0" width="203" height="44"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9p-dN-Do2">
-                        <rect key="frame" x="271.5" y="0.0" width="32.5" height="44"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="31"/>
+                        <rect key="frame" x="267" y="0.0" width="37" height="44"/>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="37"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -69,7 +69,7 @@
                 <outlet property="labelCity" destination="ckg-Hz-fkb" id="2tq-1A-eQa"/>
                 <outlet property="labelTemperature" destination="i9p-dN-Do2" id="N1D-k5-fNR"/>
             </connections>
-            <point key="canvasLocation" x="-264" y="-175"/>
+            <point key="canvasLocation" x="-122" y="-209"/>
         </tableViewCell>
     </objects>
 </document>
