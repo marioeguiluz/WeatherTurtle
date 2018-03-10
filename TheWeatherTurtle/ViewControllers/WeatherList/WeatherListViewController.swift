@@ -48,15 +48,6 @@ final class WeatherListViewController: UIViewController {
         loadWeather()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { context in
-//            self.bgImage.alpha = (size.width>size.height) ? 0.25 : 0.55
-//            self.tableManager.reload(with: <#T##[WeatherViewModel]#>)
-        }, completion: nil)
-    }
-    
     private func createEditAddButtons() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToAddCity))
         navigationItem.leftBarButtonItem = addButton
