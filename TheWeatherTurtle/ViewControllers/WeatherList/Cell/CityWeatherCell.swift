@@ -10,6 +10,7 @@ import UIKit
 
 final class CityWeatherCell: UITableViewCell {
 
+    @IBOutlet weak var imageViewBackground: UIImageView!
     @IBOutlet weak var imageViewWeather: UIImageView!
     @IBOutlet weak var labelCity: UILabel!
     @IBOutlet weak var labelTemperature: UILabel!
@@ -17,11 +18,13 @@ final class CityWeatherCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageViewWeather.image = nil
+        imageViewBackground.image = nil
     }
     
     func update(_ viewModel: WeatherViewModel) {
         labelCity.text = viewModel.city
         labelTemperature.text = viewModel.temperature
+        imageViewBackground.image = viewModel.temperatureCategory.cellBackgroundImage()
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.imageViewWeather.image = image
         })

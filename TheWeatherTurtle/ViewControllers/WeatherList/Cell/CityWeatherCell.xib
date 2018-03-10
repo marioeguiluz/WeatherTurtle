@@ -19,6 +19,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="23a-xH-XjG" userLabel="Background">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckg-Hz-fkb">
                         <rect key="frame" x="64" y="0.0" width="207.5" height="44"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
@@ -43,18 +46,23 @@
                 <constraints>
                     <constraint firstItem="ckg-Hz-fkb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5xV-4n-z24"/>
                     <constraint firstItem="i9p-dN-Do2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7qp-Fd-htd"/>
+                    <constraint firstItem="23a-xH-XjG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="F0m-nY-7h5"/>
                     <constraint firstItem="RwC-aU-ocf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IBh-Nz-rpx"/>
                     <constraint firstItem="i9p-dN-Do2" firstAttribute="leading" secondItem="ckg-Hz-fkb" secondAttribute="trailing" id="MFP-by-1f6"/>
                     <constraint firstItem="ckg-Hz-fkb" firstAttribute="leading" secondItem="RwC-aU-ocf" secondAttribute="trailing" constant="8" id="Nvw-Xa-eV1"/>
+                    <constraint firstItem="23a-xH-XjG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMQ-N1-ad9"/>
                     <constraint firstAttribute="bottom" secondItem="ckg-Hz-fkb" secondAttribute="bottom" constant="-0.5" id="Tiq-yM-Mhi"/>
                     <constraint firstItem="RwC-aU-ocf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ZoU-LI-68V"/>
                     <constraint firstAttribute="bottom" secondItem="i9p-dN-Do2" secondAttribute="bottom" constant="-0.5" id="fMn-RU-5cs"/>
+                    <constraint firstAttribute="bottom" secondItem="23a-xH-XjG" secondAttribute="bottom" constant="-0.5" id="q8Y-9q-z7t"/>
+                    <constraint firstAttribute="trailing" secondItem="23a-xH-XjG" secondAttribute="trailing" id="vsg-Tx-Z92"/>
                     <constraint firstAttribute="trailing" secondItem="i9p-dN-Do2" secondAttribute="trailing" constant="16" id="zt7-ix-Ofg"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="imageViewBackground" destination="23a-xH-XjG" id="G5z-mv-zC4"/>
                 <outlet property="imageViewWeather" destination="RwC-aU-ocf" id="Dpj-lM-OWX"/>
                 <outlet property="labelCity" destination="ckg-Hz-fkb" id="2tq-1A-eQa"/>
                 <outlet property="labelTemperature" destination="i9p-dN-Do2" id="N1D-k5-fNR"/>

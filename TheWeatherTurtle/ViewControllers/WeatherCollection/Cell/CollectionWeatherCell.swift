@@ -10,32 +10,23 @@ import UIKit
 
 final class CollectionWeatherCell: UICollectionViewCell {
 
+    @IBOutlet weak var imageViewBackground: UIImageView!
     @IBOutlet weak var imageViewWeather: UIImageView!
     @IBOutlet weak var labelCity: UILabel!
     @IBOutlet weak var labelTemperature: UILabel!
-    @IBOutlet weak var labelDetails: UILabel!
-    @IBOutlet weak var labelExtraInfo: UILabel!
     
     override func prepareForReuse() {
         super.prepareForReuse()
         imageViewWeather.image = nil
+        imageViewBackground.image = nil
     }
     
     func update(_ viewModel: WeatherViewModel) {
-        labelCity.attributedText = underlinedText(viewModel.city, color: viewModel.temperatureCategory.pinColor())
+        labelCity.text = viewModel.city
         labelTemperature.text = viewModel.temperature
-        labelDetails.text = ""
-        labelExtraInfo.text = ""
+        imageViewBackground.image = viewModel.temperatureCategory.cellBackgroundImage()
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.imageViewWeather.image = image
         })
-    }
-    
-    private func underlinedText(_ text: String, color: UIColor) -> NSAttributedString {
-        let labelAtributes:[NSAttributedStringKey : Any]  = [
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-            NSAttributedStringKey.underlineColor: color]
-        let underlineAttributedString = NSAttributedString(string: text, attributes: labelAtributes)
-        return underlineAttributedString
     }
 }

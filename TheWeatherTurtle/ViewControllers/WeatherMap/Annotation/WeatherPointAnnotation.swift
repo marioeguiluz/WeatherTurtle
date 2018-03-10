@@ -12,7 +12,7 @@ final class WeatherPointAnnotation: MKPointAnnotation {
     
     let weatherModel: WeatherViewModel
     var pinColor: UIColor {
-        return weatherModel.temperatureCategory.pinColor()
+        return weatherModel.temperatureCategory.backgroundColor()
     }
     var category: TemperatureCategory {
         return weatherModel.temperatureCategory

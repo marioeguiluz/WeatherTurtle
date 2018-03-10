@@ -62,7 +62,7 @@ final class WeatherClusterView: MKAnnotationView {
     private func drawCircleBorderSections(_ sections: [(category: TemperatureCategory, sectionCount: Int)], totalCount: Int) {
         var startingAngle:CGFloat = 0
         for (sectionCategory, sectionCount) in sections {
-            sectionCategory.pinColor().setFill()
+            sectionCategory.backgroundColor().setFill()
             let piePath = UIBezierPath()
             let endAngle = startingAngle + (CGFloat.pi * 2.0 * CGFloat(sectionCount)) / CGFloat(totalCount)
             piePath.addArc(withCenter: CGPoint(x: 20, y: 20), radius: 20,

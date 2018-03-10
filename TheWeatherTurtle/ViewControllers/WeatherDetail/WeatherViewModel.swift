@@ -77,36 +77,32 @@ enum TemperatureCategory {
             self = .unknown
         }
     }
-    
-    func backgroundImage() -> UIImage? {
+
+    func cellBackgroundImage() -> UIImage? {
         switch self {
         case .veryLow:
-            return #imageLiteral(resourceName: "verycold")
+            return #imageLiteral(resourceName: "veryLow")
         case .low:
-            return #imageLiteral(resourceName: "cold")
+            return #imageLiteral(resourceName: "low")
         case .mid:
-            return #imageLiteral(resourceName: "sunny")
+            return #imageLiteral(resourceName: "mid")
         case .high:
-            return #imageLiteral(resourceName: "hot")
+            return #imageLiteral(resourceName: "high")
         default:
             return nil
         }
     }
     
-    func textColor() -> UIColor {
-        return self == .veryLow ? .darkGray : .white
-    }
-
-    func pinColor() -> UIColor {
+    func backgroundColor() -> UIColor {
         switch self {
         case .veryLow:
-            return .lightGray
+            return UIColor(red: 31/255, green: 38/255, blue: 45/255, alpha: 1)
         case .low:
-            return .blue
+            return UIColor(red: 129/255, green: 143/255, blue: 157/255, alpha: 1)
         case .mid:
-            return .orange
+            return UIColor(red: 97/255, green: 153/255, blue: 197/255, alpha: 1)
         case .high:
-            return .red
+            return UIColor(red: 70/255, green: 138/255, blue: 184/255, alpha: 1)
         default:
             return .lightGray
         }

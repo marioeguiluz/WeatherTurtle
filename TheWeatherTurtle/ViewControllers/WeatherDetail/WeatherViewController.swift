@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class WeatherViewController: UIViewController {
+final class WeatherViewController: UIViewController, UIViewControllerTransitioningDelegate {
 
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -17,6 +17,7 @@ final class WeatherViewController: UIViewController {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var dismissButton: UIButton!
     
     private static let defaultCity = "London"
     
@@ -30,7 +31,6 @@ final class WeatherViewController: UIViewController {
         viewController.dataManager = dataManager
         viewController.cityID = city ?? WeatherViewController.defaultCity
         viewController.title = "Forecast Today"
-
         return viewController
     }
         
@@ -39,6 +39,7 @@ final class WeatherViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        dismissButton.isHidden = navigationController != nil
         loadWeather()
     }
     
@@ -81,11 +82,14 @@ final class WeatherViewController: UIViewController {
     private func update(with viewModel: WeatherViewModel) {
         labelCity.text = viewModel.city + ", " + viewModel.detail
         labelTemperature.text = viewModel.temperature
-        backgroundImageView.image = viewModel.temperatureCategory.backgroundImage()
-        labelCity.textColor = viewModel.temperatureCategory.textColor()
-        labelTemperature.textColor = viewModel.temperatureCategory.textColor()
+        backgroundImageView.image = viewModel.temperatureCategory.cellBackgroundImage()
+        view.backgroundColor = viewModel.temperatureCategory.backgroundColor()
         ImageDownloader.shared.setImage(from: viewModel.icon, completion: { [weak self] (image) in
             self?.iconImage.image = image
         })
+    }
+    
+    @IBAction func dismiss(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }

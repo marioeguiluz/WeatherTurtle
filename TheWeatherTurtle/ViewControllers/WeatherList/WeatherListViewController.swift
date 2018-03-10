@@ -18,7 +18,7 @@ final class WeatherListViewController: UIViewController {
     private var dataManager: WeatherDataManager!
     private var tableManager: WeatherListTableManager!
     private var cityIDs: [String]?
-
+    
     static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherListViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherListViewController
         viewController.navigator = navigator
@@ -105,7 +105,8 @@ final class WeatherListViewController: UIViewController {
     //MARK: Navigation
     
     private func goToWeatherDetail(city: String) {
-        navigator.pushWeatherDetail(city: city, on: navigationController)
+        //navigator.pushWeatherDetail(city: city, on: navigationController)
+        navigator.presentWeatherDetail(city: city, on: self, originFrame: CGRect(x: 100, y: 100, width: 100, height: 100))
     }
     
     @objc private func goToAddCity() {
