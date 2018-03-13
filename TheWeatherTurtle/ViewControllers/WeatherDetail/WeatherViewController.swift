@@ -47,9 +47,9 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     
     private func loadWeather() {
         update(with: .loading)
-        dataManager.getWeatherDetails(cityID: cityID) { viewState in
+        dataManager.getWeatherDetails(cityID: cityID) { [weak self] viewState in
             DispatchQueue.main.async {
-                self.update(with: viewState)
+                self?.update(with: viewState)
             }
         }
     }

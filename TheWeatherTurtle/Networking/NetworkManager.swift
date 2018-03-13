@@ -9,12 +9,12 @@
 import Foundation
 
 protocol NetworkLayer {
-    func load<A>(resource: Resource<A>, completion: @escaping (Response<A>) -> ())
+    func loadInBackground<A>(resource: Resource<A>, completion: @escaping (Response<A>) -> ())
 }
 
 final class NetworkManager: NetworkLayer {
         
-    func load<A>(resource: Resource<A>, completion: @escaping (Response<A>) -> ()) {
+    func loadInBackground<A>(resource: Resource<A>, completion: @escaping (Response<A>) -> ()) {
         URLSession.shared.dataTask(with: resource.url) { (data, response, error) in
             if let error = error {
                 completion(.error(info: NSError(domain: "Error", code: 400, userInfo: ["reason": error.localizedDescription as Any])))
