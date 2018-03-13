@@ -29,7 +29,7 @@ final class AddCityViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableManager = AddCityTableManager(tableView: tableView, delegate: self)
         tableManager.prepareTableView(with: searchController)
 
@@ -41,7 +41,16 @@ final class AddCityViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         loadCities()
+    }
+    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        if presentingViewController == nil {
+            searchController.dismiss(animated: false, completion: nil)
+        }
+        super.viewDidDisappear(animated)
     }
     
     //MARK: Services
