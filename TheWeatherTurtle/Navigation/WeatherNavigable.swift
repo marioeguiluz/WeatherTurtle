@@ -9,25 +9,25 @@
 import UIKit
 
 protocol WeatherNavigable: Navigable {
-    func pushWeatherDetail(city: String, on rootController: UINavigationController?)
-    func presentWeatherDetail(city: String, on rootController: UIViewController, originFrame: CGRect)
-    func pushAddCityWeather(on rootController: UINavigationController?)
+    func pushWeatherDetail(city: String)
+    func presentWeatherDetail(city: String, originFrame: CGRect)
+    func pushAddCityWeather()
 }
 
 extension WeatherNavigable {
-    func pushWeatherDetail(city: String, on rootController: UINavigationController?) {
+    func pushWeatherDetail(city: String) {
         let detailVC = appPresentationManager.instantiateWeatherDetailController(city: city)
-        rootController?.pushViewController(detailVC, animated: true)
+        appPresentationManager.rootNavController()?.pushViewController(detailVC, animated: true)
     }
     
     func presentWeatherDetail(city: String, on rootController: UIViewController, originFrame: CGRect) {
         let detailVC = appPresentationManager.instantiateWeatherDetailController(city: city)
-        rootController.present(detailVC, animated: true, completion: nil)
+        appPresentationManager.selectedViewController().present(detailVC, animated: true, completion: nil)
     }
     
-    func pushAddCityWeather(on rootController: UINavigationController?) {
+    func pushAddCityWeather() {
         let addVC = appPresentationManager.instantiateAddCityController()
-        rootController?.pushViewController(addVC, animated: true)
+        appPresentationManager.rootNavController()?.pushViewController(addVC, animated: true)
     }
 }
 
@@ -40,11 +40,11 @@ final class WeatherNavigator: NSObject, WeatherNavigable {
         self.appPresentationManager = appPresentationManager
     }
     
-    func presentWeatherDetail(city: String, on rootController: UIViewController, originFrame: CGRect) {
+    func presentWeatherDetail(city: String, originFrame: CGRect) {
         let detailVC = appPresentationManager.instantiateWeatherDetailController(city: city)
         animator.originFrame = originFrame
         detailVC.transitioningDelegate = self
-        rootController.present(detailVC, animated: true, completion: nil)
+        appPresentationManager.selectedViewController().present(detailVC, animated: true, completion: nil)
     }
 }
 

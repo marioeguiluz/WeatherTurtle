@@ -15,6 +15,7 @@ final class AppPresentationManager {
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
     private let coreService: CoreService
+    private let tabController = UITabBarController()
     
     init(window: UIWindow?, storyboardName: String = defaultStoryboardName) {
         self.window = window
@@ -38,19 +39,30 @@ final class AppPresentationManager {
         window?.makeKeyAndVisible()
     }
     
-    func startWithWeatherList(cityIDs: [String]? = []) {
-        setRootViewController(UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: cityIDs)))
-    }
-    
     func startWithTabBar(cityIDs: [String]? = []) {
-        let tabController = UITabBarController()
+        
         let tabTable = UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: cityIDs))
         tabTable.tabBarItem = UITabBarItem(title: tabTable.title, image: #imageLiteral(resourceName: "list"), tag: 0)
+        
         let mapAndDetailController = UINavigationController(rootViewController: instantiateMapAndDetailController(cityIDs: cityIDs))
         mapAndDetailController.tabBarItem = UITabBarItem(title: mapAndDetailController.title, image: #imageLiteral(resourceName: "world"), tag: 1)
+        
         tabController.viewControllers = [tabTable, mapAndDetailController]
         setRootViewController(tabController)
     }
+    
+    func selectedViewController() -> UIViewController {
+        guard let selectedViewController = tabController.selectedViewController else {
+            fatalError()
+        }
+        return selectedViewController
+    }
+    
+    func rootNavController() -> UINavigationController? {
+        return tabController.viewControllers?[tabController.selectedIndex] as? UINavigationController
+    }
+    
+    // MARK: - View Controller Factory
     
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
         let dataManager = coreService.weatherDataManager()

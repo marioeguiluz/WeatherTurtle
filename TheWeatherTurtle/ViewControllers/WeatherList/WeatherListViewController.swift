@@ -111,7 +111,7 @@ final class WeatherListViewController: UIViewController {
     }
     
     @objc private func goToAddCity() {
-        navigator.pushAddCityWeather(on: navigationController)
+        navigator.pushAddCityWeather()
     }
 }
 

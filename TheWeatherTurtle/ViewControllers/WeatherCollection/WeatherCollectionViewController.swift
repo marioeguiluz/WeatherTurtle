@@ -92,11 +92,11 @@ final class WeatherCollectionViewController: UIViewController {
     //MARK: Navigation
     
     private func goToWeatherDetail(city: String) {
-        navigator.pushWeatherDetail(city: city, on: navigationController)
+        navigator.pushWeatherDetail(city: city)
     }
     
     @objc private func goToAddCity() {
-        navigator.pushAddCityWeather(on: navigationController)
+        navigator.pushAddCityWeather()
     }
 }
 

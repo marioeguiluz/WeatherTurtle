@@ -52,6 +52,6 @@ final class WeatherContainerViewController: UIViewController {
     //MARK: Navigation
     
     @objc private func goToAddCity() {
-        navigator.pushAddCityWeather(on: navigationController)
+        navigator.pushAddCityWeather()
     }
 }
