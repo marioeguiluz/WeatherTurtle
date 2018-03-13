@@ -21,10 +21,10 @@ final class AppPresentationManager {
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         coreService = CoreService()
         
-        setupAppearnce()
+        setupAppearance()
     }
 
-    private func setupAppearnce() {
+    private func setupAppearance() {
         UINavigationBar.appearance().backgroundColor = .white
         UINavigationBar.appearance().tintColor = .darkGray
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.darkGray]
