@@ -74,7 +74,7 @@ final class WeatherCollectionViewController: UIViewController {
             activityIndicator.startAnimating()
             
         case .error:
-            present(navigator.alertGeneralError(), animated: true, completion: nil)
+            navigator.showAlertGeneralError()
             
         case .data(let viewModel):
             update(with: viewModel)

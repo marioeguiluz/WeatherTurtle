@@ -98,8 +98,8 @@ final class WeatherMapViewController: UIViewController {
             activityIndicator.startAnimating()
             
         case .error:
-            present(navigator.alertGeneralError(), animated: true, completion: nil)
-            
+            navigator.showAlertGeneralError()
+
         case .data(let viewModel):
             update(with: viewModel)
         }
@@ -114,7 +114,7 @@ final class WeatherMapViewController: UIViewController {
                 fallthrough
             
         case .error:
-            present(navigator.alertGeneralError(), animated: true, completion: nil)
+            navigator.showAlertGeneralError()
         
         case .data(let viewModel):
             addAnnotation(with: viewModel)

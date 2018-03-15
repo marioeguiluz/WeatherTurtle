@@ -73,8 +73,7 @@ final class AddCityViewController: UIViewController {
             activityIndicator.startAnimating()
 
         case .error:
-            guard let navigator = navigator else { fatalError("Navigator not set") }
-            present(navigator.alertGeneralError(), animated: true, completion: nil)
+            navigator.showAlertGeneralError()
 
         case .data(let viewModel):
             update(with: viewModel)
@@ -94,7 +93,9 @@ final class AddCityViewController: UIViewController {
 extension AddCityViewController: AddCityTableManagerDelegate {
     func addCityTableManager(_ tableManager: AddCityTableManager, didSelectCity viewModel: City) {
         if let cityID = viewModel.id, dataManager.storeCity("\(cityID)") {
-            navigationController?.popViewController(animated: true)
+            navigator.showAlertSuccess(title: "Success", message: "City Added", completion: { [weak self] in
+                self?.navigator.pop()
+            })
         } else {
             update(with: .error)
         }

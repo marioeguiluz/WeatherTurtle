@@ -69,6 +69,7 @@ extension AddCityTableManager: UITableViewDataSource, UITableViewDelegate {
             fatalError("Delegate not set in \(#file) : \(#function)")
         }
         delegate.addCityTableManager(self, didSelectCity: results[indexPath.row])
+        searchController?.searchBar.text = ""
     }
 }
 

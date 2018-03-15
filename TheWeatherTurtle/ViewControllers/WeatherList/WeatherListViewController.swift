@@ -83,7 +83,7 @@ final class WeatherListViewController: UIViewController {
             refreshControl.beginRefreshing()
             
         case .error:
-            present(navigator.alertGeneralError(), animated: true, completion: nil)
+            navigator.showAlertGeneralError()
             
         case .data(let viewModel):
             update(with: viewModel)

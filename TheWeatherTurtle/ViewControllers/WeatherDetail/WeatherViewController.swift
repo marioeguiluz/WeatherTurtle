@@ -65,8 +65,7 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
             activityIndicator.startAnimating()
             
         case .error:
-            guard let navigator = navigator else { fatalError("Navigator not set") }
-            present(navigator.alertGeneralError(), animated: true, completion: nil)
+            navigator.showAlertGeneralError()
             
         case .data(let viewModel):
             update(with: viewModel)
@@ -90,11 +89,11 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     }
     
     @IBAction func dismiss(_ sender: Any) {
-        UIView.animate(withDuration: 0.25) {
-            self.labelCity.alpha = 0
-            self.labelTemperature.alpha = 0
-            self.iconImage.alpha = 0
-            self.dismissButton.alpha = 0
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.labelCity.alpha = 0
+            self?.labelTemperature.alpha = 0
+            self?.iconImage.alpha = 0
+            self?.dismissButton.alpha = 0
         }
         dismiss(animated: true, completion: nil)
     }
