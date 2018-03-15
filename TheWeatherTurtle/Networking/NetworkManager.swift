@@ -13,7 +13,7 @@ protocol NetworkLayer {
 }
 
 final class NetworkManager: NetworkLayer {
-        
+
     func loadInBackground<A>(resource: Resource<A>, completion: @escaping (Response<A>) -> ()) {
         URLSession.shared.dataTask(with: resource.url) { (data, response, error) in
             if let error = error {
@@ -25,7 +25,6 @@ final class NetworkManager: NetworkLayer {
                 completion(.error(info: NSError(domain: "Error", code: 400, userInfo: ["reason": "No data"])))
                 return
             }
-            
             completion(.success(data: resource.parse(data)))
             
         }.resume()

@@ -12,7 +12,7 @@ import UIKit
 final class WeatherDataManager {
     private let weatherService: WeatherService
     private let dataStoreService: DataStoreService
-    
+
     init(weatherService: WeatherService, dataStoreService: DataStoreService) {
         self.weatherService = weatherService
         self.dataStoreService = dataStoreService

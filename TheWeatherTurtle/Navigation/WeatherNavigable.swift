@@ -20,7 +20,7 @@ extension WeatherNavigable {
         appPresentationManager.rootNavController()?.pushViewController(detailVC, animated: true)
     }
     
-    func presentWeatherDetail(city: String, on rootController: UIViewController, originFrame: CGRect) {
+    func presentWeatherDetail(city: String, originFrame: CGRect) {
         let detailVC = appPresentationManager.instantiateWeatherDetailController(city: city)
         appPresentationManager.selectedViewController().present(detailVC, animated: true, completion: nil)
     }

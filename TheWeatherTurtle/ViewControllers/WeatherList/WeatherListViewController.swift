@@ -106,7 +106,7 @@ final class WeatherListViewController: UIViewController {
     
     private func goToWeatherDetail(city: String, frame: CGRect) {
         DispatchQueue.main.async {
-            self.navigator.presentWeatherDetail(city: city, on: self, originFrame: frame)
+            self.navigator.presentWeatherDetail(city: city, originFrame: frame)
         }
     }
     
