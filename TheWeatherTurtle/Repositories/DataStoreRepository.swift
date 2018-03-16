@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol DataStoreService {
+protocol DataStoreRepository {
     func searchableCities(completion: @escaping ([City]) -> Void)
     func userSelectedCities() -> [String]
     func storeCity(_ cityID: String) -> Bool
     func removeCity(_ cityID: String) -> Bool
 }
 
-final class FileStoreage: DataStoreService {
+final class FileStorage: DataStoreRepository {
 
     private var allCities: [City]?
 

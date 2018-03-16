@@ -22,13 +22,13 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     private static let defaultCity = "London"
     
     private var navigator: Navigable!
-    private var dataManager: WeatherDataManager!
+    private var viewManager: WeatherManager!
     private var cityID: String!
 
-    static func instantiate(storyboard: UIStoryboard, navigator: Navigable, dataManager: WeatherDataManager, city: String?) -> WeatherViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: Navigable, viewManager: WeatherManager, city: String?) -> WeatherViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherViewController
         viewController.navigator = navigator
-        viewController.dataManager = dataManager
+        viewController.viewManager = viewManager
         viewController.cityID = city ?? WeatherViewController.defaultCity
         viewController.title = "Forecast Today"
         return viewController
@@ -46,8 +46,7 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     //MARK: Services
     
     private func loadWeather() {
-        update(with: .loading)
-        dataManager.getWeatherDetails(cityID: cityID) { [weak self] viewState in
+        viewManager.getWeatherDetails(cityID: cityID) { [weak self] viewState in
             DispatchQueue.main.async {
                 self?.update(with: viewState)
             }
@@ -56,7 +55,7 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     
     //MARK: Update
     
-    private func update(with viewState: ViewState<WeatherViewModel>) {
+    func update(with viewState: ViewState<WeatherViewModel>) {
         
         prepare(for: viewState)
         

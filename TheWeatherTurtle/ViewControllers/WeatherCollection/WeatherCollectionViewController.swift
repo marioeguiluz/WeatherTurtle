@@ -14,14 +14,14 @@ final class WeatherCollectionViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     private var navigator: WeatherNavigable!
-    private var dataManager: WeatherDataManager!
+    private var viewManager: WeatherManager!
     private var collectionManager: WeatherCollectionManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherCollectionViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, viewManager: WeatherManager, cityIDs: [String]?) -> WeatherCollectionViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherCollectionViewController
         viewController.navigator = navigator
-        viewController.dataManager = dataManager
+        viewController.viewManager = viewManager
         viewController.cityIDs = cityIDs
         viewController.title = "Weather Collection"
         return viewController
@@ -50,9 +50,8 @@ final class WeatherCollectionViewController: UIViewController {
     //MARK: Services
     
     private func loadWeather() {
-        update(with: .loading)
-        cityIDs = dataManager.userSelectedCities()
-        dataManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
+        cityIDs = viewManager.userSelectedCities()
+        viewManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -65,7 +64,7 @@ final class WeatherCollectionViewController: UIViewController {
     
     //MARK: Update
     
-    private func update(with viewState: ViewState<WeatherListViewModel>) {
+    func update(with viewState: ViewState<WeatherListViewModel>) {
         
         prepare(for: viewState)
         
