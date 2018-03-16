@@ -15,7 +15,7 @@ final class AppPresentationManager {
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
     private let coreRepository: CoreRepository
-    private let tabController = UITabBarController()
+    private let mainController = UINavigationController()
     
     init(window: UIWindow?, storyboardName: String = defaultStoryboardName) {
         self.window = window
@@ -39,27 +39,20 @@ final class AppPresentationManager {
         window?.makeKeyAndVisible()
     }
     
-    func startWithTabBar(cityIDs: [String]? = []) {
-        
-        let tabTable = UINavigationController(rootViewController: instantiateWeatherListController(cityIDs: cityIDs))
-        tabTable.tabBarItem = UITabBarItem(title: tabTable.title, image: #imageLiteral(resourceName: "list"), tag: 0)
-        
-        let mapAndDetailController = UINavigationController(rootViewController: instantiateMapAndDetailController(cityIDs: cityIDs))
-        mapAndDetailController.tabBarItem = UITabBarItem(title: mapAndDetailController.title, image: #imageLiteral(resourceName: "world"), tag: 1)
-        
-        tabController.viewControllers = [tabTable, mapAndDetailController]
-        setRootViewController(tabController)
+    func startWithNavBar(cityIDs: [String]? = []) {
+        mainController.setViewControllers([instantiateWeatherListController(cityIDs: cityIDs)], animated: false)
+        setRootViewController(mainController)
     }
     
     func selectedViewController() -> UIViewController {
-        guard let selectedViewController = tabController.selectedViewController else {
+        guard let selectedViewController = mainController.visibleViewController else {
             fatalError()
         }
         return selectedViewController
     }
     
     func rootNavController() -> UINavigationController? {
-        return tabController.viewControllers?[tabController.selectedIndex] as? UINavigationController
+        return mainController
     }
     
     private func weatherDataManager() -> WeatherManager {
@@ -88,27 +81,4 @@ final class AppPresentationManager {
         let viewController = AddCityViewController.instantiate(storyboard: storyboard, navigator: navigator, viewManager: viewManager)
         return viewController
     }
-    
-    func instantiateWeatherCollectionController(cityIDs: [String]? = []) -> WeatherCollectionViewController {
-        let viewManager = weatherDataManager()
-        let navigator = WeatherNavigator(appPresentationManager: self)
-        let viewController = WeatherCollectionViewController.instantiate(storyboard: storyboard, navigator: navigator, viewManager: viewManager, cityIDs: cityIDs)
-        return viewController
-    }
-    
-    func instantiateWeatherMapController(cityIDs: [String]? = [], delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
-        let viewManager = weatherDataManager()
-        let navigator = WeatherNavigator(appPresentationManager: self)
-        let viewController = WeatherMapViewController.instantiate(storyboard: storyboard, navigator: navigator, weatherManager: viewManager, cityIDs: cityIDs, delegate: delegate)
-        return viewController
-    }
-    
-    func instantiateMapAndDetailController(cityIDs: [String]? = []) -> WeatherContainerViewController {
-        let navigator = WeatherNavigator(appPresentationManager: self)
-        let detailController = instantiateWeatherCollectionController(cityIDs: cityIDs)
-        let mapController = instantiateWeatherMapController(cityIDs: cityIDs, delegate: detailController)
-        let viewController = WeatherContainerViewController.instantiate(storyboard: storyboard, navigator: navigator, mapController: mapController, detailController: detailController)
-        return viewController
-    }
-
 }
