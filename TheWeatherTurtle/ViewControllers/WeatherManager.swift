@@ -9,22 +9,23 @@
 import Foundation
 import UIKit
 
-final class WeatherDataManager {
-    private let weatherService: WeatherService
-    private let dataStoreService: DataStoreService
+final class WeatherManager {
+    private let weatherRepository: WeatherRepository
+    private let dataStoreRepository: DataStoreRepository
 
-    init(weatherService: WeatherService, dataStoreService: DataStoreService) {
-        self.weatherService = weatherService
-        self.dataStoreService = dataStoreService
+    init(weatherRepository: WeatherRepository, dataStoreRepository: DataStoreRepository) {
+        self.weatherRepository = weatherRepository
+        self.dataStoreRepository = dataStoreRepository
     }
     
     func getWeatherDetails(cityID: String, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
-        weatherService.getWeatherDetails(cityID: cityID) { (response) in
-            switch response {
+        weatherRepository.getWeatherDetails(cityID: cityID) { result in
+            switch result {
+            case .busy:
+                completion(.loading)
             case .error(_):
                 completion(.error)
-                
-            case .success(let data):
+            case .fetched(let data):
                 let viewModel = WeatherViewModel(with: data) ?? WeatherViewModel.empty()
                 completion(.data(viewModel: viewModel))
             }
@@ -32,12 +33,13 @@ final class WeatherDataManager {
     }
     
     func getWeatherDetails(cityIDs: [String], completion: @escaping (ViewState<WeatherListViewModel>) -> ()) {
-        weatherService.getWeatherDetails(cityIDs: cityIDs) { (response) in
-            switch response {
+        weatherRepository.getWeatherDetails(cityIDs: cityIDs) { result in
+            switch result {
+            case .busy:
+                completion(.loading)
             case .error(_):
                 completion(.error)
-                
-            case .success(let data):
+            case .fetched(let data):
                 let viewModel = WeatherListViewModel(with: data) ?? WeatherListViewModel.empty()
                 completion(.data(viewModel: viewModel))
             }
@@ -45,12 +47,13 @@ final class WeatherDataManager {
     }
 
     func getWeatherDetails(latitude: Double, longitude: Double, storeCity: Bool, completion: @escaping (ViewState<WeatherViewModel>) -> ()) {
-        weatherService.getWeatherDetails(latitude: latitude, longitude: longitude) { (response) in
-            switch response {
+        weatherRepository.getWeatherDetails(latitude: latitude, longitude: longitude) { result in
+            switch result {
+            case .busy:
+                completion(.loading)
             case .error(_):
                 completion(.error)
-
-            case .success(let data):
+            case .fetched(let data):
                 let viewModel = WeatherViewModel(with: data) ?? WeatherViewModel.empty()
                 if storeCity {
                     _ = self.storeCity(viewModel.id)
@@ -61,21 +64,21 @@ final class WeatherDataManager {
     }
 
     func searchableCities(completion: @escaping (ViewState<AddCityViewModel>) -> Void) {
-        dataStoreService.searchableCities { cities in
+        dataStoreRepository.searchableCities { cities in
             let viewModel = cities.isEmpty ? AddCityViewModel.empty() : AddCityViewModel(allCities: cities)
             completion(.data(viewModel: viewModel))
         }
     }
 
     func userSelectedCities() -> [String] {
-        return dataStoreService.userSelectedCities()
+        return dataStoreRepository.userSelectedCities()
     }
 
     func storeCity(_ cityID: String) -> Bool {
-        return dataStoreService.storeCity(cityID)
+        return dataStoreRepository.storeCity(cityID)
     }
     
     func removeCity(_ cityID: String) -> Bool {
-        return dataStoreService.removeCity(cityID)
+        return dataStoreRepository.removeCity(cityID)
     }
 }

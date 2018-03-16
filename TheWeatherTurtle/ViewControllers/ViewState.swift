@@ -6,10 +6,10 @@
 //  Copyright © 2018 Red Turtle Technologies. All rights reserved.
 //
 
-enum ViewState<A> {
+enum ViewState<T> {
     case loading
     case error
-    case data(viewModel: A)
+    case data(viewModel: T)
     
     func isLoading() -> Bool {
         switch self {

@@ -16,13 +16,13 @@ final class AddCityViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     private var navigator: Navigable!
-    private var dataManager: WeatherDataManager!
+    private var viewManager: WeatherManager!
     private var tableManager: AddCityTableManager!
     
-    static func instantiate(storyboard: UIStoryboard, navigator: Navigable, dataManager: WeatherDataManager) -> AddCityViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: Navigable, viewManager: WeatherManager) -> AddCityViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! AddCityViewController
         viewController.navigator = navigator
-        viewController.dataManager = dataManager
+        viewController.viewManager = viewManager
         viewController.title = "Add City"
         return viewController
     }
@@ -41,7 +41,6 @@ final class AddCityViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         loadCities()
     }
     
@@ -56,15 +55,14 @@ final class AddCityViewController: UIViewController {
     //MARK: Services
     
     private func loadCities() {
-        update(with: .loading)
-        dataManager.searchableCities { [weak self] viewState in
+        viewManager.searchableCities { [weak self] viewState in
             self?.update(with: viewState)
         }
     }
 
     //MARK: Update
     
-    private func update(with viewState: ViewState<AddCityViewModel>) {
+    func update(with viewState: ViewState<AddCityViewModel>) {
         
         prepare(for: viewState)
 
@@ -92,7 +90,7 @@ final class AddCityViewController: UIViewController {
 
 extension AddCityViewController: AddCityTableManagerDelegate {
     func addCityTableManager(_ tableManager: AddCityTableManager, didSelectCity viewModel: City) {
-        if let cityID = viewModel.id, dataManager.storeCity("\(cityID)") {
+        if let cityID = viewModel.id, viewManager.storeCity("\(cityID)") {
             navigator.showAlertSuccess(title: "Success", message: "City Added", completion: { [weak self] in
                 self?.navigator.pop()
             })

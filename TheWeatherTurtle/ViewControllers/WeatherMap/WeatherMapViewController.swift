@@ -21,11 +21,11 @@ final class WeatherMapViewController: UIViewController {
     private weak var delegate: WeatherMapViewControllerDelegate?
 
     private var navigator: WeatherNavigable!
-    private var weatherManager: WeatherDataManager!
+    private var weatherManager: WeatherManager!
     private var mapManager: WeatherMapManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherDataManager, cityIDs: [String]? = nil, delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, weatherManager: WeatherManager, cityIDs: [String]? = nil, delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherMapViewController
         viewController.navigator = navigator
         viewController.weatherManager = weatherManager
@@ -65,7 +65,6 @@ final class WeatherMapViewController: UIViewController {
     //MARK: Services
     
     private func loadWeather() {
-        update(with: .loading)
         cityIDs = weatherManager.userSelectedCities()
         weatherManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
@@ -75,7 +74,6 @@ final class WeatherMapViewController: UIViewController {
     }
     
     private func loadWeather(with coordinate: CLLocationCoordinate2D) {
-        update(with: .loading)
         weatherManager.getWeatherDetails(latitude: coordinate.latitude, longitude: coordinate.longitude, storeCity: true) { viewState in
             DispatchQueue.main.async {
                 self.addAnnotation(with: viewState)
@@ -89,7 +87,7 @@ final class WeatherMapViewController: UIViewController {
     
     //MARK: Update
     
-    private func update(with viewState: ViewState<WeatherListViewModel>) {
+    func update(with viewState: ViewState<WeatherListViewModel>) {
         
         prepare()
         
@@ -105,13 +103,13 @@ final class WeatherMapViewController: UIViewController {
         }
     }
     
-    private func addAnnotation(with viewState: ViewState<WeatherViewModel>) {
+    func addAnnotation(with viewState: ViewState<WeatherViewModel>) {
         
         prepare()
 
         switch viewState {
         case .loading:
-                fallthrough
+            activityIndicator.startAnimating()
             
         case .error:
             navigator.showAlertGeneralError()

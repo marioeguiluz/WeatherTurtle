@@ -14,13 +14,13 @@ final class AppPresentationManager {
     
     private weak var window: UIWindow?
     private let storyboard: UIStoryboard
-    private let coreService: CoreService
+    private let coreRepository: CoreRepository
     private let tabController = UITabBarController()
     
     init(window: UIWindow?, storyboardName: String = defaultStoryboardName) {
         self.window = window
         storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        coreService = CoreService()
+        coreRepository = CoreRepository()
         
         setupAppearance()
     }
@@ -62,40 +62,44 @@ final class AppPresentationManager {
         return tabController.viewControllers?[tabController.selectedIndex] as? UINavigationController
     }
     
+    private func weatherDataManager() -> WeatherManager {
+        return WeatherManager(weatherRepository: coreRepository.weatherRepository, dataStoreRepository: coreRepository.dataStoreRepository)
+    }
+    
     // MARK: - View Controller Factory
     
     func instantiateWeatherDetailController(city: String? = nil) -> WeatherViewController {
-        let dataManager = coreService.weatherDataManager()
+        let viewManager = weatherDataManager()
         let navigator = Navigator(appPresentationManager: self)
-        let viewController = WeatherViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, city: city)
+        let viewController = WeatherViewController.instantiate(storyboard: storyboard, navigator: navigator, viewManager: viewManager, city: city)
         return viewController
     }
     
     func instantiateWeatherListController(cityIDs: [String]? = []) -> WeatherListViewController {
-        let dataManager = coreService.weatherDataManager()
+        let viewManager = weatherDataManager()
         let navigator = WeatherNavigator(appPresentationManager: self)
-        let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
+        let viewController = WeatherListViewController.instantiate(storyboard: storyboard, navigator: navigator, viewManager: viewManager, cityIDs: cityIDs)
         return viewController
     }
     
     func instantiateAddCityController() -> AddCityViewController {
-        let dataManager = coreService.weatherDataManager()
+        let viewManager = weatherDataManager()
         let navigator = Navigator(appPresentationManager: self)
-        let viewController = AddCityViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager)
+        let viewController = AddCityViewController.instantiate(storyboard: storyboard, navigator: navigator, viewManager: viewManager)
         return viewController
     }
     
     func instantiateWeatherCollectionController(cityIDs: [String]? = []) -> WeatherCollectionViewController {
-        let dataManager = coreService.weatherDataManager()
+        let viewManager = weatherDataManager()
         let navigator = WeatherNavigator(appPresentationManager: self)
-        let viewController = WeatherCollectionViewController.instantiate(storyboard: storyboard, navigator: navigator, dataManager: dataManager, cityIDs: cityIDs)
+        let viewController = WeatherCollectionViewController.instantiate(storyboard: storyboard, navigator: navigator, viewManager: viewManager, cityIDs: cityIDs)
         return viewController
     }
     
     func instantiateWeatherMapController(cityIDs: [String]? = [], delegate: WeatherMapViewControllerDelegate? = nil) -> WeatherMapViewController {
-        let dataManager = coreService.weatherDataManager()
+        let viewManager = weatherDataManager()
         let navigator = WeatherNavigator(appPresentationManager: self)
-        let viewController = WeatherMapViewController.instantiate(storyboard: storyboard, navigator: navigator, weatherManager: dataManager, cityIDs: cityIDs, delegate: delegate)
+        let viewController = WeatherMapViewController.instantiate(storyboard: storyboard, navigator: navigator, weatherManager: viewManager, cityIDs: cityIDs, delegate: delegate)
         return viewController
     }
     

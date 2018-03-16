@@ -15,14 +15,14 @@ final class WeatherListViewController: UIViewController {
     private var editButton: UIBarButtonItem?
     
     private var navigator: WeatherNavigable!
-    private var dataManager: WeatherDataManager!
+    private var viewManager: WeatherManager!
     private var tableManager: WeatherListTableManager!
     private var cityIDs: [String]?
     
-    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, dataManager: WeatherDataManager, cityIDs: [String]?) -> WeatherListViewController {
+    static func instantiate(storyboard: UIStoryboard, navigator: WeatherNavigable, viewManager: WeatherManager, cityIDs: [String]?) -> WeatherListViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "\(self)") as! WeatherListViewController
         viewController.navigator = navigator
-        viewController.dataManager = dataManager
+        viewController.viewManager = viewManager
         viewController.cityIDs = cityIDs
         viewController.title = "Weather List"
         return viewController
@@ -44,7 +44,6 @@ final class WeatherListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         loadWeather()
     }
     
@@ -59,9 +58,8 @@ final class WeatherListViewController: UIViewController {
     //MARK: Services
     
     private func loadWeather() {
-        update(with: .loading)
-        cityIDs = dataManager.userSelectedCities()
-        dataManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
+        cityIDs = viewManager.userSelectedCities()
+        viewManager.getWeatherDetails(cityIDs: cityIDs ?? []) { viewState in
             DispatchQueue.main.async {
                 self.update(with: viewState)
             }
@@ -74,7 +72,7 @@ final class WeatherListViewController: UIViewController {
     
     //MARK: Update
     
-    private func update(with viewState: ViewState<WeatherListViewModel>) {
+    func update(with viewState: ViewState<WeatherListViewModel>) {
         
         prepare(for: viewState)
         
@@ -121,7 +119,7 @@ extension WeatherListViewController: WeatherListTableManagerDelegate {
     }
     
     func weatherListTableManager(_ tableManager: WeatherListTableManager, willRemoveWeatherItem viewModel: WeatherViewModel, at indexPath: IndexPath) {
-        guard dataManager.removeCity(viewModel.id) else {
+        guard viewManager.removeCity(viewModel.id) else {
             update(with: .error)
             return
         }

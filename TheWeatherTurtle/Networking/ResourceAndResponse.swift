@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct Resource<A: Decodable> {
+struct Resource<T: Decodable> {
     let url: URL
-    let parse: (Data) -> A?
+    let parse: (Data) -> T?
 }
 
-enum Response<A: Decodable> {
+enum Response<T: Decodable> {
     case error(info: Error)
-    case success(data: A?)
+    case success(data: T?)
 }
 
 extension Resource {
@@ -23,7 +23,7 @@ extension Resource {
         self.url = url
         self.parse = { data in
             let decoder = JSONDecoder()
-            return try? decoder.decode(A.self, from: data)
+            return try? decoder.decode(T.self, from: data)
         }
     }
 }
