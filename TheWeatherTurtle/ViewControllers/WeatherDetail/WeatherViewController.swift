@@ -50,6 +50,13 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     private func loadWeather() {
         activityIndicator.startAnimating()
         viewManager.getWeatherDetailsRaw(cityID: cityID) { [weak self] weatherDetails in
+            
+            // --
+            // Notice the amount of < if let > that we are handling in the viewController.
+            // This because very difficult to manage/change with complex UIs. And we are not handling the < else > cases for this example...will be even bigger
+            // Also notice that we have a lot of "self?." that make the code even more dirty
+            // --
+            
             if let name = weatherDetails.name, let description = weatherDetails.weather?.first?.description {
                 self?.labelCity.text = name + ", " + description
             }
@@ -57,6 +64,7 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
                 self?.backgroundImageView.image = self?.cellBackgroundImage(for: temp)
                 self?.contentView.backgroundColor = self?.backgroundColor(for: temp)
                 self?.labelTemperature.text = String(format: "%.0f", temp.rounded(.toNearestOrEven)) + "°"
+                // Above line: ViewController responsible of converting string to temperature formats? Why?
             }
             
             if let icon = weatherDetails.weather?.first?.icon, let url = URL(string: "http://openweathermap.org/img/w/\(icon).png") {
@@ -86,6 +94,8 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
         default:
             return nil
         }
+        // If a new developer changes one of these ranges due to a request...what will happen with the following method? Would the dev notice and do the proper change to?
+        // It will be easy to introduce a bug...
     }
     
     private func backgroundColor(for temp: Double) -> UIColor {
@@ -104,6 +114,10 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
     }
     
     //MARK: - Clean code using ViewModel
+    
+    // Notice how the viewController is just displaying data as it comes.
+    // No unwrapping, no spaguetti code, no <if let>, no transformations of data
+    // Notice how we keep the viewController responsabilities in 1 -> Display data.
     
     private func loadWeatherViewModel() {
         viewManager.getWeatherDetails(cityID: cityID) { [weak self] viewModel in
