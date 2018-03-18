@@ -23,18 +23,18 @@ struct WeatherDetails: Codable {
 
 extension WeatherDetails {
     static func exampleData() -> WeatherDetails {
-        let coord = Coord(lon: 12, lat: 12)
-        let weather = [Weather(id: 1, main: "main", description: "description", icon: "10d")]
-        let base = "base"
-        let main = Main(temp: 12, pressure: 1, humidity: 1, temp_min: 10, temp_max: 15)
-        let visibility = 1
-        let wind = Wind(speed: 10, deg: 15)
-        let clouds = Clouds(all: 5)
-        let dt = 1
-        let sys = Sys(type: 1, id: 1, message: 1, country: "GB", sunrise: 6, sunset: 18)
-        let id = 1
+        let coord = Coord(lon: -0.13, lat: 51.51)
+        let weather = [Weather(id: 601, main: "snow", description: "snow", icon: "13n")]
+        let base = "stations"
+        let main = Main(temp: 12, pressure: 1011, humidity: 87, temp_min: 10, temp_max: 15)
+        let visibility = 8000
+        let wind = Wind(speed: 2.6, deg: 40)
+        let clouds = Clouds(all: 75)
+        let dt = 1521397200
+        let sys = Sys(type: 1, id: 5091, message: 0.0044, country: "GB", sunrise: 1521353178, sunset: 1521396681)
+        let id = 2643743
         let name = "London"
-        let cod = 1
+        let cod = 200
         
         return WeatherDetails(coord: coord, weather: weather, base: base, main: main, visibility: visibility, wind: wind, clouds: clouds, dt: dt, sys: sys, id: id, name: name, cod: cod)
     }
