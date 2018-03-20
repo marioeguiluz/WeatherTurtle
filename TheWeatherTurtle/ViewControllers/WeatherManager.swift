@@ -15,9 +15,4 @@ final class WeatherManager {
         let responseFromNetwork = WeatherDetails.exampleData()
         completion(responseFromNetwork)
     }
-    
-    func getWeatherDetails(cityID: String, completion: @escaping (WeatherViewModel) -> ()) {
-        let viewModel = WeatherViewModel(with: WeatherDetails.exampleData()) ?? WeatherViewModel.empty()
-        completion(viewModel)
-    }
 }

@@ -112,32 +112,4 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
             return .lightGray
         }
     }
-    
-    //MARK: - Clean code using ViewModel
-    
-    // Notice how the viewController is just displaying data as it comes.
-    // No unwrapping, no spaguetti code, no <if let>, no transformations of data
-    // Notice how we keep the viewController responsabilities in 1 -> Display data.
-    
-    private func loadWeatherViewModel() {
-        viewManager.getWeatherDetails(cityID: cityID) { [weak self] viewModel in
-            DispatchQueue.main.async {
-                self?.update(with: viewModel)
-            }
-        }
-    }
-    
-    private func update(with viewModel: WeatherViewModel) {
-        labelCity.text = viewModel.city + ", " + viewModel.detail
-        labelTemperature.text = viewModel.temperature
-        backgroundImageView.image = viewModel.temperatureCategory.cellBackgroundImage()
-        contentView.backgroundColor = viewModel.temperatureCategory.backgroundColor()
-        DispatchQueue.global().async {
-            if let url = viewModel.icon, let image = try? UIImage(data: Data(contentsOf: url, options: Data.ReadingOptions.uncached)) {
-                DispatchQueue.main.async { [weak self] in
-                    self?.iconImage.image = image
-                }
-            }
-        }
-    }
 }
