@@ -42,74 +42,25 @@ final class WeatherViewController: UIViewController, UIViewControllerTransitioni
         super.viewWillAppear(animated)
 
         dismissButton.isHidden = navigationController != nil
-        loadWeather()
+        loadViewModel()
     }
     
     //MARK: - Bad code
     
-    private func loadWeather() {
+    private func loadViewModel() {
         activityIndicator.startAnimating()
-        viewManager.getWeatherDetailsRaw(cityID: cityID) { [weak self] weatherDetails in
-            
-            // --
-            // Notice the amount of < if let > that we are handling in the viewController.
-            // This because very difficult to manage/change with complex UIs. And we are not handling the < else > cases for this example...will be even bigger
-            // Also notice that we have a lot of "self?." that make the code even more dirty
-            // --
-            
-            if let name = weatherDetails.name, let description = weatherDetails.weather?.first?.description {
-                self?.labelCity.text = name + ", " + description
-            }
-            if let temp = weatherDetails.main?.temp {
-                self?.backgroundImageView.image = self?.cellBackgroundImage(for: temp)
-                self?.contentView.backgroundColor = self?.backgroundColor(for: temp)
-                self?.labelTemperature.text = String(format: "%.0f", temp.rounded(.toNearestOrEven)) + "°"
-                // Above line: ViewController responsible of converting string to temperature formats? Why?
-            }
-            
-            if let icon = weatherDetails.weather?.first?.icon, let url = URL(string: "http://openweathermap.org/img/w/\(icon).png") {
-                DispatchQueue.global().async {
-                    if let image = try? UIImage(data: Data(contentsOf: url, options: Data.ReadingOptions.uncached)) {
-                        DispatchQueue.main.async {
-                            self?.iconImage.image = image
-                        }
+        viewManager.getWeatherDetailsViewModel(cityID: cityID) { [weak self] viewModel in
+            self?.labelCity.text = viewModel.cityAndDescription
+            self?.backgroundImageView.image = viewModel.backgroundImage
+            self?.contentView.backgroundColor = viewModel.backgroundColor
+            self?.labelTemperature.text = viewModel.temperatureString
+            DispatchQueue.global().async {
+                if let image = try? UIImage(data: Data(contentsOf: viewModel.iconURL, options: Data.ReadingOptions.uncached)) {
+                    DispatchQueue.main.async {
+                        self?.iconImage.image = image
                     }
                 }
             }
-            
-            self?.activityIndicator.stopAnimating()
-        }
-    }
-    
-    private func cellBackgroundImage(for temp: Double) -> UIImage? {
-        switch temp {
-        case ...0:
-            return #imageLiteral(resourceName: "veryLow")
-        case 0..<10:
-            return #imageLiteral(resourceName: "low")
-        case 10..<20:
-            return #imageLiteral(resourceName: "mid")
-        case 20...50:
-            return #imageLiteral(resourceName: "high")
-        default:
-            return nil
-        }
-        // If a new developer changes one of these ranges due to a request...what will happen with the following method? Would the dev notice and do the proper change to?
-        // It will be easy to introduce a bug...
-    }
-    
-    private func backgroundColor(for temp: Double) -> UIColor {
-        switch temp {
-        case ...0:
-            return UIColor(red: 31/255, green: 38/255, blue: 45/255, alpha: 1)
-        case 0..<10:
-            return UIColor(red: 129/255, green: 143/255, blue: 157/255, alpha: 1)
-        case 10..<20:
-            return UIColor(red: 97/255, green: 153/255, blue: 197/255, alpha: 1)
-        case 20...50:
-            return UIColor(red: 70/255, green: 138/255, blue: 184/255, alpha: 1)
-        default:
-            return .lightGray
         }
     }
 }
