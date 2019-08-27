@@ -89,7 +89,7 @@ extension WeatherListTableManager: UITableViewDataSource, UITableViewDelegate {
         delegate.weatherListTableManager(self, didSelectWeatherItem: items[indexPath.row], frame: originRect)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
             willRemoveRow(at: indexPath)

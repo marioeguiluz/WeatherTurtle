@@ -38,7 +38,7 @@ extension Animator: UIViewControllerAnimatedTransitioning {
         }
         
         containerView.addSubview(toView)
-        containerView.bringSubview(toFront: detailView)
+        containerView.bringSubviewToFront(detailView)
         
         UIView.animate(withDuration: duration,
                        animations: {

@@ -33,15 +33,15 @@ final class WeatherContainerViewController: UIViewController {
     }
     
     private func addViewControllers() {
-        addChildViewController(topViewController)
+        addChild(topViewController)
         topViewController.view.frame = topView.bounds
         topView.addSubview(topViewController.view)
-        topViewController.didMove(toParentViewController: self)
+        topViewController.didMove(toParent: self)
         
-        addChildViewController(bottomViewController)
+        addChild(bottomViewController)
         bottomViewController.view.frame = bottomView.bounds
         bottomView.addSubview(bottomViewController.view)
-        bottomViewController.didMove(toParentViewController: self)
+        bottomViewController.didMove(toParent: self)
     }
     
     private func createAddButton() {

@@ -81,8 +81,8 @@ final class WeatherClusterView: MKAnnotationView {
     }
     
     private func drawTotalAnnotationsText(_ count: Int) {
-        let attributes = [ NSAttributedStringKey.foregroundColor: UIColor.black,
-                           NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         let text = "\(count)"
         let size = text.size(withAttributes: attributes)
         let rect = CGRect(x: 20 - size.width / 2, y: 20 - size.height / 2, width: size.width, height: size.height)

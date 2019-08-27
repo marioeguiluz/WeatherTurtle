@@ -37,7 +37,7 @@ final class WeatherCollectionManager: NSObject {
     }
     
     func scrollToCity(with cityId: String) {
-        if let index = items.index(where: { $0.id == cityId }) {
+        if let index = items.firstIndex(where: { $0.id == cityId }) {
             let indexPath = IndexPath(row: index, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
         }

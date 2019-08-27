@@ -92,7 +92,7 @@ final class FileStorage: DataStoreRepository {
         guard FileManager.default.fileExists(atPath: path),
             var dictionary = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String : [String]],
             var cities = dictionary[keyCities],
-            let indexToRemove = cities.index(where: { $0 == cityID }) else {
+            let indexToRemove = cities.firstIndex(where: { $0 == cityID }) else {
                 return false
         }
         

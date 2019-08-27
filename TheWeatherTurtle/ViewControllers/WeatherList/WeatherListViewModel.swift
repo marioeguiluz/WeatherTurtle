@@ -14,7 +14,7 @@ extension WeatherListViewModel {
     
     init?(with data: WeatherDetailsList?) {
         guard let list = data?.list else { return nil }
-        cities = list.flatMap { WeatherViewModel(with: $0) }
+        cities = list.compactMap { WeatherViewModel(with: $0) }
     }
     
     static func empty() -> WeatherListViewModel {
